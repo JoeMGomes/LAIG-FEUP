@@ -3,74 +3,81 @@
  * @constructor
  * @param scene - Reference to MyScene object
  */
-class MyBranch extends CGFobject {
-	constructor(scene) {
-		super(scene);
-		this.slices = 3;
-		this.initBuffers();
-		this.scene = scene;
-	}
+class MyCylinder extends CGFobject {
+  constructor(scene, id, base, top, height, slices, stacks) {
+    super(scene);
+    this.scene = scene;
+    this.id = id;
+    this.base = base;
+    this.top = top;
+    this.height = height;
+    this.slices = slices;
+    this.stacks = stacks;
+    this.initBuffers();
+  }
 
-	initBuffers() {
-		this.vertices = [];
-		this.normals = [];
-		//Counter-clockwise reference of vertices
-		this.indices = [];
-		this.texCoords = [];
-		
-		//It needs at lest 3 slices
-		if(this.slices < 3)
-			this.slices = 3;
+  initBuffers() {
+    this.vertices = [];
+    this.normals = [];
+    //Counter-clockwise reference of vertices
+    this.indices = [];
+    this.texCoords = [];
 
-		//Vertices & Normals & Textcoords
-		var ang = 2*Math.PI/this.slices;
-		for(var i = 0; i < this.slices; i++) {
-			//Vertices
-			this.vertices.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			this.vertices.push(Math.cos(ang*i),1,Math.sin(ang*i));
-			//Normals
-			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			//TextCoords
-			this.texCoords.push(i/(this.slices-1),1);
-			this.texCoords.push(i/(this.slices-1),0);
-		}
+    //It needs at lest 3 slices
+    if (this.slices < 3) this.slices = 3;
 
-		//Indice
-		for(var i = 0; i < (this.slices*2); i++) {
-			this.indices.push( (i % (this.slices*2)) , (i+1 % (this.slices*2)) , (i+2 % (this.slices*2)) );
-			this.indices.push( (i+2 % (this.slices*2)) , (i+1 % (this.slices*2)) , (i % (this.slices*2)) );
-		}
+    //Vertices & Normals & Textcoords
 
-		//More Vertices & Normals
-		for(var i = 0; i < this.slices; i++) {
-			//Vertices
-			this.vertices.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			this.vertices.push(Math.cos(ang*i),1,Math.sin(ang*i));
-			//Normals
-			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			this.normals.push(Math.cos(ang*i),0,Math.sin(ang*i));
-			//TextCoords
-			this.texCoords.push(i/(this.slices-1),1);
-			this.texCoords.push(i/(this.slices-1),0);
-		}
+    var ang = 0;
+    var alphaAng = (2 * Math.PI) / this.slices;
+    var stackY = 0;
+    var stackX = 0;
+    var stackIncX = Math.abs(this.top - this.base) / this.stacks;
+    var stackIncY = this.height / this.stacks;
 
-		this.primitiveType = this.scene.gl.TRIANGLES;
-		this.initGLBuffers();
+    for (var i = 0; i < this.stacks; i++) {
+      for (var j = 0; j < this.slices; j++) {
+        var sa = Math.sin(ang);
+        var saa = Math.sin(ang + alphaAng);
+        var ca = Math.cos(ang);
+        var caa = Math.cos(ang + alphaAng);
 
-		//materials
-        this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(133/255, 64/255, 0, 1.0);
-        this.material.setDiffuse(133/255, 64/255, 0, 1.0);
-        this.material.setSpecular(133/255, 64/255, 0, 0.2);
-        this.material.setShininess(10.0);
-	}
+        var normal = [saa - sa, ca * saa - sa * caa, caa - ca];
 
-	Display () {
-		this.material.apply();
-		this.scene.pushMatrix();
-        this.scene.scale(0.5, 1, 0.5);
-        this.display();
-        this.scene.popMatrix();
-	}
+        /*// normalization
+			var nsize = Math.sqrt(normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]);
+			normal[0] /= nsize;
+			normal[1] /= nsize;
+			normal[2] /= nsize;*/
+
+        //Vertices
+        this.vertices.push(
+          ca * (this.base + stackX),
+          stackY,
+          -sa * (this.base + stackX)
+        );
+
+        stackX += stackIncX;
+        stackIncY += stackIncY;
+        ang += alphaAng;
+      }
+    }
+
+    for (var i = 0; i < this.stacks; i++) {
+      for (var j = 0; j < this.slices; j++) {
+        if (i == 0) {
+          this.indices.push(j, j + 1, this.slices + j);
+          this.indices.push(j + 1, this.slices + j + 1, this.slices + j);
+        } else {
+          this.indices.push(i * j, i * j + 1, (i + 1) * j);
+          this.indices.push(i*j + 1, (i + 1) * j +1, (i + 1) * j);
+        }
+      }
+    }
+
+    this.primitiveType = this.scene.gl.TRIANGLES;
+    this.initGLBuffers();
+
+    console.log(this.indices);
+  }
 }
