@@ -32,23 +32,28 @@ class MyCylinder extends CGFobject {
     var alphaAng = (2 * Math.PI) / this.slices;
     var stackY = 0;
     var stackX = 0;
-    var stackIncX = Math.abs(this.top - this.base) / this.stacks;
+    var stackIncX = (this.top - this.base) / (this.stacks + 1);
     var stackIncY = this.height / this.stacks;
 
-    for (var i = 0; i < this.stacks; i++) {
+    for (var i = 0; i < this.stacks + 1; i++) {
       for (var j = 0; j < this.slices; j++) {
         var sa = Math.sin(ang);
         var saa = Math.sin(ang + alphaAng);
         var ca = Math.cos(ang);
         var caa = Math.cos(ang + alphaAng);
 
-        var normal = [saa - sa, ca * saa - sa * caa, caa - ca];
+        var normal = [ca, -Math.tan((this.top-this.base) / this.height) , -sa];
 
-        /*// normalization
-			var nsize = Math.sqrt(normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]);
-			normal[0] /= nsize;
-			normal[1] /= nsize;
-			normal[2] /= nsize;*/
+        // normalization
+        var nsize = Math.sqrt(
+          normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]
+        );
+        normal[0] /= nsize;
+        normal[1] /= nsize;
+        normal[2] /= nsize;
+
+        // push normal once for each vertex
+        this.normals.push(...normal);
 
         //Vertices
         this.vertices.push(
@@ -57,27 +62,39 @@ class MyCylinder extends CGFobject {
           -sa * (this.base + stackX)
         );
 
-        stackX += stackIncX;
-        stackIncY += stackIncY;
         ang += alphaAng;
       }
+      stackX += stackIncX;
+      stackY += stackIncY;
     }
 
     for (var i = 0; i < this.stacks; i++) {
       for (var j = 0; j < this.slices; j++) {
         if (i == 0) {
-          this.indices.push(j, j + 1, this.slices + j);
-          this.indices.push(j + 1, this.slices + j + 1, this.slices + j);
+          this.indices.push(j, (j + 1) % this.slices, this.slices + j);
+          this.indices.push(
+            (j + 1) % this.slices,
+            this.slices + ((j + 1) % this.slices),
+            this.slices + j
+          );
         } else {
-          this.indices.push(i * j, i * j + 1, (i + 1) * j);
-          this.indices.push(i*j + 1, (i + 1) * j +1, (i + 1) * j);
+          this.indices.push(
+            j + this.slices * i,
+            ((j + 1) % this.slices) + this.slices * i,
+            this.slices + j + this.slices * i
+          );
+          this.indices.push(
+            ((j + 1) % this.slices) + this.slices * i,
+            this.slices + ((j + 1) % this.slices) + this.slices * i,
+            this.slices + j + this.slices * i
+          );
         }
       }
     }
 
+
+    //TODO: Texture Coord
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
-
-    console.log(this.indices);
   }
 }
