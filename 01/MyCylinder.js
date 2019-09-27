@@ -42,7 +42,7 @@ class MyCylinder extends CGFobject {
         var ca = Math.cos(ang);
         var caa = Math.cos(ang + alphaAng);
 
-        var normal = [ca, -Math.tan((this.top-this.base) / this.height) , -sa];
+        var normal = [ca, -sa, -Math.tan((this.top-this.base) / this.height)];
 
         // normalization
         var nsize = Math.sqrt(
@@ -58,8 +58,8 @@ class MyCylinder extends CGFobject {
         //Vertices
         this.vertices.push(
           ca * (this.base + stackX),
-          stackY,
-          -sa * (this.base + stackX)
+          -sa * (this.base + stackX),
+          stackY
         );
 
         ang += alphaAng;
@@ -71,22 +71,22 @@ class MyCylinder extends CGFobject {
     for (var i = 0; i < this.stacks; i++) {
       for (var j = 0; j < this.slices; j++) {
         if (i == 0) {
-          this.indices.push(j, (j + 1) % this.slices, this.slices + j);
+          this.indices.push(j,  this.slices + j,(j + 1) % this.slices);
           this.indices.push(
             (j + 1) % this.slices,
-            this.slices + ((j + 1) % this.slices),
-            this.slices + j
+            this.slices + j,
+            this.slices + ((j + 1) % this.slices)
           );
         } else {
           this.indices.push(
             j + this.slices * i,
-            ((j + 1) % this.slices) + this.slices * i,
-            this.slices + j + this.slices * i
+            this.slices + j + this.slices * i,
+            ((j + 1) % this.slices) + this.slices * i
           );
           this.indices.push(
             ((j + 1) % this.slices) + this.slices * i,
-            this.slices + ((j + 1) % this.slices) + this.slices * i,
-            this.slices + j + this.slices * i
+            this.slices + j + this.slices * i,
+            this.slices + ((j + 1) % this.slices) + this.slices * i
           );
         }
       }
