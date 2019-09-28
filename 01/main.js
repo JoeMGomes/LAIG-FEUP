@@ -1,8 +1,8 @@
 //From https://github.com/EvanHahn/ScriptInclude
-include = function() {
+include = function () {
   function f() {
     var a = this.readyState;
-    (!a || /ded|te/.test(a)) && (c--, !c && e && d());
+    (!a || /ded|te/.test(a)) && (c-- , !c && e && d());
   }
   var a = arguments,
     b = document,
@@ -17,7 +17,7 @@ include = function() {
       (g.onload = g.onerror = g.onreadystatechange = f),
       (b.head || b.getElementsByTagName("head")[0]).appendChild(g);
 };
-serialInclude = function(a) {
+serialInclude = function (a) {
   var b = console,
     c = serialInclude.l;
   if (a.length > 0) c.splice(0, 0, a);
@@ -26,7 +26,7 @@ serialInclude = function(a) {
     if (c[0].length > 1) {
       var d = c[0].splice(0, 1);
       b.log("Loading " + d + "...");
-      include(d, function() {
+      include(d, function () {
         serialInclude([]);
       });
     } else {
@@ -40,7 +40,7 @@ serialInclude.l = new Array();
 
 function getUrlVars() {
   var vars = {};
-  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (
     m,
     key,
     value
@@ -59,8 +59,9 @@ serialInclude([
   "MyCylinder.js",
   "MyTriangle.js",
   "MySphere.js",
+  'MyTorus.js',
 
-  (main = function() {
+  (main = function () {
     // Standard application, scene and interface setup
     var app = new CGFapplication(document.body);
     var myInterface = new MyInterface();
