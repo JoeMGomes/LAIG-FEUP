@@ -57,6 +57,8 @@ serialInclude([
   "MyInterface.js",
   "MyRectangle.js",
   "MyCylinder.js",
+  "MyTriangle.js",
+  "MySphere.js",
 
   (main = function() {
     // Standard application, scene and interface setup
