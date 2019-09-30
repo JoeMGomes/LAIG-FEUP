@@ -227,6 +227,96 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseView(viewsNode) {
+        var children = viewsNode.children;
+
+        this.views = [];
+        var grandChildren = [];
+
+        for (var i = 0; i < children.length; i++){
+            if (!(children[i].nodeName != "perspective" || children[i].nodeName != "ortho")) {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            var viewId = this.reader.getString(children[i], 'id');
+            if (viewId == null)
+                return "no ID defined for view";
+
+            // Checks for repeated IDs.
+            if (this.views[viewId] != null)
+                return "ID must be unique for each viwq (conflict: ID = " + viewId + ")";
+
+                grandChildren = children[i].children;
+
+            if (grandChildren[0].nodeName != 'from' && grandChildren[1].nodeName != 'to') {
+                return "There must be 2 points with the tag 'from' and 'to'";
+            }
+            
+            if (children[i].nodeName == "perspective") {
+                
+                var near = this.reader.getString(children[i], 'near');
+                if (!(near != null && !isNaN(near))) {
+                    return "unable to parse near of the view " + viewId;
+                }
+
+
+                var far = this.reader.getString(children[i], 'far');
+                if (!(far != null && !isNaN(far))) {
+                    return "unable to parse far of the view " + viewId;
+                }
+
+                var angle = this.reader.getString(children[i], 'angle');
+                if (!(angle != null && !isNaN(angle))) {
+                    return "unable to parse angle of the view " + viewId;
+                }
+
+
+                var fromX = this.reader.getString(grandChildren[0], 'x');
+                if (!(fromX != null && !isNaN(fromX))) {
+                    return "unable to parse x coordenate of the 'from' point of the view " + viewId;
+                }
+
+                var fromY = this.reader.getString(grandChildren[0], 'y');
+                if (!(fromY != null && !isNaN(fromY))) {
+                    return "unable to parse y coordenate of the 'from' point of the view " + viewId;
+                }
+
+                var fromZ = this.reader.getString(grandChildren[0], 'z');
+                if (!(fromZ != null && !isNaN(fromZ))) {
+                    return "unable to parse y coordenate of the 'from' point of the view " + viewId;
+                }
+
+                var toX = this.reader.getString(grandChildren[1], 'x');
+                if (!(toX != null && !isNaN(toX))) {
+                    return "unable to parse x coordenate of the 'to' point of the view " + viewId;
+                }
+
+                var toY = this.reader.getString(grandChildren[1], 'y');
+                if (!(toY != null && !isNaN(toY))) {
+                    return "unable to parse y coordenate of the 'to' point of the view " + viewId;
+                }
+
+                var toZ = this.reader.getString(grandChildren[1], 'z');
+                if (!(toZ != null && !isNaN(toZ))) {
+                    return "unable to parse y coordenate of the 'to' point of the view " + viewId;
+                }
+
+                var pers = new CGFcamera(angle, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+                this.views[viewId] = pers;
+
+            }
+
+
+
+        }
+
+        
+
+
+
+
+
+
         this.onXMLMinorError("To do: Parse views and create cameras.");
 
         return null;
@@ -837,8 +927,8 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        //To do: Create display loop for transversing the scene graph
-
+        //To do: Create display loop for transversing the scene graplay loop for transversing the scene graph
+        
         //To test the parsing/creation of the primitives, call the display function directly
         this.primitives['demoRectangle'].display();
         this.primitives['demoTriangle'].display();
