@@ -558,8 +558,7 @@ class MySceneGraph {
                 var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
 
                 this.primitives[primitiveId] = rect;
-            }
-            if (primitiveType == 'triangle') {
+            } else if (primitiveType == 'triangle') {
                 // x1
                 var x1 = this.reader.getFloat(grandChildren[0], 'x1');
                 if (!(x1 != null && !isNaN(x1)))
@@ -609,8 +608,7 @@ class MySceneGraph {
                 var triang = new MyTriangle(this.scene, primitiveId, x1, y1, z1, x2, y2, z2, x3, y3, z3);
 
                 this.primitives[primitiveId] = triang;
-            } 
-            else if (primitiveType == 'cylinder') {
+            } else if (primitiveType == 'cylinder') {
                 // base
                 var base = this.reader.getFloat(grandChildren[0], 'base');
                 if (!(base != null && !isNaN(x1)))
@@ -639,8 +637,7 @@ class MySceneGraph {
                 var cyl = new MyCylinder(this.scene, primitiveId, base, top, height, slices, stacks);
 
                 this.primitives[primitiveId] = cyl;
-            }
-            if (primitiveType == 'sphere') { 
+            } else if (primitiveType == 'sphere') { 
 
                 var radius = this.reader.getFloat(grandChildren[0], 'radius');
                 if (!(radius != null && !isNaN(radius)))
@@ -658,15 +655,38 @@ class MySceneGraph {
 
                 this.primitives[primitiveId] = sphe
 
-            }
-            else {
-                console.warn("To do: Parse other primitives.");
-            }
+            }  else if (primitiveType == 'torus') {
+                // inner
+                var inner = this.reader.getFloat(grandChildren[0], 'inner');
+                if (!(inner != null && !isNaN(inner)))
+                    return "unable to parse inner of the primitive coordinates for ID = " + primitiveId;
+
+                // outer
+                var outer = this.reader.getFloat(grandChildren[0], 'outer');
+                if (!(outer != null && !isNaN(outer)))
+                    return "unable to parse outer of the primitive coordinates for ID = " + primitiveId;
+
+                // slices
+                var slices = this.reader.getFloat(grandChildren[0], 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
+
+                // loops
+                var loops = this.reader.getFloat(grandChildren[0], 'loops');
+                if (!(loops != null && !isNaN(loops)))
+                    return "unable to parse loops of the primitive coordinates for ID = " + primitiveId;
+
+                var torus = new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
+
+                this.primitives[primitiveId] = torus;
         }
+    }
 
         this.log("Parsed primitives");
         return null;
-    }
+}
+
+
 
     /**
    * Parses the <components> block.
@@ -840,9 +860,10 @@ class MySceneGraph {
         //To do: Create display loop for transversing the scene graph
 
         //To test the parsing/creation of the primitives, call the display function directly
-        this.primitives['demoRectangle'].display();
-        this.primitives['demoTriangle'].display();
-        this.primitives['demoSphere'].display();
-        this.primitives['demoCylinder'].display();
+        // this.primitives['demoRectangle'].display();
+        // this.primitives['demoTriangle'].display();
+        // this.primitives['demoSphere'].display();
+        // this.primitives['demoCylinder'].display();
+         this.primitives['demoTorus'].display();
     }
 }
