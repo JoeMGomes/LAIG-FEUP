@@ -235,7 +235,7 @@
 		</component>
 		<component id="blade_suport">
 			<transformation>
-1            </transformation>
+            </transformation>
 			<materials >
 				<material id="inherit"/>
 			</materials>
