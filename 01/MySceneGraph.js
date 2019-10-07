@@ -370,10 +370,28 @@ class MySceneGraph {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
 
-                if (grandChildren[2] == null) {
-                    
+                if (grandChildren[2] != null) {
+                    var upX = this.reader.getString(grandChildren[2], 'x');
+                    if (!(upX != null && !isNaN(upX))) {
+                        return "unable to parse x coordenate of the 'up' point of the view " + viewId;
+                    }
+
+                    var upY = this.reader.getString(grandChildren[2], 'y');
+                    if (!(upY != null && !isNaN(upY))) {
+                        return "unable to parse y coordenate of the 'up' point of the view " + viewId;
+                    }
+
+                    var upZ = this.reader.getString(grandChildren[2], 'z');
+                    if (!(upZ != null && !isNaN(upZ))) {
+                        return "unable to parse y coordenate of the 'up' point of the view " + viewId;
+                    }
+
+                    var cam = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [upX, upY, upZ]);
+                    this.views[viewId] = cam;
                 }
 
+                var cam = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [0, 1, 0]);
+                this.views[viewId] = cam;
 
             }
 
@@ -383,12 +401,6 @@ class MySceneGraph {
 
 
 
-
-
-
-
-
-        this.onXMLMinorError("To do: Parse views and create cameras.");
 
         return null;
     }
@@ -633,7 +645,6 @@ class MySceneGraph {
                             return coordinates;
 
                         transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
-                        console.log(transfMatrix);
 
                         break;
                     case 'scale':
@@ -654,11 +665,8 @@ class MySceneGraph {
                         var angle = this.reader.getString(grandChildren[j], 'angle');
                         if (!(angle != null && !isNaN(angle)))
                             return "unable to parse angle of the primitive coordinates for ID = " + transformationID;
-                        console.log(axis, angle);
+                        transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
 
-                        //TODO: finish rotation
-
-                        this.onXMLMinorError("To do: Parse rotate transformations.");
                         break;
                 }
             }
@@ -1041,6 +1049,6 @@ class MySceneGraph {
         // this.primitives['demoTriangle'].display();
         // this.primitives['demoSphere'].display();
         // this.primitives['demoCylinder'].display();
-        this.primitives['demoTorus'].display();
+        //this.primitives['demoTorus'].display();
     }
 }
