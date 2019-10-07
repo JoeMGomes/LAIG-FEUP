@@ -59,7 +59,8 @@ serialInclude([
   "MyCylinder.js",
   "MyTriangle.js",
   "MySphere.js",
-  'MyTorus.js', 
+  'MyTorus.js',
+  'NodeComponent.js' 
 
   (main = function () {
     // Standard application, scene and interface setup

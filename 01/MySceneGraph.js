@@ -647,8 +647,6 @@ class MySceneGraph {
                             return coordinates;
                         transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
 
-                        console.log(transfMatrix);
-
                         break;
                     case 'rotate':
                         // angle
