@@ -223,7 +223,7 @@ class MySceneGraph {
     }
 
     /**
-     * Parses the <views> block.
+     * Parses the <views> block..
      * @param {view block element} viewsNode
      */
     parseView(viewsNode) {
