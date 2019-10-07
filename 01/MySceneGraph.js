@@ -565,32 +565,26 @@ class MySceneGraph {
                             return coordinates;
 
                         transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
-                        console.log(transfMatrix);
 
                         break;
-                    case 'scale':            
-                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
-                    if (!Array.isArray(coordinates))
-                        return coordinates;
+                    case 'scale':
+                        var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
+                        if (!Array.isArray(coordinates))
+                            return coordinates;
                         transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
-                  
-                          console.log(transfMatrix);
 
                         break;
                     case 'rotate':
                         // angle
                         var axis = this.reader.getString(grandChildren[j], 'axis');
-                        if (!( axis == "x" || axis =="y" || axis == "z"))
+                        if (!(axis == "x" || axis == "y" || axis == "z"))
                             return "unable to parse axis of the primitive coordinates for ID = " + transformationID;
 
                         var angle = this.reader.getString(grandChildren[j], 'angle');
                         if (!(angle != null && !isNaN(angle)))
                             return "unable to parse angle of the primitive coordinates for ID = " + transformationID;
-                            console.log(axis,angle);
+                        transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
 
-                            //TODO: finish rotation
-
-                        this.onXMLMinorError("To do: Parse rotate transformations.");
                         break;
                 }
             }
