@@ -394,14 +394,7 @@ class MySceneGraph {
                 this.views[viewId] = cam;
 
             }
-
-
-
         }
-
-
-
-
         return null;
     }
 
@@ -562,10 +555,38 @@ class MySceneGraph {
      */
     parseTextures(texturesNode) {
 
-        //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+        var children = texturesNode.children;
+        this.textures = [];
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag" + children[i].nodeName + ">");
+                continue;
+            }
+
+            var textId = this.reader.getString(children[i], 'id');
+            if (this.textures[textId] != null) {
+                this.onXMLMinorError("Texture id: " + textId + " already exists.");
+                continue;
+            }
+
+            var file = this.reader.getString(children[i], 'file');
+            if (file.substring(file.length - 4, file.length) != ".jpg" || file.substring(file.length - 4, file.length) != ".png") {
+                this.onXMLMinorError("File type not suported.");
+                continue;
+            }
+
+            this.texture = new CGFtexture(this.scene, file);
+            this.textures[textId] = this.texture;
+        }
         return null;
     }
+
+
+
+
+
+
 
     /**
      * Parses the <materials> node.
@@ -652,8 +673,6 @@ class MySceneGraph {
                         if (!Array.isArray(coordinates))
                             return coordinates;
                         transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
-
-                        console.log(transfMatrix);
 
                         break;
                     case 'rotate':
