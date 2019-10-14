@@ -767,45 +767,64 @@ class MySceneGraph {
             grandChildren = children[i].children;
             // Specifications for the current transformation.
 
-            var transfMatrix = mat4.create();
 
-            for (var j = 0; j < grandChildren.length; j++) {
-                switch (grandChildren[j].nodeName) {
-                    case 'translate':
-                        var coordinates = this.parseCoordinates3D(grandChildren[j], "translate transformation for ID " + transformationID);
-                        if (!Array.isArray(coordinates))
-                            return coordinates;
-
-                        transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
-
-                        break;
-                    case 'scale':
-                        var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
-                        if (!Array.isArray(coordinates))
-                            return coordinates;
-                        transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
-
-                        break;
-                    case 'rotate':
-                        // angle
-                        var axis = this.reader.getString(grandChildren[j], 'axis');
-                        if (!(axis == "x" || axis == "y" || axis == "z"))
-                            return "unable to parse axis of the primitive coordinates for ID = " + transformationID;
-
-                        var angle = this.reader.getString(grandChildren[j], 'angle');
-                        if (!(angle != null && !isNaN(angle)))
-                            return "unable to parse angle of the primitive coordinates for ID = " + transformationID;
-                        transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
-
-                        break;
-                }
-            }
-            this.transformations[transformationID] = transfMatrix;
+            this.transformations[transformationID] = parseTranforms(grandChildren);
         }
 
         this.log("Parsed transformations");
         return null;
     }
+
+
+
+    parseTranforms(grandChildren) {
+        var transfMatrix = mat4.create();
+
+        for (var j = 0; j < grandChildren.length; j++) {
+            switch (grandChildren[j].nodeName) {
+                case 'translate':
+                    var coordinates = this.parseCoordinates3D(grandChildren[j], "translate transformation for ID " + transformationID);
+                    if (!Array.isArray(coordinates))
+                        return coordinates;
+
+                    transfMatrix = mat4.translate(transfMatrix, transfMatrix, coordinates);
+
+                    break;
+                case 'scale':
+                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
+                    if (!Array.isArray(coordinates))
+                        return coordinates;
+                    transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
+
+                    break;
+                case 'rotate':
+                    // angle
+                    var axis = this.reader.getString(grandChildren[j], 'axis');
+                    if (!(axis == "x" || axis == "y" || axis == "z")) {
+                        this.onXMLError("unable to parse axis of the primitive coordinates for ID = " + transformationID);
+                        return 0;
+                    }
+
+                    var angle = this.reader.getString(grandChildren[j], 'angle');
+                    if (!(angle != null && !isNaN(angle))) {
+                        this.onXMLError("unable to parse angle of the primitive coordinates for ID = " + transformationID);
+                        return 0;
+                    }
+                    transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
+
+                    break;
+            }
+        }
+        return transfMatrix;
+    }
+
+
+
+
+
+
+
+
 
     /**
      * Parses the <primitives> block.
@@ -873,6 +892,8 @@ class MySceneGraph {
                 var rect = new MyRectangle(this.scene, primitiveId, x1, x2, y1, y2);
 
                 this.primitives[primitiveId] = rect;
+
+
             } else if (primitiveType == 'triangle') {
                 // x1
                 var x1 = this.reader.getFloat(grandChildren[0], 'x1');
@@ -1033,27 +1054,103 @@ class MySceneGraph {
             if (this.components[componentID] != null)
                 return "ID must be unique for each component (conflict: ID = " + componentID + ")";
 
-            grandChildren = children[i].children;
-
-            nodeNames = [];
-            for (var j = 0; j < grandChildren.length; j++) {
-                nodeNames.push(grandChildren[j].nodeName);
-            }
-
-            var transformationIndex = nodeNames.indexOf("transformation");
-            var materialsIndex = nodeNames.indexOf("materials");
-            var textureIndex = nodeNames.indexOf("texture");
-            var childrenIndex = nodeNames.indexOf("children");
-
-            this.onXMLMinorError("To do: Parse components.");
-            // Transformations
-
-            // Materials
-
-            // Texture
-
-            // Children
+            this.components[componentID] = children[i];
         }
+
+        this.parseNodes(this.idRoot);
+        return null;
+    }
+
+
+    parseNodes(nodeId) {
+        children = [];
+        grandChildren = [];
+
+        var compNode = new GraphNode(nodeId);
+        this.graphNodes[nodeId] = compnode;
+
+        children = this.components[nodeId].children;
+        childNames = [];
+
+        for (var i = 0; i < children.length; i++) {
+            nodeNames.push(children[i].nodeName);
+        }
+
+
+        var transformationIndex = children.indexOf("transformation");
+        var materialsIndex = children.indexOf("materials");
+        var textureIndex = children.indexOf("texture");
+        var childrenIndex = children.indexOf("children");
+
+        if (transformationIndex != -1) {
+            var transfchildren = children[transformationIndex].children;
+            if (transfchildren.length != 0) {
+                if (transfchildren[0].nodeName == "transformationref") {
+                    var transfrom = this.reader.getString(transfchildren[0], "id");
+                    if (this.transformations[transfrom] != null) {
+                        mat4.copy(compNode.transform, this.transformations[transfrom]);
+                    } else {
+                        this.onXMLMinorError("transformation " + transfrom + " does not exist!");
+                    }
+                } else {
+
+                    mat4.color(compNode.transform, this.parseTranforms(transfchildren));
+                }
+            }
+        }
+
+        if (materialsIndex != -1) {
+            var materialchildren = children[materialsIndex].children;
+            if (materialchildren.length != 0) {
+                for (var i = 0; i < materialchildren.length; i++) {
+                    var materialid = this.reader.getString(materialchildren[i], "id");
+                    if (materialid == "inherit" || this.materials[materialid] != null) {
+                        compNode.materialsID.push(materialid);
+                    } else {
+                        this.onXMLMinorError("Material " + materialid + " does not exist!");
+                    }
+                }
+            } else {
+                this.onXMLError("compoment " + nodeId + " must have a material");
+            }
+        }
+
+        if (textureIndex != 1) {
+            var texturechildren = children[textureIndex].children;
+            var texture = getString(texturechildren[0], "id");
+            if (texture != "none" || texture != "inherit" || this.textures(texture) != null) {
+                var textX = this.reader.getFloat(texturechildren[0], "length_s");
+                var textY = this.reader.getFloat(texturechildren[0], "length_t");
+                compNode.textureID = texture;
+                compNode.xTex = textX;
+                compNode.yTex = textY;
+            } else {
+                this.onXMLMinorError("Texture " + texture + " does not exit!");
+            }
+        }
+
+
+
+        var childcomps = children[childrenIndex].children;
+        for (var i = 0; i < childcomps.length; i++) {
+            if (childcomps[i].nodeName = "componentref") {
+                var childcompId = this.reader.getString(childcomps[i], "id");
+                compNode.children.push(childcompId);
+                this.parseNodes(childcompId);
+            } else if (childcomps[i].nodeName == "primitiveref") {
+                var childcompId = this.reader.getString(childcomps[i], 'id');
+                compNode.leafs.push(childcompId);
+            } else {
+                this.onXMLMinorError("unknown tag <" + childcomps[i].nodeName + ">");
+            }
+        }
+
+        this.graphNodes[nodeId] = compNode;
+
+
+
+
+
     }
 
 
