@@ -32,7 +32,7 @@ class MyCylinder extends CGFobject {
     var alphaAng = (2 * Math.PI) / this.slices;
     var stackY = 0;
     var stackX = 0;
-    var stackIncX = (this.top - this.base) / (this.stacks + 1);
+    var stackIncX = (this.top - this.base) / (this.stacks );
     var stackIncY = this.height / this.stacks;
 
     for (var i = 0; i < this.stacks + 1; i++) {

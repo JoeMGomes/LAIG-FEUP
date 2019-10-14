@@ -609,7 +609,7 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
             var shininess = this.reader.getFloat(children[i], 'shininess');
             if (!(shininess != null && !isNaN(shininess)))
@@ -730,6 +730,7 @@ class MySceneGraph {
             material.setDiffuse(diffuseProperties[0],diffuseProperties[1],diffuseProperties[2],diffuseProperties[3]);
             material.setSpecular(specularProperties[0],specularProperties[1],specularProperties[2],specularProperties[3]);
            
+            this.materials.push(material);
         }
 
         this.log("Parsed materials");
@@ -1270,50 +1271,57 @@ class MySceneGraph {
         // this.primitives['demoRectangle'].display();
 
         var rootMaterial = Object.keys(this.materials)[0];
+        // console.log(this.materials[rootMaterial]);
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
+
+
     }
 
-    traverseNodes(nodeID,material,texture, sLength,tLength){
+    traverseNodes(nodeID,material ,texture , sLength,tLength){
 
         var node = this.graphNodes[nodeID];
+        var tempMat = material;
 
-        if(node.materialsID[node.materialsIndex] != "inherit")
-            material = this.materials[node.materialsID[node.materialsIndex]];
-        
+        if (node.materialsID[node.materialsIndex] != "inherit")
+          material = this.materials[node.materialsID[node.materialsIndex]];
 
-        if(node.textureID != "none" && node.textureID != "inherit"){
-            texture = this.textures[node.textureID];
-            mat.setTexture(texture);
-        } else if (node.textureID == "none")
-            material.setTexture(null);
+        if (node.textureID != "none" && node.textureID != "inherit") {
+          texture = this.textures[node.textureID];
+          tempMat.setTexture(texture);
+        } else if (node.textureID == "none") material.setTexture(null);
 
-        if(node.xTex != null && node.yTex != null){
-            sLength = node.xTex;
-            tLength = node.yTex;
+        if (node.xTex != null && node.yTex != null) {
+          sLength = node.xTex;
+          tLength = node.yTex;
         }
 
-        material.apply();
-        material.setTexture(texture);
+        tempMat.apply();
+        tempMat.setTexture(texture);
 
         this.scene.multMatrix(node.transform);
 
         //desenhar as primitivas
-        for(var i = 0; i < node.leafs.length ; i++){
-            if (this.primitives[node.leafs[i]] != null)
+        for (var i = 0; i < node.leafs.length; i++) {
+          if (this.primitives[node.leafs[i]] != null)
             this.drawPrimitive(node.leafs[i], sLength, tLength);
         }
 
         //percorrer outros nodes filhos recursivamente
         for (var i = 0; i < node.children.length; i++) {
-            this.scene.pushMatrix();
-            this.processNode(node.children[i], material, texture, sLength, tLength);
-            this.scene.popMatrix();
+          this.scene.pushMatrix();
+          this.traverseNodes(            node.children[i],
+            tempMat,
+            texture,
+            sLength,
+            tLength
+          );
+          this.scene.popMatrix();
         }
     }
 
     drawPrimitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
-        primitive.applyTextures(factorS, factorT);
+       // primitive.applyTextures(factorS, factorT);
         primitive.display();
     }
 

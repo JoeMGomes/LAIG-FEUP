@@ -47,7 +47,7 @@
 			<cylinder base="0.3" top="0.3" height="2.5" slices="8" stacks="1" />
 		</primitive>
 		<primitive id="pyramid8">
-			<cylinder base="0.3" top="0" height="0.9" slices="8" stacks="1" />
+			<cylinder base="0.3" top="0.001" height="0.9" slices="8" stacks="1" />
 		</primitive>
 		<primitive id="torus">
 			<torus inner=".2" outer="1.2" slices="12" loops="24" />

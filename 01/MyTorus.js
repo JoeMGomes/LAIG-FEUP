@@ -22,11 +22,7 @@ class MyTorus extends CGFobject {
     this.indices = [];
     this.texCoords = [];
 
-    //It needs at lest 3 slices
-    if (this.slices < 3) this.slices = 3;
-
     //Vertices & Normals & Textcoords
-
     var outerAng = 0;
     var outerInc = (2 * Math.PI) / this.loops;
     var innerAng = 0;
@@ -34,8 +30,8 @@ class MyTorus extends CGFobject {
 
     for (var i = 0; i < this.loops + 1; i++) {
       for (var j = 0; j < this.slices; j++) {
-        var sa = Math.sin(innerAng);
-        var ca = Math.cos(innerAng);
+        var sa = Math.sin(innerAng)* this.inner;
+        var ca = Math.cos(innerAng)* this.inner;
 
         var normal = [ca*Math.cos(outerAng),  Math.sin(outerAng)*ca, -sa];
 
