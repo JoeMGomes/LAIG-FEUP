@@ -1033,10 +1033,7 @@ class MySceneGraph {
 
         this.components = [];
 
-        var grandChildren = [];
-        var grandgrandChildren = [];
-        var nodeNames = [];
-
+        this.graphNodes = [];
         // Any number of components.
         for (var i = 0; i < children.length; i++) {
 
@@ -1076,10 +1073,10 @@ class MySceneGraph {
         }
 
 
-        var transformationIndex = children.indexOf("transformation");
-        var materialsIndex = children.indexOf("materials");
-        var textureIndex = children.indexOf("texture");
-        var childrenIndex = children.indexOf("children");
+        var transformationIndex = childNames.indexOf("transformation");
+        var materialsIndex = childNames.indexOf("materials");
+        var textureIndex = childNames.indexOf("texture");
+        var childrenIndex = childNames.indexOf("children");
 
         if (transformationIndex != -1) {
             var transfchildren = children[transformationIndex].children;
@@ -1093,7 +1090,7 @@ class MySceneGraph {
                     }
                 } else {
 
-                    mat4.color(compNode.transform, this.parseTranforms(transfchildren));
+                    mat4.copy(compNode.transform, this.parseTransforms(transfchildren));
                 }
             }
         }
@@ -1115,11 +1112,11 @@ class MySceneGraph {
         }
 
         if (textureIndex != 1) {
-            var texturechildren = children[textureIndex].children;
-            var texture = getString(texturechildren[0], "id");
+            var texturechildren = children[textureIndex];
+            var texture = this.reader.getString(texturechildren, 'id');
             if (texture != "none" || texture != "inherit" || this.textures(texture) != null) {
-                var textX = this.reader.getFloat(texturechildren[0], "length_s");
-                var textY = this.reader.getFloat(texturechildren[0], "length_t");
+                var textX = this.reader.getFloat(texturechildren, "length_s", false);
+                var textY = this.reader.getFloat(texturechildren, "length_t", false);
                 compNode.textureID = texture;
                 compNode.xTex = textX;
                 compNode.yTex = textY;
@@ -1132,7 +1129,7 @@ class MySceneGraph {
 
         var childcomps = children[childrenIndex].children;
         for (var i = 0; i < childcomps.length; i++) {
-            if (childcomps[i].nodeName = "componentref") {
+            if (childcomps[i].nodeName == "componentref") {
                 var childcompId = this.reader.getString(childcomps[i], "id");
                 compNode.children.push(childcompId);
                 this.parseNodes(childcompId);
@@ -1281,7 +1278,7 @@ class MySceneGraph {
         var node = this.graphNodes[nodeID];
 
         if(node.materialsID[node.materialsIndex] != "inherit")
-            material = this.materials[node-materialsID[node.materialsIndex]];
+            material = this.materials[node.materialsID[node.materialsIndex]];
         
 
         if(node.textureID != "none" && node.textureID != "inherit"){
