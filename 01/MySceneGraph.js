@@ -768,7 +768,7 @@ class MySceneGraph {
             // Specifications for the current transformation.
 
 
-            this.transformations[transformationID] = parseTranforms(grandChildren);
+            this.transformations[transformationID] = this.parseTransforms(grandChildren);
         }
 
         this.log("Parsed transformations");
@@ -777,13 +777,13 @@ class MySceneGraph {
 
 
 
-    parseTranforms(grandChildren) {
+    parseTransforms(grandChildren) {
         var transfMatrix = mat4.create();
 
         for (var j = 0; j < grandChildren.length; j++) {
             switch (grandChildren[j].nodeName) {
                 case 'translate':
-                    var coordinates = this.parseCoordinates3D(grandChildren[j], "translate transformation for ID " + transformationID);
+                    var coordinates = this.parseCoordinates3D(grandChildren[j], "translate transformation for ID " + grandChildren[j].nodeName);
                     if (!Array.isArray(coordinates))
                         return coordinates;
 
@@ -791,7 +791,7 @@ class MySceneGraph {
 
                     break;
                 case 'scale':
-                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + transformationID);
+                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " +  grandChildren[j].nodeName);
                     if (!Array.isArray(coordinates))
                         return coordinates;
                     transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
@@ -801,13 +801,13 @@ class MySceneGraph {
                     // angle
                     var axis = this.reader.getString(grandChildren[j], 'axis');
                     if (!(axis == "x" || axis == "y" || axis == "z")) {
-                        this.onXMLError("unable to parse axis of the primitive coordinates for ID = " + transformationID);
+                        this.onXMLError("unable to parse axis of the primitive coordinates for ID = " +  grandChildren[j].nodeName);
                         return 0;
                     }
 
                     var angle = this.reader.getString(grandChildren[j], 'angle');
                     if (!(angle != null && !isNaN(angle))) {
-                        this.onXMLError("unable to parse angle of the primitive coordinates for ID = " + transformationID);
+                        this.onXMLError("unable to parse angle of the primitive coordinates for ID = " +  grandChildren[j].nodeName);
                         return 0;
                     }
                     transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
@@ -1063,17 +1063,16 @@ class MySceneGraph {
 
 
     parseNodes(nodeId) {
-        children = [];
-        grandChildren = [];
+        var children = [];
+        var grandChildren = [];
 
         var compNode = new GraphNode(nodeId);
-        this.graphNodes[nodeId] = compnode;
-
+        
         children = this.components[nodeId].children;
-        childNames = [];
+        var childNames = [];
 
         for (var i = 0; i < children.length; i++) {
-            nodeNames.push(children[i].nodeName);
+            childNames.push(children[i].nodeName);
         }
 
 
@@ -1274,7 +1273,7 @@ class MySceneGraph {
         // this.primitives['demoRectangle'].display();
 
         var rootMaterial = Object.keys(this.materials)[0];
-        this.processNode(this.idRoot, this.materials[rootMaterial], null, 1, 1);
+        this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
     }
 
     traverseNodes(nodeID,material,texture, sLength,tLength){
