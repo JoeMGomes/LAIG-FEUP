@@ -24,6 +24,7 @@
 		<texture id="body_connector" file="scenes/images/connector.png" />
 		<texture id="support" file="scenes/images/support.png" />
 		<texture id="torus" file="scenes/images/torus.png" />
+		<texture id="dirt" file="scenes/images/dirt_texture.png" />
 
 	</textures>
 	<materials>
@@ -72,9 +73,36 @@
 		<primitive id="cylinder3">
 			<cylinder base="0.3" top="0.3" height="4" slices="3" stacks="1" />
 		</primitive>
+		<primitive id="bigRect">
+			<rectangle x1="0" y1="0" x2="200" y2="200" />
+		</primitive>
 	</primitives>
 	<components>
 		<component id="root">
+			<transformation></transformation>
+			<materials>
+				<material id="default" />
+			</materials>
+			<texture id="body" />
+			<children>
+				<componentref id= "drone" />
+				<componentref id="floor"/>
+			</children>
+		</component>
+		<component id="floor">
+			<transformation>
+					<translate x="-100" y="-1" z="100"/>
+					<rotate axis="x" angle="-90"/>
+			</transformation>
+			<materials>
+				<material id="default" />
+			</materials>
+			<texture id="dirt" length_s="20" length_t="20" />
+			<children>
+				<primitiveref id="bigRect"/>
+			</children>
+		</component>
+		<component id="drone">
 			<transformation></transformation>
 			<materials>
 				<material id="default" />

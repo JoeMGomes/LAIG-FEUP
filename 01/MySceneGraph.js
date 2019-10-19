@@ -591,7 +591,6 @@ class MySceneGraph {
 
         this.materials = new Array();
 
-        console.log(children.length);
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
 
@@ -604,8 +603,6 @@ class MySceneGraph {
             var materialID = this.reader.getString(children[i], 'id');
             if (materialID == null)
                 return "no ID defined for material";
-
-            console.log(i ,materialID);
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
@@ -1267,12 +1264,9 @@ class MySceneGraph {
     displayScene() {
         //To do: Create display loop for transversing the scene graplay loop for transversing the scene graph
         //To test the parsing/creation of the primitives, call the display function directly
-        // this.primitives['demoRectangle'].display();
 
         var rootMaterial = Object.keys(this.materials)[0];
-        // console.log(this.materials[rootMaterial]);
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
-       // console.log(this.materials);
 
     }
 
