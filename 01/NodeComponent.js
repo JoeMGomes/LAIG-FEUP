@@ -19,6 +19,9 @@ class GraphNode {
     }
 
 
-    
+    nextMaterial(){
+        this.materialsIndex++;
+        this.materialsIndex = this.materialsIndex % this.materialsID.length;
+    }
 
 }

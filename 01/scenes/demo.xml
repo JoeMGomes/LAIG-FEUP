@@ -1,15 +1,16 @@
 <lxs>
 	<scene root="root" axis_length="5" />
+
 	<views default="defaultCamera">
 		<perspective id="defaultCamera" near="0.1" far="500" angle="45">
 			<from x="30" y="15" z="30" />
 			<to x="0" y="-2" z="0" />
 		</perspective>
 	</views>
-	<ambient>
+	<globals>
 		<ambient r="0.2" g="0.2" b="0.2" a="1.0" />
 		<background r="0.0" g="0.0" b="0.0" a="1.0" />
-	</ambient>
+	</globals>
 	<lights>
 		<omni id="demoLight" enabled="1">
 			<location x="9.8" y="11.9" z="10" w="1.0" />
@@ -19,14 +20,30 @@
 		</omni>
 	</lights>
 	<textures>
-		<texture id="demoTexture" file="scenes/images/aefeup.jpg" />
+		<texture id="body" file="scenes/images/drone_body.png" />
+		<texture id="body_connector" file="scenes/images/connector.png" />
+		<texture id="support" file="scenes/images/support.png" />
+		<texture id="torus" file="scenes/images/torus.png" />
+
 	</textures>
 	<materials>
-		<material id="demoMaterial" shininess="10">
+		<material id="default" shininess="5">
 			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
-			<ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-			<diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-			<specular r="0.6" g="0.0" b="0.0" a="1.0" />
+			<ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+			<diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+		</material>
+		<material id="body" shininess="5">
+			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
+			<ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+			<diffuse r="1" g="1" b="1" a="1.0" />
+			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
+		</material>
+		<material id="black" shininess="3">
+			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
+			<ambient r="0.3" g="0.3" b="0.0" a="1.0" />
+			<diffuse r="0.8" g="0.7" b="0.0" a="1.0" />
+			<specular r="0.3" g="0.3" b="0.3" a="1.0" />
 		</material>
 	</materials>
 	<transformations>
@@ -41,7 +58,7 @@
 			<rectangle x1="0" y1="0" x2="1" y2=".4" />
 		</primitive>
 		<primitive id="sphere">
-			<sphere radius="1.7" slices="12" stacks="8" />
+			<sphere radius="1.7" slices="24" stacks="16" />
 		</primitive>
 		<primitive id="cylinder8">
 			<cylinder base="0.3" top="0.3" height="2.5" slices="8" stacks="1" />
@@ -60,9 +77,9 @@
 		<component id="root">
 			<transformation></transformation>
 			<materials>
-				<material id="demoMaterial" />
+				<material id="default" />
 			</materials>
-			<texture id="demoTexture" />
+			<texture id="body" />
 			<children>
 				<componentref id= "body" />
 				<componentref id="arm1" />
@@ -73,12 +90,13 @@
 		</component>
 		<component id="body">
 			<transformation>
+				<translate x="0" y=".2" z="0"/>
 				<scale x="1" y="0.6" z="1" />
 			</transformation>
 			<materials >
-				<material id="inherit"/>
+				<material id="body"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="body" length_s="1" length_t="1"/>
 			<children>
 				<primitiveref id= "sphere" />
 			</children>
@@ -88,7 +106,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blades" />
 				<componentref id= "blade_suport" />
@@ -100,9 +118,9 @@
 				<rotate axis="x" angle="90"/>
 			</transformation>
 			<materials >
-				<material id="inherit" />
+				<material id="default" />
 			</materials>
-			<texture id="none" />
+			<texture id="torus" />
 			<children>
 				<primitiveref id="torus" />
 			</children>
@@ -112,9 +130,9 @@
 				<translate x="4" y="1.5" z="0" />
 			</transformation>
 			<materials >
-				<material id="inherit"/>
+				<material id="black"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="none" length_s="1" length_t="1"/>
 			<children>
 				<componentref id="blade_protection" />
 				<componentref id= "blade_motor" />
@@ -131,7 +149,7 @@
 				<rotate axis="x" angle="35" />
 			</transformation>
 			<materials >
-				<material id="inherit"/>
+				<material id="black"/>
 			</materials>
 			<texture id="none"/>
 			<children>
@@ -141,10 +159,11 @@
 		</component>
 		<component id="blade_back">
 			<transformation>
+				<translate x="0" y = "0.4" z ="-0.01"/>
 				<rotate axis="x" angle="180" />
 			</transformation>
 			<materials >
-				<material id="inherit"/>
+				<material id="black"/>
 			</materials>
 			<texture id="none"/>
 			<children>
@@ -156,7 +175,7 @@
 				<rotate axis="x" angle="-90"/>
 			</transformation>
 			<materials >
-				<material id="inherit"/>
+				<material id="black"/>
 			</materials>
 			<texture id="none"/>
 			<children>
@@ -168,7 +187,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
@@ -180,7 +199,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
@@ -192,7 +211,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
@@ -204,7 +223,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
@@ -216,7 +235,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
@@ -228,14 +247,14 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="blade" />
 			</children>
 		</component>
 		<component id="blade_suport">
 			<transformation>
-            </transformation>
+			</transformation>
 			<materials >
 				<material id="inherit"/>
 			</materials>
@@ -253,7 +272,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="support"/>
 			<children>
 				<primitiveref id="cylinder8" />
 			</children>
@@ -261,12 +280,13 @@
 		<component id="body_connect">
 			<transformation>
 				<scale x="1" y="0.8" z="1" />
+				<rotate axis="x" angle="30"/>
 				<rotate axis="y" angle="90" />
 			</transformation>
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<primitiveref id="cylinder3" />
 			</children>
@@ -276,7 +296,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="arm" />
 			</children>
@@ -288,7 +308,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="arm" />
 			</children>
@@ -300,7 +320,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="arm" />
 			</children>
@@ -312,7 +332,7 @@
 			<materials >
 				<material id="inherit"/>
 			</materials>
-			<texture id="none"/>
+			<texture id="inherit"/>
 			<children>
 				<componentref id="arm" />
 			</children>

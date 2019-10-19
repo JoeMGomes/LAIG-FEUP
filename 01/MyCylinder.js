@@ -38,9 +38,7 @@ class MyCylinder extends CGFobject {
     for (var i = 0; i < this.stacks + 1; i++) {
       for (var j = 0; j < this.slices; j++) {
         var sa = Math.sin(ang);
-        var saa = Math.sin(ang + alphaAng);
         var ca = Math.cos(ang);
-        var caa = Math.cos(ang + alphaAng);
 
         var normal = [ca, -sa, -Math.tan((this.top-this.base) / this.height)];
 
@@ -61,7 +59,11 @@ class MyCylinder extends CGFobject {
           -sa * (this.base + stackX),
           stackY
         );
+        
+        var s = j/this.slices;
+        var t = 1 - i/this.stacks;
 
+        this.texCoords.push(s,t);
         ang += alphaAng;
       }
       stackX += stackIncX;
@@ -93,7 +95,7 @@ class MyCylinder extends CGFobject {
     }
 
 
-    //TODO: Texture Coord
+
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }

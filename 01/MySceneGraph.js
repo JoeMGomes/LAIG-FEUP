@@ -571,9 +571,9 @@ class MySceneGraph {
             }
 
             var file = this.reader.getString(children[i], 'file');
-            if (file.substring(file.length - 4, file.length) != ".jpg" || file.substring(file.length - 4, file.length) != ".png") {
+            if(! (file.substring(file.length - 4, file.length) == ".jpg" || file.substring(file.length - 4, file.length) == ".png")){
                 this.onXMLMinorError("File type not suported.");
-         //       continue;
+                continue;
             }
 
             this.texture = new CGFtexture(this.scene, file);
@@ -1279,14 +1279,14 @@ class MySceneGraph {
     traverseNodes(nodeID,material ,texture , sLength,tLength){
 
         var node = this.graphNodes[nodeID];
-        var tempMat = material;
+        
 
         if (node.materialsID[node.materialsIndex] != "inherit")
           material = this.materials[node.materialsID[node.materialsIndex]];
 
         if (node.textureID != "none" && node.textureID != "inherit") {
           texture = this.textures[node.textureID];
-          tempMat.setTexture(texture);
+          material.setTexture(texture);
         } else if (node.textureID == "none") material.setTexture(null);
 
         if (node.xTex != null && node.yTex != null) {
@@ -1294,8 +1294,8 @@ class MySceneGraph {
           tLength = node.yTex;
         }
 
-        tempMat.apply();
-        tempMat.setTexture(texture);
+        material.apply();
+        material.setTexture(texture);
 
         this.scene.multMatrix(node.transform);
 
@@ -1308,12 +1308,7 @@ class MySceneGraph {
         //percorrer outros nodes filhos recursivamente
         for (var i = 0; i < node.children.length; i++) {
           this.scene.pushMatrix();
-          this.traverseNodes(            node.children[i],
-            tempMat,
-            texture,
-            sLength,
-            tLength
-          );
+          this.traverseNodes(node.children[i],material,texture,sLength,tLength);
           this.scene.popMatrix();
         }
     }

@@ -34,6 +34,10 @@ class MySphere extends CGFobject {
             for (var j = 0; j <= this.slices; j++) {
                 this.vertices.push(this.radius * Math.sin(vert_ang) * Math.sin(hor_ang), this.radius * Math.sin(vert_ang) * Math.cos(hor_ang), this.radius * Math.cos(vert_ang));
                 this.normals.push(this.radius * Math.sin(vert_ang) * Math.sin(hor_ang), this.radius * Math.sin(vert_ang) * Math.cos(hor_ang), this.radius * Math.cos(vert_ang));
+                
+                var u = 0.5 + Math.atan2(Math.cos(vert_ang), Math.sin(vert_ang) * Math.sin(hor_ang))/2*Math.PI;
+                var v = 0.5 - Math.asin(Math.sin(vert_ang) * Math.cos(hor_ang))/Math.PI;
+                this.texCoords.push(u,v);
                 hor_ang += aphaAng;
             }
             hor_ang = 0;

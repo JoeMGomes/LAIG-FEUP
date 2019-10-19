@@ -46,7 +46,11 @@ class MyTorus extends CGFobject {
         // push normal once for each vertex
         this.normals.push(...normal);
 
-        // this.vertices.push(ca + this.outer,0,-sa);
+        //TExture coords
+        var s = j/this.slices;
+        var t = 1 - i/this.loops;
+        this.texCoords.push(s,t);
+
         //Vertices
         this.vertices.push(
           (ca + this.outer) * Math.cos(outerAng),
