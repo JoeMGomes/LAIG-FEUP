@@ -112,12 +112,12 @@ class MySceneGraph {
                 return error;
         }
 
-        // <ambient>
-        if ((index = nodeNames.indexOf("ambient")) == -1)
-            return "tag <ambient> missing";
+        // <globals>
+        if ((index = nodeNames.indexOf("globals")) == -1)
+            return "tag <globals> missing";
         else {
             if (index != AMBIENT_INDEX)
-                this.onXMLMinorError("tag <ambient> out of order");
+                this.onXMLMinorError("tag <globals> out of order");
 
             //Parse ambient block
             if ((error = this.parseAmbient(nodes[index])) != null)
@@ -573,7 +573,7 @@ class MySceneGraph {
             var file = this.reader.getString(children[i], 'file');
             if (file.substring(file.length - 4, file.length) != ".jpg" || file.substring(file.length - 4, file.length) != ".png") {
                 this.onXMLMinorError("File type not suported.");
-                continue;
+         //       continue;
             }
 
             this.texture = new CGFtexture(this.scene, file);
@@ -589,11 +589,9 @@ class MySceneGraph {
     parseMaterials(materialsNode) {
         var children = materialsNode.children;
 
-        this.materials = [];
+        this.materials = new Array();
 
-        var grandChildren = [];
-        var nodeNames = [];
-
+        console.log(children.length);
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
 
@@ -607,6 +605,8 @@ class MySceneGraph {
             if (materialID == null)
                 return "no ID defined for material";
 
+            console.log(i ,materialID);
+
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
                 return "ID must be unique for each material (conflict: ID = " + materialID + ")";
@@ -618,8 +618,8 @@ class MySceneGraph {
             var grandChildren = children[i].children;
             var matProperties = [];
 
-            for(var i = 0; i < grandChildren.length; i++)
-                matProperties.push(grandChildren[i].nodeName);
+            for(var j = 0; j < grandChildren.length; j++)
+                matProperties.push(grandChildren[j].nodeName);
 
             var emissionIndex = matProperties.indexOf("emission");
             var ambientIndex = matProperties.indexOf("ambient");
@@ -729,8 +729,7 @@ class MySceneGraph {
             material.setAmbient(ambientProperties[0],ambientProperties[1],ambientProperties[2],ambientProperties[3]);
             material.setDiffuse(diffuseProperties[0],diffuseProperties[1],diffuseProperties[2],diffuseProperties[3]);
             material.setSpecular(specularProperties[0],specularProperties[1],specularProperties[2],specularProperties[3]);
-           
-            this.materials.push(material);
+            this.materials[materialID] = material;
         }
 
         this.log("Parsed materials");
@@ -1273,7 +1272,7 @@ class MySceneGraph {
         var rootMaterial = Object.keys(this.materials)[0];
         // console.log(this.materials[rootMaterial]);
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
-
+       // console.log(this.materials);
 
     }
 
