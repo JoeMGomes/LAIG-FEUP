@@ -12,6 +12,8 @@ class XMLscene extends CGFscene {
         super();
 
         this.interface = myinterface;
+
+        this.lightValues = {};
     }
 
     /**
@@ -52,7 +54,7 @@ class XMLscene extends CGFscene {
         // Reads the lights from the scene graph.
         for (var key in this.graph.lights) {
             if (i >= 8)
-                break;              // Only eight lights allowed by WebGL.
+                break; // Only eight lights allowed by WebGL.
 
             if (this.graph.lights.hasOwnProperty(key)) {
                 var light = this.graph.lights[key];
@@ -100,7 +102,19 @@ class XMLscene extends CGFscene {
         this.initLights();
 
         this.sceneInited = true;
+
+        this.interface.addGroups(this.graph.lights);
     }
+
+
+
+    selectView(id) {
+        this.camera = this.graph.views[id];
+        this.interface.setActiveCamera(this.camera);
+    }
+
+
+
 
     /**
      * Displays the scene.
@@ -122,10 +136,26 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
         this.axis.display();
 
-        for (var i = 0; i < this.lights.length; i++) {
+        /*for (var i = 0; i < this.lights.length; i++) {
             this.lights[i].setVisible(true);
-            this.lights[i].enable();
+            this.lights[i].disable();
+        }*/
+
+        var i = 0;
+        for (var key in this.lightValues) {
+            if (this.lightValues.hasOwnProperty(key)) {
+                if (this.lightValues[key]) {
+                    this.lights[i].setVisible(true);
+                    this.lights[i].enable();
+                } else {
+                    this.lights[i].setVisible(false);
+                    this.lights[i].disable();
+                }
+                this.lights[i].update();
+                i++;
+            }
         }
+
 
         if (this.sceneInited) {
             // Draw axis

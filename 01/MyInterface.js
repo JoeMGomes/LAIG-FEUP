@@ -1,6 +1,6 @@
 /**
-* MyInterface class, creating a GUI interface.
-*/
+ * MyInterface class, creating a GUI interface.
+ */
 class MyInterface extends CGFinterface {
     /**
      * @constructor
@@ -27,21 +27,37 @@ class MyInterface extends CGFinterface {
         return true;
     }
 
+
+    addGroups(lights) {
+        var group = this.gui.addFolder("Lights");
+        group.open();
+
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
+                this.scene.lightValues[key] = lights[key][0];
+                group.add(this.scene.lightValues, key);
+            }
+        }
+    }
+
+
+
+
     /**
      * initKeys
      */
     initKeys() {
-        this.scene.gui=this;
-        this.processKeyboard=function(){};
-        this.activeKeys={};
+        this.scene.gui = this;
+        this.processKeyboard = function () {};
+        this.activeKeys = {};
     }
 
     processKeyDown(event) {
-        this.activeKeys[event.code]=true;
+        this.activeKeys[event.code] = true;
     };
 
     processKeyUp(event) {
-        this.activeKeys[event.code]=false;
+        this.activeKeys[event.code] = false;
     };
 
     isKeyPressed(keyCode) {
