@@ -48,7 +48,7 @@ class MySceneGraph {
     /*
      * Callback to be executed after successful reading
      */
-    onXMLReady() { 
+    onXMLReady() {
         this.log("XML Loading finished.");
         var rootElement = this.reader.xmlDoc.documentElement;
 
@@ -231,6 +231,7 @@ class MySceneGraph {
 
         this.views = [];
         var grandChildren = [];
+        this.viewIds = [];
 
         for (var i = 0; i < children.length; i++) {
             if (!(children[i].nodeName != "perspective" || children[i].nodeName != "ortho")) {
@@ -247,6 +248,7 @@ class MySceneGraph {
                 return "ID must be unique for each viwq (conflict: ID = " + viewId + ")";
 
             grandChildren = children[i].children;
+            this.viewIds.push(viewId);
 
             if (grandChildren[0].nodeName != 'from' && grandChildren[1].nodeName != 'to') {
                 return "There must be 2 points with the tag 'from' and 'to'";
@@ -571,7 +573,7 @@ class MySceneGraph {
             }
 
             var file = this.reader.getString(children[i], 'file');
-            if(! (file.substring(file.length - 4, file.length) == ".jpg" || file.substring(file.length - 4, file.length) == ".png")){
+            if (!(file.substring(file.length - 4, file.length) == ".jpg" || file.substring(file.length - 4, file.length) == ".png")) {
                 this.onXMLMinorError("File type not suported.");
                 continue;
             }
@@ -605,7 +607,7 @@ class MySceneGraph {
             if (materialID == null)
                 return "no ID defined for material";
 
-            console.log(i ,materialID);
+            console.log(i, materialID);
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
@@ -613,12 +615,12 @@ class MySceneGraph {
 
             var shininess = this.reader.getFloat(children[i], 'shininess');
             if (!(shininess != null && !isNaN(shininess)))
-            return "unable to parse shininess of the material of ID = " + materialID;
-            
+                return "unable to parse shininess of the material of ID = " + materialID;
+
             var grandChildren = children[i].children;
             var matProperties = [];
 
-            for(var j = 0; j < grandChildren.length; j++)
+            for (var j = 0; j < grandChildren.length; j++)
                 matProperties.push(grandChildren[j].nodeName);
 
             var emissionIndex = matProperties.indexOf("emission");
@@ -627,108 +629,108 @@ class MySceneGraph {
             var specularIndex = matProperties.indexOf("specular");
 
             var emissionProperties = [];
-            if(emissionIndex != -1){
+            if (emissionIndex != -1) {
 
                 var r = this.reader.getFloat(grandChildren[emissionIndex], 'r');
-                if (!(r != null && !isNaN(r) &&  r >= 0 && r <= 1 ))
-                return "unable to parse R component of the material emission of ID = " + materialID;
-                
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the material emission of ID = " + materialID;
+
                 var g = this.reader.getFloat(grandChildren[emissionIndex], 'g');
-                if (!(g != null && !isNaN(g) &&  g >= 0 && g <= 1 ))
-                return "unable to parse R component of the material emission of ID = " + materialID;
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse R component of the material emission of ID = " + materialID;
 
                 var b = this.reader.getFloat(grandChildren[emissionIndex], 'b');
-                if (!(b != null && !isNaN(b) &&  b >= 0 && b <= 1 ))
-                return "unable to parse B component of the material emission of ID = " + materialID;
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the material emission of ID = " + materialID;
 
                 var a = this.reader.getFloat(grandChildren[emissionIndex], 'a');
-                if (!(a != null && !isNaN(a) &&  a >= 0 && a <= 1 ))
-                return "unable to parse A component of the material emission of ID = " + materialID;
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the material emission of ID = " + materialID;
 
-                emissionProperties.push(r,g,b,a);
+                emissionProperties.push(r, g, b, a);
             } else {
-                return "emission properties undefined for material of ID = "+ materialID;
+                return "emission properties undefined for material of ID = " + materialID;
             }
-            
+
             var ambientProperties = [];
-            if(ambientIndex != -1){
+            if (ambientIndex != -1) {
 
                 var r = this.reader.getFloat(grandChildren[ambientIndex], 'r');
-                if (!(r != null && !isNaN(r) &&  r >= 0 && r <= 1 ))
-                return "unable to parse R component of the material ambient of ID = " + materialID;
-                
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the material ambient of ID = " + materialID;
+
                 var g = this.reader.getFloat(grandChildren[ambientIndex], 'g');
-                if (!(g != null && !isNaN(g) &&  g >= 0 && g <= 1 ))
-                return "unable to parse R component of the material ambient of ID = " + materialID;
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse R component of the material ambient of ID = " + materialID;
 
                 var b = this.reader.getFloat(grandChildren[ambientIndex], 'b');
-                if (!(b != null && !isNaN(b) &&  b >= 0 && b <= 1 ))
-                return "unable to parse B component of the material ambient of ID = " + materialID;
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the material ambient of ID = " + materialID;
 
                 var a = this.reader.getFloat(grandChildren[ambientIndex], 'a');
-                if (!(a != null && !isNaN(a) &&  a >= 0 && a <= 1 ))
-                return "unable to parse A component of the material ambient of ID = " + materialID;
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the material ambient of ID = " + materialID;
 
-                ambientProperties.push(r,g,b,a);
+                ambientProperties.push(r, g, b, a);
             } else {
-                return "ambient properties undefined for material of ID = "+ materialID;
+                return "ambient properties undefined for material of ID = " + materialID;
             }
 
             var diffuseProperties = [];
-            if(diffuseIndex != -1){
+            if (diffuseIndex != -1) {
 
                 var r = this.reader.getFloat(grandChildren[diffuseIndex], 'r');
-                if (!(r != null && !isNaN(r) &&  r >= 0 && r <= 1 ))
-                return "unable to parse R component of the material diffuse of ID = " + materialID;
-                
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the material diffuse of ID = " + materialID;
+
                 var g = this.reader.getFloat(grandChildren[diffuseIndex], 'g');
-                if (!(g != null && !isNaN(g) &&  g >= 0 && g <= 1 ))
-                return "unable to parse R component of the material diffuse of ID = " + materialID;
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse R component of the material diffuse of ID = " + materialID;
 
                 var b = this.reader.getFloat(grandChildren[diffuseIndex], 'b');
-                if (!(b != null && !isNaN(b) &&  b >= 0 && b <= 1 ))
-                return "unable to parse B component of the material diffuse of ID = " + materialID;
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the material diffuse of ID = " + materialID;
 
                 var a = this.reader.getFloat(grandChildren[diffuseIndex], 'a');
-                if (!(a != null && !isNaN(a) &&  a >= 0 && a <= 1 ))
-                return "unable to parse A component of the material diffuse of ID = " + materialID;
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the material diffuse of ID = " + materialID;
 
-                diffuseProperties.push(r,g,b,a);
+                diffuseProperties.push(r, g, b, a);
             } else {
-                return "diffuse properties undefined for material of ID = "+ materialID;
+                return "diffuse properties undefined for material of ID = " + materialID;
             }
 
             var specularProperties = [];
-            if(specularIndex != -1){
+            if (specularIndex != -1) {
 
                 var r = this.reader.getFloat(grandChildren[specularIndex], 'r');
-                if (!(r != null && !isNaN(r) &&  r >= 0 && r <= 1 ))
-                return "unable to parse R component of the material specular of ID = " + materialID;
-                
+                if (!(r != null && !isNaN(r) && r >= 0 && r <= 1))
+                    return "unable to parse R component of the material specular of ID = " + materialID;
+
                 var g = this.reader.getFloat(grandChildren[specularIndex], 'g');
-                if (!(g != null && !isNaN(g) &&  g >= 0 && g <= 1 ))
-                return "unable to parse R component of the material specular of ID = " + materialID;
+                if (!(g != null && !isNaN(g) && g >= 0 && g <= 1))
+                    return "unable to parse R component of the material specular of ID = " + materialID;
 
                 var b = this.reader.getFloat(grandChildren[specularIndex], 'b');
-                if (!(b != null && !isNaN(b) &&  b >= 0 && b <= 1 ))
-                return "unable to parse B component of the material specular of ID = " + materialID;
+                if (!(b != null && !isNaN(b) && b >= 0 && b <= 1))
+                    return "unable to parse B component of the material specular of ID = " + materialID;
 
                 var a = this.reader.getFloat(grandChildren[specularIndex], 'a');
-                if (!(a != null && !isNaN(a) &&  a >= 0 && a <= 1 ))
-                return "unable to parse A component of the material specular of ID = " + materialID;
+                if (!(a != null && !isNaN(a) && a >= 0 && a <= 1))
+                    return "unable to parse A component of the material specular of ID = " + materialID;
 
-                specularProperties.push(r,g,b,a);
+                specularProperties.push(r, g, b, a);
             } else {
-                return "specular properties undefined for material of ID = "+ materialID;
+                return "specular properties undefined for material of ID = " + materialID;
             }
-            
+
             var material = new CGFappearance(this.scene);
             material.setTextureWrap("REPEAT", "REPEAT");
             material.setShininess(shininess);
-            material.setEmission(emissionProperties[0],emissionProperties[1],emissionProperties[2],emissionProperties[3]);
-            material.setAmbient(ambientProperties[0],ambientProperties[1],ambientProperties[2],ambientProperties[3]);
-            material.setDiffuse(diffuseProperties[0],diffuseProperties[1],diffuseProperties[2],diffuseProperties[3]);
-            material.setSpecular(specularProperties[0],specularProperties[1],specularProperties[2],specularProperties[3]);
+            material.setEmission(emissionProperties[0], emissionProperties[1], emissionProperties[2], emissionProperties[3]);
+            material.setAmbient(ambientProperties[0], ambientProperties[1], ambientProperties[2], ambientProperties[3]);
+            material.setDiffuse(diffuseProperties[0], diffuseProperties[1], diffuseProperties[2], diffuseProperties[3]);
+            material.setSpecular(specularProperties[0], specularProperties[1], specularProperties[2], specularProperties[3]);
             this.materials[materialID] = material;
         }
 
@@ -791,7 +793,7 @@ class MySceneGraph {
 
                     break;
                 case 'scale':
-                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " +  grandChildren[j].nodeName);
+                    var coordinates = this.parseCoordinates3D(grandChildren[j], "scale transformation for ID " + grandChildren[j].nodeName);
                     if (!Array.isArray(coordinates))
                         return coordinates;
                     transfMatrix = mat4.scale(transfMatrix, transfMatrix, coordinates);
@@ -801,13 +803,13 @@ class MySceneGraph {
                     // angle
                     var axis = this.reader.getString(grandChildren[j], 'axis');
                     if (!(axis == "x" || axis == "y" || axis == "z")) {
-                        this.onXMLError("unable to parse axis of the primitive coordinates for ID = " +  grandChildren[j].nodeName);
+                        this.onXMLError("unable to parse axis of the primitive coordinates for ID = " + grandChildren[j].nodeName);
                         return 0;
                     }
 
                     var angle = this.reader.getString(grandChildren[j], 'angle');
                     if (!(angle != null && !isNaN(angle))) {
-                        this.onXMLError("unable to parse angle of the primitive coordinates for ID = " +  grandChildren[j].nodeName);
+                        this.onXMLError("unable to parse angle of the primitive coordinates for ID = " + grandChildren[j].nodeName);
                         return 0;
                     }
                     transfMatrix = mat4.rotate(transfMatrix, transfMatrix, angle * Math.PI / 180, this.axisCoords[axis]);
@@ -1064,7 +1066,7 @@ class MySceneGraph {
         var grandChildren = [];
 
         var compNode = new GraphNode(nodeId);
-        
+
         children = this.components[nodeId].children;
         var childNames = [];
 
@@ -1272,26 +1274,26 @@ class MySceneGraph {
         var rootMaterial = Object.keys(this.materials)[0];
         // console.log(this.materials[rootMaterial]);
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
-       // console.log(this.materials);
+        // console.log(this.materials);
 
     }
 
-    traverseNodes(nodeID,material ,texture , sLength,tLength){
+    traverseNodes(nodeID, material, texture, sLength, tLength) {
 
         var node = this.graphNodes[nodeID];
-        
+
 
         if (node.materialsID[node.materialsIndex] != "inherit")
-          material = this.materials[node.materialsID[node.materialsIndex]];
+            material = this.materials[node.materialsID[node.materialsIndex]];
 
         if (node.textureID != "none" && node.textureID != "inherit") {
-          texture = this.textures[node.textureID];
-          material.setTexture(texture);
+            texture = this.textures[node.textureID];
+            material.setTexture(texture);
         } else if (node.textureID == "none") material.setTexture(null);
 
         if (node.xTex != null && node.yTex != null) {
-          sLength = node.xTex;
-          tLength = node.yTex;
+            sLength = node.xTex;
+            tLength = node.yTex;
         }
 
         material.apply();
@@ -1301,22 +1303,32 @@ class MySceneGraph {
 
         //desenhar as primitivas
         for (var i = 0; i < node.leafs.length; i++) {
-          if (this.primitives[node.leafs[i]] != null)
-            this.drawPrimitive(node.leafs[i], sLength, tLength);
+            if (this.primitives[node.leafs[i]] != null)
+                this.drawPrimitive(node.leafs[i], sLength, tLength);
         }
 
         //percorrer outros nodes filhos recursivamente
         for (var i = 0; i < node.children.length; i++) {
-          this.scene.pushMatrix();
-          this.traverseNodes(node.children[i],material,texture,sLength,tLength);
-          this.scene.popMatrix();
+            this.scene.pushMatrix();
+            this.traverseNodes(node.children[i], material, texture, sLength, tLength);
+            this.scene.popMatrix();
         }
     }
 
     drawPrimitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
-       // primitive.applyTextures(factorS, factorT);
+        // primitive.applyTextures(factorS, factorT);
         primitive.display();
     }
+
+
+    nextMaterial() {
+        for (var key in this.graphNodes) {
+            if (this.graphNodes.hasOwnProperty(key)) {
+                this.graphNodes[key].nextMaterial();
+            }
+        }
+    }
+
 
 }

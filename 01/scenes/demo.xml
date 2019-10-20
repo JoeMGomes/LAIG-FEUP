@@ -2,7 +2,7 @@
 	<scene root="root" axis_length="5" />
 
 	<views default="defaultCamera">
-		<perspective id="defaultCamera" near="0.1" far="500" angle="45">
+		<perspective id="defaultCamera" near="0.1" far="500" angle="40">
 			<from x="30" y="15" z="30" />
 			<to x="0" y="-2" z="0" />
 		</perspective>
@@ -39,10 +39,16 @@
 			<diffuse r="1" g="1" b="1" a="1.0" />
 			<specular r="1.0" g="1.0" b="1.0" a="1.0" />
 		</material>
-		<material id="black" shininess="3">
+		<material id="yellow" shininess="3">
 			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
 			<ambient r="0.3" g="0.3" b="0.0" a="1.0" />
 			<diffuse r="0.8" g="0.7" b="0.0" a="1.0" />
+			<specular r="0.3" g="0.3" b="0.3" a="1.0" />
+		</material>
+		<material id="black" shininess="3">
+			<emission r="0.0" g="0.0" b="0.0" a="1.0" />
+			<ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+			<diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
 			<specular r="0.3" g="0.3" b="0.3" a="1.0" />
 		</material>
 	</materials>
@@ -130,7 +136,7 @@
 				<translate x="4" y="1.5" z="0" />
 			</transformation>
 			<materials >
-				<material id="black"/>
+				<material id="yellow"/>
 			</materials>
 			<texture id="none" length_s="1" length_t="1"/>
 			<children>
@@ -149,7 +155,7 @@
 				<rotate axis="x" angle="35" />
 			</transformation>
 			<materials >
-				<material id="black"/>
+				<material id="yellow"/>
 			</materials>
 			<texture id="none"/>
 			<children>
@@ -163,7 +169,7 @@
 				<rotate axis="x" angle="180" />
 			</transformation>
 			<materials >
-				<material id="black"/>
+				<material id="yellow"/>
 			</materials>
 			<texture id="none"/>
 			<children>
@@ -175,7 +181,8 @@
 				<rotate axis="x" angle="-90"/>
 			</transformation>
 			<materials >
-				<material id="black"/>
+				<material id="yellow"/>
+				<material id ="black"/>
 			</materials>
 			<texture id="none"/>
 			<children>
