@@ -28,7 +28,7 @@ class MyInterface extends CGFinterface {
     }
 
 
-    addGroups(lights) {
+    addGroups(lights, views) {
         var group = this.gui.addFolder("Lights");
         group.open();
 
@@ -38,7 +38,16 @@ class MyInterface extends CGFinterface {
                 group.add(this.scene.lightValues, key);
             }
         }
+
+
+   
+
+
     }
+
+
+
+
 
 
 
@@ -58,6 +67,9 @@ class MyInterface extends CGFinterface {
 
     processKeyUp(event) {
         this.activeKeys[event.code] = false;
+        if (event.code == "KeyM") {
+            this.scene.updateMaterial();
+        }
     };
 
     isKeyPressed(keyCode) {
