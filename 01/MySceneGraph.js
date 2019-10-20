@@ -233,6 +233,13 @@ class MySceneGraph {
         var grandChildren = [];
         this.viewIds = [];
 
+        this.default = this.reader.getString(viewsNode, 'default');
+
+        if (this.default == null) {
+            this.onXMLError("no ID defined for default view");
+        }
+
+
         for (var i = 0; i < children.length; i++) {
             if (!(children[i].nodeName != "perspective" || children[i].nodeName != "ortho")) {
                 this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
@@ -245,7 +252,7 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.views[viewId] != null)
-                return "ID must be unique for each viwq (conflict: ID = " + viewId + ")";
+                return "ID must be unique for each view (conflict: ID = " + viewId + ")";
 
             grandChildren = children[i].children;
             this.viewIds.push(viewId);
@@ -256,49 +263,49 @@ class MySceneGraph {
 
             if (children[i].nodeName == "perspective") {
 
-                var near = this.reader.getString(children[i], 'near');
+                var near = this.reader.getFloat(children[i], 'near');
                 if (!(near != null && !isNaN(near))) {
                     return "unable to parse near of the view " + viewId;
                 }
 
 
-                var far = this.reader.getString(children[i], 'far');
+                var far = this.reader.getFloat(children[i], 'far');
                 if (!(far != null && !isNaN(far))) {
                     return "unable to parse far of the view " + viewId;
                 }
 
-                var angle = this.reader.getString(children[i], 'angle');
+                var angle = this.reader.getFloat(children[i], 'angle');
                 if (!(angle != null && !isNaN(angle))) {
                     return "unable to parse angle of the view " + viewId;
                 }
 
 
-                var fromX = this.reader.getString(grandChildren[0], 'x');
+                var fromX = this.reader.getFloat(grandChildren[0], 'x');
                 if (!(fromX != null && !isNaN(fromX))) {
                     return "unable to parse x coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var fromY = this.reader.getString(grandChildren[0], 'y');
+                var fromY = this.reader.getFloat(grandChildren[0], 'y');
                 if (!(fromY != null && !isNaN(fromY))) {
                     return "unable to parse y coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var fromZ = this.reader.getString(grandChildren[0], 'z');
+                var fromZ = this.reader.getFloat(grandChildren[0], 'z');
                 if (!(fromZ != null && !isNaN(fromZ))) {
                     return "unable to parse y coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var toX = this.reader.getString(grandChildren[1], 'x');
+                var toX = this.reader.getFloat(grandChildren[1], 'x');
                 if (!(toX != null && !isNaN(toX))) {
                     return "unable to parse x coordenate of the 'to' point of the view " + viewId;
                 }
 
-                var toY = this.reader.getString(grandChildren[1], 'y');
+                var toY = this.reader.getFloat(grandChildren[1], 'y');
                 if (!(toY != null && !isNaN(toY))) {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
 
-                var toZ = this.reader.getString(grandChildren[1], 'z');
+                var toZ = this.reader.getFloat(grandChildren[1], 'z');
                 if (!(toZ != null && !isNaN(toZ))) {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
@@ -1141,10 +1148,6 @@ class MySceneGraph {
         }
 
         this.graphNodes[nodeId] = compNode;
-
-
-
-
 
     }
 

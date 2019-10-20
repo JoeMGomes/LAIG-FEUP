@@ -87,8 +87,6 @@ class MyTorus extends CGFobject {
       }
     }
 
-
-    //TODO: Texture Coord
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
