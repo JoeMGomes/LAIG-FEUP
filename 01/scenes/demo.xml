@@ -53,6 +53,12 @@
         </material>
         <material id="black" shininess="3">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.3" g="0.3" b="0.3" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+        </material>
+          <material id="red" shininess="3">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
@@ -216,6 +222,7 @@
             <materials >
                 <material id="yellow"/>
                 <material id ="black"/>
+                <material id="red"/>
             </materials>
             <texture id="none"/>
             <children>
