@@ -93,6 +93,12 @@
         <primitive id="bigRect">
             <rectangle x1="0" y1="0" x2="200" y2="200" />
         </primitive>
+		<primitive id="cylinder4">
+            <cylinder base="1.4142135" top="1.4142135" height="2" slices="4" stacks="1" />
+        </primitive>
+		<primitive id="topbot">
+            <rectangle x1="0" y1="0" x2="2" y2="2" />
+        </primitive>
     </primitives>
     <components>
         <component id="root">
@@ -102,7 +108,6 @@
             </materials>
             <texture id="body" />
             <children>
-                <componentref id= "drone" />
                 <componentref id="floor"/>
 				<componentref id="controler"/>
             </children>
@@ -116,11 +121,200 @@
             <texture id="none" />
             <children>
                 <componentref id= "antena" />
-                <componentref id="main"/>
-				<componentref id="controler"/>
+                <componentref id="mainbody"/>
             </children>
         </component>
 
+		<component id="antena">
+            <transformation>
+				<translate x="1.5" y="0.2" z="2"/>
+				<scale x="0.3" y="0.3" z="0.5"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id= "tip" />
+                <componentref id="tube" />
+            </children>
+        </component>
+
+		<component id="tip">
+            <transformation>
+				<translate  x="0" y="0" z="2.5"/>
+				<scale x="1" y="1" z="0.3"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id= "pyramid8" />
+            </children>
+        </component>
+
+		<component id="tube">
+            <transformation></transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id= "cylinder8" />
+            </children>
+        </component>
+
+		<component id="mainbody">
+            <transformation></transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="box"/>
+				<componentref id="joystick1"/>
+				<componentref id="joystick2"/>
+            </children>
+        </component>
+
+		<component id="box">
+            <transformation>
+				<scale x="1.5" y="0.2" z="1"/>
+ 			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="mid"/>
+				<componentref id="top"/>
+				<componentref id="bot"/>
+            </children>
+        </component>
+
+		<component id="mid">
+            <transformation>
+				<translate x="1" y="1" z="0"/>
+				<rotate axis="z" angle="45"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="cylinder4"/>
+            </children>
+        </component>
+
+		<component id="top">
+            <transformation>
+				<translate x="0" y="0" z="2"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="topbot"/>
+            </children>
+        </component>
+
+		<component id="bot">
+            <transformation></transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="topbot"/>
+            </children>
+        </component>
+
+		<component id="joystick1">
+            <transformation>
+				<translate x="2.25" y="0.4" z="1.4"/>
+				<scale x="0.3" y="0.3" z="0.3"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="joystick"/>
+            </children>
+        </component>
+
+		<component id="joystick2">
+            <transformation>
+				<translate x="0.7" y="0.4" z="1.4"/>
+				<scale x="0.3" y="0.3" z="0.3"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="joystick"/>
+            </children>
+        </component>
+
+		<component id="joystick">
+            <transformation>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="joybox"/>
+				<componentref id="stick"/>
+				<componentref id="joystickprotection"/>
+            </children>
+        </component>
+
+		<component id="joystickprotection">
+            <transformation>
+				<rotate axis="x" angle="-90"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="torus"/>
+            </children>
+        </component>
+
+		<component id="stick">
+            <transformation>
+				<translate x="0" y="0" z="0"/>
+				<scale x="0.3" y="0.3" z="0.3"/>
+				<rotate axis="x" angle="-90"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id= "tip" />
+                <componentref id="tube" />
+            </children>
+        </component>
+
+		<component id="joybox">
+            <transformation>
+				<translate x="-0.9" y="0" z="-0.3"/>
+				<scale x="0.6" y="0.4" z="0.25"/>
+			</transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="box"/>
+            </children>
+        </component>
 
         <component id="floor">
             <transformation>
