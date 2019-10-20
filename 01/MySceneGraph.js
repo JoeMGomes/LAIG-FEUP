@@ -318,79 +318,79 @@ class MySceneGraph {
                 //orthogonal
             } else if (children[i].nodeName == "ortho") {
 
-                var near = this.reader.getString(children[i], 'near');
+                var near = this.reader.getFloat(children[i], 'near');
                 if (!(near != null && !isNaN(near))) {
                     return "unable to parse near of the view " + viewId;
                 }
 
 
-                var far = this.reader.getString(children[i], 'far');
+                var far = this.reader.getFloat(children[i], 'far');
                 if (!(far != null && !isNaN(far))) {
                     return "unable to parse far of the view " + viewId;
                 }
 
-                var left = this.reader.getString(children[i], 'left');
+                var left = this.reader.getFloat(children[i], 'left');
                 if (!(left != null && !isNaN(left))) {
                     return "unable to parse left of the view " + viewId;
                 }
 
-                var right = this.reader.getString(children[i], 'right');
+                var right = this.reader.getFloat(children[i], 'right');
                 if (!(right != null && !isNaN(right))) {
                     return "unable to parse right of the view " + viewId;
                 }
 
-                var top = this.reader.getString(children[i], 'top');
+                var top = this.reader.getFloat(children[i], 'top');
                 if (!(top != null && !isNaN(top))) {
                     return "unable to parse top of the view " + viewId;
                 }
 
-                var bottom = this.reader.getString(children[i], 'bottom');
+                var bottom = this.reader.getFloat(children[i], 'bottom');
                 if (!(bottom != null && !isNaN(bottom))) {
                     return "unable to parse bottom of the view " + viewId;
                 }
 
-                var fromX = this.reader.getString(grandChildren[0], 'x');
+                var fromX = this.reader.getFloat(grandChildren[0], 'x');
                 if (!(fromX != null && !isNaN(fromX))) {
                     return "unable to parse x coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var fromY = this.reader.getString(grandChildren[0], 'y');
+                var fromY = this.reader.getFloat(grandChildren[0], 'y');
                 if (!(fromY != null && !isNaN(fromY))) {
                     return "unable to parse y coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var fromZ = this.reader.getString(grandChildren[0], 'z');
+                var fromZ = this.reader.getFloat(grandChildren[0], 'z');
                 if (!(fromZ != null && !isNaN(fromZ))) {
                     return "unable to parse y coordenate of the 'from' point of the view " + viewId;
                 }
 
-                var toX = this.reader.getString(grandChildren[1], 'x');
+                var toX = this.reader.getFloat(grandChildren[1], 'x');
                 if (!(toX != null && !isNaN(toX))) {
                     return "unable to parse x coordenate of the 'to' point of the view " + viewId;
                 }
 
-                var toY = this.reader.getString(grandChildren[1], 'y');
+                var toY = this.reader.getFloat(grandChildren[1], 'y');
                 if (!(toY != null && !isNaN(toY))) {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
 
-                var toZ = this.reader.getString(grandChildren[1], 'z');
+                var toZ = this.reader.getFloat(grandChildren[1], 'z');
                 if (!(toZ != null && !isNaN(toZ))) {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
 
                 if (grandChildren[2] != null) {
-                    var upX = this.reader.getString(grandChildren[2], 'x');
+                    var upX = this.reader.getFloat(grandChildren[2], 'x');
                     if (!(upX != null && !isNaN(upX))) {
                         return "unable to parse x coordenate of the 'up' point of the view " + viewId;
                     }
 
-                    var upY = this.reader.getString(grandChildren[2], 'y');
+                    var upY = this.reader.getFloat(grandChildren[2], 'y');
                     if (!(upY != null && !isNaN(upY))) {
                         return "unable to parse y coordenate of the 'up' point of the view " + viewId;
                     }
 
-                    var upZ = this.reader.getString(grandChildren[2], 'z');
+                    var upZ = this.reader.getFloat(grandChildren[2], 'z');
                     if (!(upZ != null && !isNaN(upZ))) {
                         return "unable to parse y coordenate of the 'up' point of the view " + viewId;
                     }
