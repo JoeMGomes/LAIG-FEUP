@@ -32,7 +32,7 @@ class MyCylinder extends CGFobject {
     var alphaAng = (2 * Math.PI) / this.slices;
     var stackY = 0;
     var stackX = 0;
-    var stackIncX = (this.top - this.base) / (this.stacks );
+    var stackIncX = (this.top - this.base) / (this.stacks);
     var stackIncY = this.height / this.stacks;
 
     for (var i = 0; i < this.stacks + 1; i++) {
@@ -40,7 +40,7 @@ class MyCylinder extends CGFobject {
         var sa = Math.sin(ang);
         var ca = Math.cos(ang);
 
-        var normal = [ca, -sa, -Math.tan((this.top-this.base) / this.height)];
+        var normal = [ca, -sa, -Math.tan((this.top - this.base) / this.height)];
 
         // normalization
         var nsize = Math.sqrt(
@@ -59,11 +59,11 @@ class MyCylinder extends CGFobject {
           -sa * (this.base + stackX),
           stackY
         );
-        
-        var s = j/this.slices;
-        var t = 1 - i/this.stacks;
 
-        this.texCoords.push(s,t);
+        var s = j / this.slices;
+        var t = 1 - i / this.stacks;
+
+        this.texCoords.push(s, t);
         ang += alphaAng;
       }
       stackX += stackIncX;
@@ -73,7 +73,7 @@ class MyCylinder extends CGFobject {
     for (var i = 0; i < this.stacks; i++) {
       for (var j = 0; j < this.slices; j++) {
         if (i == 0) {
-          this.indices.push(j,  this.slices + j,(j + 1) % this.slices);
+          this.indices.push(j, this.slices + j, (j + 1) % this.slices);
           this.indices.push(
             (j + 1) % this.slices,
             this.slices + j,
@@ -98,5 +98,10 @@ class MyCylinder extends CGFobject {
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
+  }
+
+  updateTexCoords(sTex, tTex) {
+
+    this.updateTexCoordsGLBuffers();
   }
 }

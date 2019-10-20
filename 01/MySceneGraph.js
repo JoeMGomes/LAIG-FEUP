@@ -1311,7 +1311,7 @@ class MySceneGraph {
 
     drawPrimitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
-        // primitive.applyTextures(factorS, factorT);
+        primitive.updateTexCoords(factorS, factorT);
         primitive.display();
     }
 

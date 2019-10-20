@@ -73,8 +73,18 @@ class MyRectangle extends CGFobject {
 	 * Updates the list of texture coordinates of the rectangle
 	 * @param {Array} coords - Array of texture coordinates
 	 */
-	updateTexCoords(coords) {
-		this.texCoords = [...coords];
+	updateTexCoords(sTex, tTex) {
+		this.texCoords = [];
+
+		var maxX = (this.x2 - this.x1) / sTex;
+		var maxY = (this.y2 - this.y1) / tTex;
+
+		this.texCoords.push(0, maxY);
+		this.texCoords.push(maxX, maxY);
+		this.texCoords.push(0, 0);
+		this.texCoords.push(maxX, 0);
+
+
 		this.updateTexCoordsGLBuffers();
 	}
 }
