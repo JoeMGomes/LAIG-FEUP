@@ -30,10 +30,10 @@ class MyTorus extends CGFobject {
 
     for (var i = 0; i < this.loops + 1; i++) {
       for (var j = 0; j < this.slices; j++) {
-        var sa = Math.sin(innerAng)* this.inner;
-        var ca = Math.cos(innerAng)* this.inner;
+        var sa = Math.sin(innerAng) * this.inner;
+        var ca = Math.cos(innerAng) * this.inner;
 
-        var normal = [ca*Math.cos(outerAng),  Math.sin(outerAng)*ca, -sa];
+        var normal = [ca * Math.cos(outerAng), Math.sin(outerAng) * ca, -sa];
 
         // normalization
         var nsize = Math.sqrt(
@@ -47,15 +47,15 @@ class MyTorus extends CGFobject {
         this.normals.push(...normal);
 
         //TExture coords
-        var s = j/this.slices;
-        var t = 1 - i/this.loops;
-        this.texCoords.push(s,t);
+        var s = j / this.slices;
+        var t = 1 - i / this.loops;
+        this.texCoords.push(s, t);
 
         //Vertices
         this.vertices.push(
           (ca + this.outer) * Math.cos(outerAng),
-         Math.sin(outerAng)*(ca + this.outer),
-          -sa 
+          Math.sin(outerAng) * (ca + this.outer),
+          -sa
         );
 
         innerAng += alphaAng;
@@ -66,7 +66,7 @@ class MyTorus extends CGFobject {
     for (var i = 0; i < this.loops; i++) {
       for (var j = 0; j < this.slices; j++) {
         if (i == 0) {
-          this.indices.push(j, (j + 1) % this.slices,  this.slices + j);
+          this.indices.push(j, (j + 1) % this.slices, this.slices + j);
           this.indices.push(
             (j + 1) % this.slices,
             this.slices + ((j + 1) % this.slices),
@@ -89,5 +89,11 @@ class MyTorus extends CGFobject {
 
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
+  }
+
+
+  updateTexCoords(sTex, tTex) {
+
+    this.updateTexCoordsGLBuffers();
   }
 }
