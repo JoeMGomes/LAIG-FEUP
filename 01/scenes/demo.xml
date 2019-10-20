@@ -104,8 +104,24 @@
             <children>
                 <componentref id= "drone" />
                 <componentref id="floor"/>
+				<componentref id="controler"/>
             </children>
         </component>
+
+		<component id="controler">
+            <transformation></transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id= "antena" />
+                <componentref id="main"/>
+				<componentref id="controler"/>
+            </children>
+        </component>
+
+
         <component id="floor">
             <transformation>
                 <translate x="-100" y="-1" z="100"/>
