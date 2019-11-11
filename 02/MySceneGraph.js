@@ -1069,8 +1069,7 @@ class MySceneGraph {
 
                             if(control != "controlpoint")
                             return "unable to parse controlpoint of the primitive coordinates for ID = " + primitiveId;
-                             //TODO: pode estar mal xx != x
-                            var coordinates = this.parseCoordinates3D(grandgrandChildren[j* npointsV + k], "controlPoint for ID " + primitiveId);
+                            var coordinates = this.parseCoordinates3DXX(grandgrandChildren[j* npointsV + k], "controlPoint for ID " + primitiveId);
                             if (!Array.isArray(coordinates))
                                 return coordinates;
                             coordinates.push(1);
@@ -1232,6 +1231,34 @@ class MySceneGraph {
 
         // z
         var z = this.reader.getFloat(node, 'z');
+        if (!(z != null && !isNaN(z)))
+            return "unable to parse z-coordinate of the " + messageError;
+
+        position.push(...[x, y, z]);
+
+        return position;
+    }
+
+     /**
+     * Parse the coordinates from a node with ID = id
+     * @param {block element} node
+     * @param {message to be displayed in case of error} messageError
+     */
+    parseCoordinates3DXX(node, messageError) {
+        var position = [];
+
+        // x
+        var x = this.reader.getFloat(node, 'xx');
+        if (!(x != null && !isNaN(x)))
+            return "unable to parse x-coordinate of the " + messageError;
+
+        // y
+        var y = this.reader.getFloat(node, 'yy');
+        if (!(y != null && !isNaN(y)))
+            return "unable to parse y-coordinate of the " + messageError;
+
+        // z
+        var z = this.reader.getFloat(node, 'zz');
         if (!(z != null && !isNaN(z)))
             return "unable to parse z-coordinate of the " + messageError;
 

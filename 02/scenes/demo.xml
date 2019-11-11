@@ -104,17 +104,17 @@
         </primitive>
         <primitive id="planeNurb">
             <patch npointsU="3" npointsV="3" npartsU="4" npartsV="4">
-                <controlpoint x="-0.5" y="0" z="-0.5" />
-                <controlpoint x="0" y="0" z="-0.5" />
-                <controlpoint x="0.5" y="0" z="-0.5" />
+                <controlpoint xx="-0.5" yy="0" zz="-0.5" />
+                <controlpoint xx="0" yy="0" zz="-0.5" />
+                <controlpoint xx="0.5" yy="0" zz="-0.5" />
 
-                <controlpoint x="-0.5" y="0" z="0" />
-                <controlpoint x="0" y="2" z="0" />
-                <controlpoint x="0.5" y="0" z="0" />
+                <controlpoint xx="-0.5" yy="0" zz="0" />
+                <controlpoint xx="0" yy="2" zz="0" />
+                <controlpoint xx="0.5" yy="0" zz="0" />
                 
-                <controlpoint x="-0.5" y="0" z="0.5" />
-                <controlpoint x="0" y="0" z="0.5" />
-                <controlpoint x="0.5" y="0" z="0.5" />
+                <controlpoint xx="-0.5" yy="0" zz="0.5" />
+                <controlpoint xx="0" yy="0" zz="0.5" />
+                <controlpoint xx="0.5" yy="0" zz="0.5" />
             </patch>
         </primitive>
         <primitive id="cylNurb">
@@ -132,7 +132,7 @@
                 <!-- <componentref id="floor"/>
 				<componentref id="controler"/>
                 <componentref id="drone"/> -->
-                <primitiveref id="cylNurb"/>
+                <primitiveref id="planeNurb"/>
             </children>
         </component>
 
