@@ -62,6 +62,7 @@ serialInclude([
   'primitives/Plane.js',
   'primitives/Patch.js',
   "primitives/MySphere.js",
+  "primitives/MySecurityCamera.js",
   'primitives/MyTorus.js',
   'NodeComponent.js',
   'LeafPrimitive.js', 
