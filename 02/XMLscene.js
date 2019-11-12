@@ -37,7 +37,7 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(100);
 
-    this.securityCamText = new CGFtextureRTT(this, 512, 512); //TODO: MUDAR TAMANHO
+    this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height); 
     this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
   }
 
@@ -57,7 +57,7 @@ class XMLscene extends CGFscene {
       0.4,
       0.1,
       500,
-      vec3.fromValues(0, 15, 0),
+      vec3.fromValues(0, 3, 0),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -161,9 +161,7 @@ class XMLscene extends CGFscene {
   }
 
   selectView(id) {
-    console.log(this.camera);
     this.camera = this.graph.views[id];
-    console.log(this.camera);
     this.interface.setActiveCamera(this.camera);
   }
 
@@ -175,12 +173,12 @@ class XMLscene extends CGFscene {
    * Renders the scene.
    */
   render(camera) {
-    // ---- BEGIN Background, camera and axis setup
-    this.interface.setActiveCamera(camera);
+    // ---- BEGIN Background, camera and axis setups
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-
+    
+    this.interface.setActiveCamera(camera);
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
@@ -225,9 +223,13 @@ class XMLscene extends CGFscene {
     this.securityCamText.detachFromFrameBuffer();
 
     this.render(this.camera);
+    
 
-     this.gl.disable(this.gl.DEPTH_TEST)
+    this.gl.disable(this.gl.DEPTH_TEST)
+    this.pushMatrix();
+    
     this.secCam.display();
+    this.popMatrix();
     this.gl.enable(this.gl.DEPTH_TEST)
   }
 }

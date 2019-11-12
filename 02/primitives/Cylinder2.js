@@ -44,7 +44,7 @@ class Cylinder2 extends CGFobject {
             [this.base, 0.0, 0.0, 1]
           ],
           ]
-        ];
+        ;
 	      var nurbsSurface = new CGFnurbsSurface(3, 1, controlvertexes);
 
         this.obj = new CGFnurbsObject(scene,this.slices, this.stacks, nurbsSurface ); // must provide an object with the function getPoint(u, v) (CGFnurbsSurface has it)

@@ -13,6 +13,7 @@ class MySecurityCamera extends CGFobject {
   display() {
 
     this.RTTexture.bind(0);
+
     this.rect.display();
   }
   updateTexCoords() {}
