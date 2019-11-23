@@ -1069,6 +1069,7 @@ class MySceneGraph {
 
                             if(control != "controlpoint")
                             return "unable to parse controlpoint of the primitive coordinates for ID = " + primitiveId;
+                            
                             var coordinates = this.parseCoordinates3DXX(grandgrandChildren[j* npointsV + k], "controlPoint for ID " + primitiveId);
                             if (!Array.isArray(coordinates))
                                 return coordinates;

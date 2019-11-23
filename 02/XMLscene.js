@@ -46,19 +46,18 @@ class XMLscene extends CGFscene {
    * Initializes the scene cameras.
    */
   initCameras() {
-    this.camera = new CGFcamera(
-      0.4,
-      0.1,
-      500,
-      vec3.fromValues(30, 15, 30),
-      vec3.fromValues(0, 0, 0)
-    );
-
     this.securityCam = new CGFcamera(
       0.4,
       0.1,
       500,
-      vec3.fromValues(0, 3, 0),
+      vec3.fromValues(20, 20, 10),
+      vec3.fromValues(0, 0, 0)
+    );
+    this.normalCam = new CGFcamera(
+      0.4,
+      0.1,
+      500,
+      vec3.fromValues(0, 10, 0),
       vec3.fromValues(0, 0, 0)
     );
   }
@@ -157,12 +156,12 @@ class XMLscene extends CGFscene {
   }
 
   initViews() {
-    this.camera = this.graph.views[this.graph.default];
+    this.normalCam = this.graph.views[this.graph.default];
     this.interface.setActiveCamera(this.camera);
   }
 
   selectView(id) {
-    this.camera = this.graph.views[id];
+    this.normalCam = this.graph.views[id];
     this.interface.setActiveCamera(this.camera);
   }
 
@@ -184,12 +183,13 @@ class XMLscene extends CGFscene {
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
     
-    this.interface.setActiveCamera(camera);
+    this.camera = camera;
+    this.interface.setActiveCamera(this.camera);
     
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
-
+    
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
@@ -229,7 +229,7 @@ class XMLscene extends CGFscene {
 
     this.securityCamText.detachFromFrameBuffer()
 
-    this.render(this.camera)
+    this.render(this.normalCam)
   
     this.gl.disable(this.gl.DEPTH_TEST)
     
