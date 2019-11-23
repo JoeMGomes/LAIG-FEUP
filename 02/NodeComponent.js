@@ -12,6 +12,7 @@ class GraphNode {
         this.leafs = [];
         this.materialsID = [];
         this.materialsIndex = 0;
+        this.animation;
         this.textureID = null;
         this.xTex = null;
         this.yTex = null;
@@ -19,7 +20,7 @@ class GraphNode {
     }
 
 
-    nextMaterial(){
+    nextMaterial() {
         this.materialsIndex++;
         this.materialsIndex = this.materialsIndex % this.materialsID.length;
     }

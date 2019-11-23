@@ -171,6 +171,19 @@ class MySceneGraph {
                 return error;
         }
 
+        // <animations>
+        if ((index = nodeNames.indexOf("animations")) == -1)
+            return "tag <animations> missing";
+        else {
+            if (index != PRIMITIVES_INDEX)
+                this.onXMLMinorError("tag <animations> out of order");
+
+            //Parse primitives block
+            if ((error = this.parseAnimations(nodes[index])) != null)
+                return error;
+        }
+
+
         // <primitives>
         if ((index = nodeNames.indexOf("primitives")) == -1)
             return "tag <primitives> missing";
@@ -827,6 +840,79 @@ class MySceneGraph {
 
 
 
+    parseAnimations(primitiveNode) {
+
+        var children = primitiveNode.children;
+        this.animations = [];
+
+
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "animation") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current primitive.
+            var animationId = this.reader.getString(children[i], 'id');
+            if (animationId == null)
+                return "no ID defined for texture";
+
+            // Checks for repeated IDs.
+            if (this.animations[animationId] != null)
+                return "ID must be unique for each primitive (conflict: ID = " + animationId + ")";
+
+            var animationChildren = children[i].children;
+            var keyframes = [];
+
+            for (let k = 0; k < animationChildren.length; k++) {
+                if (animationChildren[k].nodeName != "keyframe") {
+                    this.onXMLMinorError("unknown tag <" + animationChildren[k].nodeName + ">");
+                }
+                var keyframeInstant = this.reader.getFloat(animationChildren[k], 'instant');
+                if (keyframeInstant == null)
+                    return "not valid keyframe instant";
+                var keyframechildren = animationChildren[k].children;
+
+                var keyTransX, keyTransY, keyTransZ;
+                keyTransX = this.reader.getFloat(keyframechildren[0], 'x');
+                keyTransY = this.reader.getFloat(keyframechildren[0], 'y');
+                keyTransZ = this.reader.getFloat(keyframechildren[0], 'z');
+
+                var tranformations = [];
+                tranformations.push(keyTransX);
+                tranformations.push(keyTransY);
+                tranformations.push(keyTransZ);
+
+                var keyRotateX, keyRotateY, keyRotateZ;
+                keyRotateX = this.reader.getFloat(keyframechildren[1], 'angle_x');
+                keyRotateY = this.reader.getFloat(keyframechildren[1], 'angle_y');
+                keyRotateZ = this.reader.getFloat(keyframechildren[1], 'angle_z');
+
+                var rotations = [];
+                rotations.push(keyRotateX);
+                rotations.push(keyRotateY);
+                rotations.push(keyRotateZ);
+
+                var keyScaleX, keyScaleY, keyScaleZ;
+                keyScaleX = this.reader.getFloat(keyframechildren[2], 'x');
+                keyScaleY = this.reader.getFloat(keyframechildren[2], 'y');
+                keyScaleZ = this.reader.getFloat(keyframechildren[2], 'z');
+
+                var scales = [];
+                scales.push(keyScaleX);
+                scales.push(keyScaleY);
+                scales.push(keyScaleZ);
+
+
+
+                var keyframe = new KeyFrame(keyframeInstant, tranformations, scales, rotations);
+                keyframes.push(keyframe);
+            }
+            let anim = new KeyFrameAnimation(keyframes)
+            this.animations[animationId] = anim;
+        }
+
+    }
 
 
 
@@ -866,7 +952,7 @@ class MySceneGraph {
             if (grandChildren.length != 1 ||
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
-                    grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' && 
+                    grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
                     grandChildren[0].nodeName != 'patch')) {
                 return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane or patch)"
             }
@@ -977,8 +1063,8 @@ class MySceneGraph {
                 if (!(stacks != null && !isNaN(stacks)))
                     return "unable to parse stacks of the primitive coordinates for ID = " + primitiveId;
 
-                if (primitiveType == 'cylinder' )
-                var cyl = new MyCylinder(this.scene, primitiveId, base, top, height, slices, stacks);
+                if (primitiveType == 'cylinder')
+                    var cyl = new MyCylinder(this.scene, primitiveId, base, top, height, slices, stacks);
                 else var cyl = new Cylinder2(this.scene, primitiveId, base, top, height, slices, stacks);
 
 
@@ -1025,60 +1111,60 @@ class MySceneGraph {
                 var torus = new MyTorus(this.scene, primitiveId, inner, outer, slices, loops);
 
                 this.primitives[primitiveId] = torus;
-            } else if(primitiveType == 'plane'){
+            } else if (primitiveType == 'plane') {
                 //npartsU
-                var npartsU = this.reader.getInteger(grandChildren[0],'npartsU');
+                var npartsU = this.reader.getInteger(grandChildren[0], 'npartsU');
                 if (!(npartsU != null && !isNaN(inner)))
-                return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsV
-                var npartsV = this.reader.getInteger(grandChildren[0],'npartsV');
+                var npartsV = this.reader.getInteger(grandChildren[0], 'npartsV');
                 if (!(npartsV != null && !isNaN(inner)))
-                return "unable to parse npartsV of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npartsV of the primitive coordinates for ID = " + primitiveId;
 
-                var plane = new Plane(this.scene, primitiveId, npartsU,npartsV);
+                var plane = new Plane(this.scene, primitiveId, npartsU, npartsV);
                 this.primitives[primitiveId] = plane;
-            } else if(primitiveType == 'patch'){
+            } else if (primitiveType == 'patch') {
                 //npointsU
-                var npointsU = this.reader.getInteger(grandChildren[0],'npointsU');
+                var npointsU = this.reader.getInteger(grandChildren[0], 'npointsU');
                 if (!(npartsU != null && !isNaN(inner)))
-                return "unable to parse npointsU of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npointsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npointsV
-                var npointsV = this.reader.getInteger(grandChildren[0],'npointsV');
+                var npointsV = this.reader.getInteger(grandChildren[0], 'npointsV');
                 if (!(npointsV != null && !isNaN(inner)))
-                return "unable to parse npointsV of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npointsV of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsU
-                var npartsU = this.reader.getInteger(grandChildren[0],'npartsU');
+                var npartsU = this.reader.getInteger(grandChildren[0], 'npartsU');
                 if (!(npartsU != null && !isNaN(inner)))
-                return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsV
-                var npartsV = this.reader.getInteger(grandChildren[0],'npartsV');
+                var npartsV = this.reader.getInteger(grandChildren[0], 'npartsV');
                 if (!(npartsV != null && !isNaN(inner)))
-                return "unable to parse npartsV of the primitive coordinates for ID = " + primitiveId;
+                    return "unable to parse npartsV of the primitive coordinates for ID = " + primitiveId;
 
                 var grandgrandChildren = grandChildren[0].children;
                 var controlPoints = new Array();
-                    for(var j = 0; j < npointsU; j++){
-                        var vectorU = new Array();
+                for (var j = 0; j < npointsU; j++) {
+                    var vectorU = new Array();
 
-                        for(var k = 0; k < npointsV; k++){
-                            var control = grandgrandChildren[j*npointsV+k].nodeName;
+                    for (var k = 0; k < npointsV; k++) {
+                        var control = grandgrandChildren[j * npointsV + k].nodeName;
 
-                            if(control != "controlpoint")
+                        if (control != "controlpoint")
                             return "unable to parse controlpoint of the primitive coordinates for ID = " + primitiveId;
-                            var coordinates = this.parseCoordinates3DXX(grandgrandChildren[j* npointsV + k], "controlPoint for ID " + primitiveId);
-                            if (!Array.isArray(coordinates))
-                                return coordinates;
-                            coordinates.push(1);
-                            vectorU.push( coordinates);
-                        }
-                        controlPoints.push(vectorU);
+                        var coordinates = this.parseCoordinates3DXX(grandgrandChildren[j * npointsV + k], "controlPoint for ID " + primitiveId);
+                        if (!Array.isArray(coordinates))
+                            return coordinates;
+                        coordinates.push(1);
+                        vectorU.push(coordinates);
                     }
+                    controlPoints.push(vectorU);
+                }
 
-                var patch = new Patch(this.scene, primitiveId,npointsU, npointsV, npartsU,npartsV, controlPoints);
+                var patch = new Patch(this.scene, primitiveId, npointsU, npointsV, npartsU, npartsV, controlPoints);
                 this.primitives[primitiveId] = patch;
             }
         }
@@ -1139,6 +1225,7 @@ class MySceneGraph {
 
 
         var transformationIndex = childNames.indexOf("transformation");
+        var animationIndex = childNames.indexOf("animationref");
         var materialsIndex = childNames.indexOf("materials");
         var textureIndex = childNames.indexOf("texture");
         var childrenIndex = childNames.indexOf("children");
@@ -1159,6 +1246,12 @@ class MySceneGraph {
                 }
             }
         }
+
+        if (animationIndex != -1) {
+            let anim = this.reader.getString(children[animationIndex], "id");
+            compNode.animation = this.animations[anim];
+        }
+
 
         if (materialsIndex != -1) {
             var materialchildren = children[materialsIndex].children;
@@ -1239,7 +1332,7 @@ class MySceneGraph {
         return position;
     }
 
-     /**
+    /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
      * @param {message to be displayed in case of error} messageError
@@ -1252,7 +1345,7 @@ class MySceneGraph {
         if (!(x != null && !isNaN(x)))
             return "unable to parse x-coordinate of the " + messageError;
 
-        // y
+        // ya de não 
         var y = this.reader.getFloat(node, 'yy');
         if (!(y != null && !isNaN(y)))
             return "unable to parse y-coordinate of the " + messageError;
@@ -1334,8 +1427,7 @@ class MySceneGraph {
         this.loadedOk = false;
     }
 
-    /**
-     * Callback to be executed on any minor error, showing a warning on the console.
+    /**a de não 
      * @param {string} message
      */
     onXMLMinorError(message) {
@@ -1350,6 +1442,12 @@ class MySceneGraph {
         console.log("   " + message);
     }
 
+
+    update(t) {
+        
+        this.updateAnimation(t, this.idRoot);
+    }
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
@@ -1361,6 +1459,18 @@ class MySceneGraph {
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
 
     }
+
+    updateAnimation(t, nodeID) {
+        let nodes = this.graphNodes;
+        let node = nodes[nodeID];
+        if (node.animation != null) {
+            node.animation.update(t);
+        }
+        for (var i = 0; i < node.children.length; i++) {
+            this.updateAnimation(t, node.children[i]);
+        }
+    }
+
 
     traverseNodes(nodeID, material, texture, sLength, tLength) {
 
@@ -1384,6 +1494,11 @@ class MySceneGraph {
         material.setTexture(texture);
 
         this.scene.multMatrix(node.transform);
+        if (node.animation != null) {
+            
+            this.scene.multMatrix(node.animation.apply());
+        }
+
 
         //desenhar as primitivas
         for (var i = 0; i < node.leafs.length; i++) {

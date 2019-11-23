@@ -71,6 +71,28 @@
             <rotate axis="z" angle="0" />
         </transformation>
     </transformations>
+
+    <animations>
+        <animation id="test" >
+            <keyframe instant="6">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="0" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+            <keyframe instant="18">
+                <translate x="0" y="10" z="0" />
+                <rotate angle_x="10" angle_y="0" angle_z="0" />
+                <scale x="0.1" y="0.1" z="0.1" />
+            </keyframe>
+        </animation>
+        <animation id="bladeRotate" >
+            <keyframe instant="100">
+                <translate x="0" y="0" z="0" />
+                <rotate angle_x="0" angle_y="-30000" angle_z="0" />
+                <scale x="1" y="1" z="1" />
+            </keyframe>
+        </animation>
+    </animations>
     <primitives>
         <primitive id="bladeRect">
             <rectangle x1="0" y1="0" x2="1" y2=".4" />
@@ -357,6 +379,7 @@
         </component>
         <component id="drone">
             <transformation></transformation>
+            <animationref id="test" />
             <materials>
                 <material id="default" />
             </materials>
@@ -417,6 +440,19 @@
             <children>
                 <componentref id="blade_protection" />
                 <componentref id= "blade_motor" />
+                <componentref id="bladecomp" />
+            </children>
+        </component>
+        <component id="bladecomp">
+            <transformation>
+                
+            </transformation>
+            <animationref id="bladeRotate" />
+            <materials >
+                <material id="yellow"/>
+            </materials>
+            <texture id="none" length_s="1" length_t="1"/>
+            <children>
                 <componentref id="blade_1" />
                 <componentref id="blade_2" />
                 <componentref id="blade_3" />

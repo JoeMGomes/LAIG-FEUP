@@ -2,7 +2,7 @@
 include = function () {
   function f() {
     var a = this.readyState;
-    (!a || /ded|te/.test(a)) && (c-- , !c && e && d());
+    (!a || /ded|te/.test(a)) && (c--, !c && e && d());
   }
   var a = arguments,
     b = document,
@@ -12,10 +12,10 @@ include = function () {
   e && c--;
   for (var g, h = 0; c > h; h++)
     (g = b.createElement("script")),
-      (g.src = arguments[h]),
-      (g.async = !0),
-      (g.onload = g.onerror = g.onreadystatechange = f),
-      (b.head || b.getElementsByTagName("head")[0]).appendChild(g);
+    (g.src = arguments[h]),
+    (g.async = !0),
+    (g.onload = g.onerror = g.onreadystatechange = f),
+    (b.head || b.getElementsByTagName("head")[0]).appendChild(g);
 };
 serialInclude = function (a) {
   var b = console,
@@ -65,7 +65,10 @@ serialInclude([
   "primitives/MySecurityCamera.js",
   'primitives/MyTorus.js',
   'NodeComponent.js',
-  'LeafPrimitive.js', 
+  'LeafPrimitive.js',
+  'Keyframe.js',
+  'Animation.js',
+  'KeyframeAnimation.js',
 
   (main = function () {
     // Standard application, scene and interface setup
