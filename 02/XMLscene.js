@@ -39,6 +39,7 @@ class XMLscene extends CGFscene {
 
     this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height); 
     this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
+    this.defaultShader = this.activeShader;
   }
 
   /**
@@ -169,6 +170,11 @@ class XMLscene extends CGFscene {
     this.graph.nextMaterial();
   }
 
+  update(t) {
+		// only shader 6 is using time factor
+			this.secCam.shader.setUniformsValues({ timeFactor: t / 100 % 1000 });
+	}
+
   /**
    * Renders the scene.
    */
@@ -179,6 +185,7 @@ class XMLscene extends CGFscene {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
     
     this.interface.setActiveCamera(camera);
+    
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
@@ -216,20 +223,19 @@ class XMLscene extends CGFscene {
   }
 
   display() {
-    this.securityCamText.attachToFrameBuffer();
-
-    this.render(this.securityCam);
-
-    this.securityCamText.detachFromFrameBuffer();
-
-    this.render(this.camera);
+    this.securityCamText.attachToFrameBuffer()
     
+    this.render(this.securityCam)
 
+    this.securityCamText.detachFromFrameBuffer()
+
+    this.render(this.camera)
+  
     this.gl.disable(this.gl.DEPTH_TEST)
-    this.pushMatrix();
     
-    this.secCam.display();
-    this.popMatrix();
+    this.secCam.display()
+    this.setActiveShader(this.defaultShader)
+  
     this.gl.enable(this.gl.DEPTH_TEST)
   }
 }

@@ -129,9 +129,9 @@
             </materials>
             <texture id="body" />
             <children>
-                <!-- <componentref id="floor"/>
+               <componentref id="floor"/>
 				<componentref id="controler"/>
-                <componentref id="drone"/> -->
+                <componentref id="drone"/> 
                 <primitiveref id="planeNurb"/>
             </children>
         </component>
