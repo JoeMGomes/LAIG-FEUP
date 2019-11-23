@@ -243,6 +243,7 @@ class MySceneGraph {
         var children = viewsNode.children;
 
         this.views = [];
+        this.securityCams = [];
         var grandChildren = [];
         this.viewIds = [];
 
@@ -324,8 +325,9 @@ class MySceneGraph {
                 }
 
                 var pers = new CGFcamera(angle, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+                var persS = new CGFcamera(angle, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
                 this.views[viewId] = pers;
-
+                this.securityCams[viewId] = persS;
 
 
                 //orthogonal
@@ -409,11 +411,16 @@ class MySceneGraph {
                     }
 
                     var cam = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [upX, upY, upZ]);
+                    var camS = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [upX, upY, upZ]);
                     this.views[viewId] = cam;
+                    this.securityCams[viewId] = camS;
                 }
 
                 var cam = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [0, 1, 0]);
+                var camS = new CGFcameraOrtho(left, right, bottom, top, near, far, [fromX, fromY, fromZ], [toX, toY, toZ], [0, 1, 0]);
+
                 this.views[viewId] = cam;
+                this.securityCams[viewId] = camS;
 
             }
         }
