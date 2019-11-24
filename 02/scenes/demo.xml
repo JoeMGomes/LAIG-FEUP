@@ -3,11 +3,11 @@
 
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="6" y="6" z="6" />
+            <from x="25" y="25" z="10" />
             <to x="0" y="0" z="0" />
         </perspective>
         <perspective id="topView" near="0.1" far="500" angle="45">
-            <from x="1" y="10" z="1" />
+            <from x="1" y="15" z="1" />
             <to x="0" y="0" z="0" />
         </perspective>
     </views>
@@ -29,7 +29,7 @@
         <texture id="body_connector" file="scenes/images/connector.png" />
         <texture id="support" file="scenes/images/support.png" />
         <texture id="torus" file="scenes/images/torus.png" />
-        <texture id="dirt" file="scenes/images/dirt_texture.png" />
+        <texture id="dirt" file="scenes/images/dirt_texture1.png" />
         <texture id="remote" file="scenes/images/remote.png" />
     </textures>
     <materials>
@@ -57,7 +57,7 @@
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
         </material>
-          <material id="red" shininess="3">
+        <material id="red" shininess="3">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.7" g="0.1" b="0.1m" a="1.0" />
@@ -71,9 +71,8 @@
             <rotate axis="z" angle="0" />
         </transformation>
     </transformations>
-
     <animations>
-        <animation id="test" >
+        <animation id="test">
             <keyframe instant="2">
                 <translate x="0" y="7" z="0" />
                 <rotate angle_x="0" angle_y="0" angle_z="0" />
@@ -131,7 +130,7 @@
             </keyframe>
 
         </animation>
-        <animation id="bladeRotate" >
+        <animation id="bladeRotate">
             <keyframe instant="18">
                 <translate x="0" y="0" z="0" />
                 <rotate angle_x="0" angle_y="-10000" angle_z="0" />
@@ -161,28 +160,58 @@
         <primitive id="bigRect">
             <rectangle x1="0" y1="0" x2="200" y2="200" />
         </primitive>
-		<primitive id="cylinder4">
+        <primitive id="cylinder4">
             <cylinder base="1.4142135" top="1.4142135" height="2" slices="4" stacks="1" />
         </primitive>
-		<primitive id="topbot">
+        <primitive id="topbot">
             <rectangle x1="0" y1="0" x2="2" y2="2" />
         </primitive>
         <primitive id="plane">
             <plane npartsU="3" npartsV="3"/>
         </primitive>
         <primitive id="planeNurb">
-            <patch npointsU="3" npointsV="3" npartsU="4" npartsV="4">
-                <controlpoint xx="-0.5" yy="0" zz="-0.5" />
-                <controlpoint xx="0" yy="0" zz="-0.5" />
-                <controlpoint xx="0.5" yy="0" zz="-0.5" />
+            <patch npointsU="6" npointsV="6" npartsU="10" npartsV="10">
+                <controlpoint xx="-4" yy="-0.8" zz="-4" />
+                <controlpoint xx="-2" yy="-1" zz="-4" />
+                <controlpoint xx="-1" yy="-0.6" zz="-4" />
+                <controlpoint xx="1" yy="-0.4" zz="-4" />
+                <controlpoint xx="2" yy="0.2" zz="-4" />
+                <controlpoint xx="4" yy="-0.9" zz="-4" />
 
-                <controlpoint xx="-0.5" yy="0" zz="0" />
-                <controlpoint xx="0" yy="2" zz="0" />
-                <controlpoint xx="0.5" yy="0" zz="0" />
-                
-                <controlpoint xx="-0.5" yy="0" zz="0.5" />
-                <controlpoint xx="0" yy="0" zz="0.5" />
-                <controlpoint xx="0.5" yy="0" zz="0.5" />
+                <controlpoint xx="-4" yy="-1" zz="-2" />
+                <controlpoint xx="-2" yy="2" zz="-2" />
+                <controlpoint xx="-1" yy="2" zz="-2" />
+                <controlpoint xx="1" yy="2" zz="-2" />
+                <controlpoint xx="2" yy="3" zz="-2" />
+                <controlpoint xx="4" yy="-1" zz="-2" />
+
+                <controlpoint xx="-4" yy="-1" zz="-1" />
+                <controlpoint xx="-2" yy="0" zz="-1" />
+                <controlpoint xx="-1" yy="0" zz="-1" />
+                <controlpoint xx="1" yy="0" zz="-1" />
+                <controlpoint xx="2" yy="0" zz="-1" />
+                <controlpoint xx="4" yy="-1" zz="-1" />
+
+                <controlpoint xx="-4" yy="-1" zz="1" />
+                <controlpoint xx="-2" yy="2" zz="1" />
+                <controlpoint xx="-1" yy="2.7" zz="1" />
+                <controlpoint xx="1" yy="1.9" zz="1" />
+                <controlpoint xx="2" yy="2.4" zz="1" />
+                <controlpoint xx="4" yy="-1" zz="1" />
+
+                <controlpoint xx="-4" yy="-1" zz="2" />
+                <controlpoint xx="-2" yy="2" zz="2" />
+                <controlpoint xx="-1" yy="0" zz="2" />
+                <controlpoint xx="1" yy="0" zz="2" />
+                <controlpoint xx="2" yy="0" zz="2" />
+                <controlpoint xx="4" yy="-1" zz="2" />
+
+                <controlpoint xx="-4" yy="-0.8" zz="4" />
+                <controlpoint xx="-2" yy="-1" zz="4" />
+                <controlpoint xx="-1" yy="-0.43" zz="4" />
+                <controlpoint xx="1" yy="-0.6" zz="4" />
+                <controlpoint xx="2" yy="0" zz="4" />
+                <controlpoint xx="4" yy="-0.8" zz="4" />
             </patch>
         </primitive>
         <primitive id="cylNurb">
@@ -197,14 +226,26 @@
             </materials>
             <texture id="body" />
             <children>
-               <componentref id="floor"/>
-				<componentref id="controler"/>
-                <componentref id="drone"/> 
+                <!-- <componentref id="floor"/> -->
+                <componentref id="controler"/>
+                <componentref id="drone"/>
+                <componentref id ="mountain"/>
+            </children>
+        </component>
+        <component id="mountain">
+            <transformation>
+                <translate x ="-10" y= "-27.5" z="-15"/>
+                <scale x ="50" y="30" z="50"/>
+            </transformation>
+            <materials>
+                <material id="default" />
+            </materials>
+            <texture id="dirt"/>
+            <children>
                 <primitiveref id="planeNurb"/>
             </children>
         </component>
-
-		<component id="controler">
+        <component id="controler">
             <transformation>
                 <rotate axis="y" angle="-135"/>
                 <translate x="-1.6" y="-1" z="-5"/>
@@ -219,11 +260,11 @@
             </children>
         </component>
 
-		<component id="antena">
+        <component id="antena">
             <transformation>
-				<translate x="1.5" y="0.2" z="2"/>
-				<scale x="0.3" y="0.3" z="0.5"/>
-			</transformation>
+                <translate x="1.5" y="0.2" z="2"/>
+                <scale x="0.3" y="0.3" z="0.5"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -234,11 +275,11 @@
             </children>
         </component>
 
-		<component id="tip">
+        <component id="tip">
             <transformation>
-				<translate  x="0" y="0" z="2.5"/>
-				<scale x="1" y="1" z="0.3"/>
-			</transformation>
+                <translate x="0" y="0" z="2.5"/>
+                <scale x="1" y="1" z="0.3"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -248,7 +289,7 @@
             </children>
         </component>
 
-		<component id="tube">
+        <component id="tube">
             <transformation></transformation>
             <materials>
                 <material id="default" />
@@ -259,7 +300,7 @@
             </children>
         </component>
 
-		<component id="mainbody">
+        <component id="mainbody">
             <transformation></transformation>
             <materials>
                 <material id="default" />
@@ -267,31 +308,31 @@
             <texture id="none" />
             <children>
                 <componentref id="box"/>
-				<componentref id="joystick1"/>
-				<componentref id="joystick2"/>
+                <componentref id="joystick1"/>
+                <componentref id="joystick2"/>
             </children>
         </component>
 
-		<component id="box">
+        <component id="box">
             <transformation>
-				<scale x="1.5" y="0.2" z="1"/>
- 			</transformation>
+                <scale x="1.5" y="0.2" z="1"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
             <texture id="none" />
             <children>
                 <componentref id="mid"/>
-				<componentref id="top"/>
-				<componentref id="bot"/>
+                <componentref id="top"/>
+                <componentref id="bot"/>
             </children>
         </component>
 
-		<component id="mid">
+        <component id="mid">
             <transformation>
-				<translate x="1" y="1" z="0"/>
-				<rotate axis="z" angle="45"/>
-			</transformation>
+                <translate x="1" y="1" z="0"/>
+                <rotate axis="z" angle="45"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -301,10 +342,10 @@
             </children>
         </component>
 
-		<component id="top">
+        <component id="top">
             <transformation>
-				<translate x="0" y="0" z="2"/>
-			</transformation>
+                <translate x="0" y="0" z="2"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -314,7 +355,7 @@
             </children>
         </component>
 
-		<component id="bot">
+        <component id="bot">
             <transformation></transformation>
             <materials>
                 <material id="default" />
@@ -325,11 +366,11 @@
             </children>
         </component>
 
-		<component id="joystick1">
+        <component id="joystick1">
             <transformation>
-				<translate x="2.25" y="0.4" z="1.4"/>
-				<scale x="0.3" y="0.3" z="0.3"/>
-			</transformation>
+                <translate x="2.25" y="0.4" z="1.4"/>
+                <scale x="0.3" y="0.3" z="0.3"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -339,11 +380,11 @@
             </children>
         </component>
 
-		<component id="joystick2">
+        <component id="joystick2">
             <transformation>
-				<translate x="0.7" y="0.4" z="1.4"/>
-				<scale x="0.3" y="0.3" z="0.3"/>
-			</transformation>
+                <translate x="0.7" y="0.4" z="1.4"/>
+                <scale x="0.3" y="0.3" z="0.3"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -353,24 +394,24 @@
             </children>
         </component>
 
-		<component id="joystick">
+        <component id="joystick">
             <transformation>
-			</transformation>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
             <texture id="none" />
             <children>
                 <componentref id="joybox"/>
-				<componentref id="stick"/>
-				<componentref id="joystickprotection"/>
+                <componentref id="stick"/>
+                <componentref id="joystickprotection"/>
             </children>
         </component>
 
-		<component id="joystickprotection">
+        <component id="joystickprotection">
             <transformation>
-				<rotate axis="x" angle="-90"/>
-			</transformation>
+                <rotate axis="x" angle="-90"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -380,12 +421,12 @@
             </children>
         </component>
 
-		<component id="stick">
+        <component id="stick">
             <transformation>
-				<translate x="0" y="0" z="0"/>
-				<scale x="0.3" y="0.3" z="0.3"/>
-				<rotate axis="x" angle="-90"/>
-			</transformation>
+                <translate x="0" y="0" z="0"/>
+                <scale x="0.3" y="0.3" z="0.3"/>
+                <rotate axis="x" angle="-90"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -396,11 +437,11 @@
             </children>
         </component>
 
-		<component id="joybox">
+        <component id="joybox">
             <transformation>
-				<translate x="-0.9" y="0" z="-0.3"/>
-				<scale x="0.6" y="0.4" z="0.25"/>
-			</transformation>
+                <translate x="-0.9" y="0" z="-0.3"/>
+                <scale x="0.6" y="0.4" z="0.25"/>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -491,7 +532,7 @@
         </component>
         <component id="bladecomp">
             <transformation>
-                
+
             </transformation>
             <animationref id="bladeRotate" />
             <materials >
