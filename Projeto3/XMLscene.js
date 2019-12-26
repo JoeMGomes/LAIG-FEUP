@@ -37,6 +37,7 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(16.67);
 
+
     this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
     this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
     this.defaultShader = this.activeShader;
@@ -252,5 +253,6 @@ class XMLscene extends CGFscene {
     this.setActiveShader(this.defaultShader)
 
     this.gl.enable(this.gl.DEPTH_TEST)
+
   }
 }

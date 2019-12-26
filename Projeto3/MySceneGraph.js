@@ -961,7 +961,7 @@ class MySceneGraph {
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
                     grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
-                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2')) {
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' && grandChildren[0].nodeName != 'objfile')) {
                 return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane or patch)"
             }
 
@@ -1174,6 +1174,16 @@ class MySceneGraph {
 
                 var patch = new Patch(this.scene, primitiveId, npointsU, npointsV, npartsU, npartsV, controlPoints);
                 this.primitives[primitiveId] = patch;
+            } else if (primitiveType == 'objfile') {
+
+
+                var file = this.reader.getString(grandChildren[0], 'file');
+                if (!(file.substring(file.length - 4, file.length) == ".obj")) {
+                    this.onXMLMinorError("File type not suported.");
+                    continue;
+                }
+                var objFile = new CGFOBJModel(this.scene, file, false);
+                this.primitives[primitiveId] = objFile;
             }
         }
 

@@ -54,6 +54,9 @@
         <primitive id="bladeRect">
             <rectangle x1="0" y1="0" x2="1" y2=".4" />
         </primitive>
+        <primitive id="human">
+            <objfile file="models/male.obj"/>
+        </primitive>
     </primitives>
     <components>
         <component id="root">
@@ -63,7 +66,7 @@
             </materials>
             <texture id="body" />
             <children>
-                <primitiveref id="bladeRect"/>
+                <primitiveref id="human"/>
             </children>
         </component>
     </components>
