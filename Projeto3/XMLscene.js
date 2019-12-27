@@ -253,6 +253,6 @@ class XMLscene extends CGFscene {
     this.setActiveShader(this.defaultShader)
 
     this.gl.enable(this.gl.DEPTH_TEST)
-
+    
   }
 }

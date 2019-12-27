@@ -1535,6 +1535,7 @@ class MySceneGraph {
     drawPrimitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
         primitive.updateTexCoords(factorS, factorT);
+        primitive.enableNormalViz();
         primitive.display();
     }
 

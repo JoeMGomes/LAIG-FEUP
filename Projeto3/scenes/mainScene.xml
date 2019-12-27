@@ -2,8 +2,8 @@
     <scene root="root" axis_length="5" />
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="5" y="5" z="10" />
-            <to x="0" y="0" z="0" />
+            <from x="0" y="4" z="2" />
+            <to x="0" y="2" z="0" />
         </perspective>
         <perspective id="topView" near="0.1" far="500" angle="45">
             <from x="1" y="15" z="1" />
@@ -15,11 +15,18 @@
         <background r="0.0" g="0.0" b="0.0" a="1.0" />
     </globals>
     <lights>
-        <omni id="demoLight" enabled="1">
-            <location x="9.8" y="11.9" z="10" w="1.0" />
+        <omni id="whiteLight" enabled="1">
+            <location x="0" y="5" z="-4" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <attenuation constant="1.0" linear="1.0" quadratic="1.0" />
+        </omni>
+         <omni id="blackLight" enabled="1">
+            <location x="0" y="5" z="4" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r=".4" g=".4" b=".4" a=".4" />
+            <specular r=".4" g=".4" b=".4" a=".4" />
             <attenuation constant="1.0" linear="1.0" quadratic="1.0" />
         </omni>
     </lights>
@@ -32,6 +39,12 @@
             <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+        <material id="brown" shininess="5">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.6" g="0.3" b="0.1" a="1.0" />
+            <diffuse r="0.6" g="0.3" b="0.1" a="1.0" />
+            <specular r=".3" g=".3" b=".3" a="1.0" />
         </material>
     </materials>
     <transformations>
@@ -54,8 +67,11 @@
         <primitive id="bladeRect">
             <rectangle x1="0" y1="0" x2="1" y2=".4" />
         </primitive>
-        <primitive id="human">
-            <objfile file="models/male.obj"/>
+        <primitive id="table">
+            <objfile file="models/table.obj"/>
+        </primitive>
+        <primitive id="chair">
+            <objfile file="models/chair.obj"/>
         </primitive>
     </primitives>
     <components>
@@ -66,7 +82,35 @@
             </materials>
             <texture id="body" />
             <children>
-                <primitiveref id="human"/>
+                <primitiveref id="table"/>
+                <componentref id="chairWhite"/>
+                <componentref id="chairBlack"/>
+
+            </children>
+        </component>
+        <component id="chairWhite">
+            <transformation>
+                <translate x="0" y="0" z="-1.5"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="chair"/>
+            </children>
+        </component>
+        <component id="chairBlack">
+            <transformation>
+                <translate x="0" y="0" z="1.5"/>
+                <rotate axis="y" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="chair"/>
             </children>
         </component>
     </components>
