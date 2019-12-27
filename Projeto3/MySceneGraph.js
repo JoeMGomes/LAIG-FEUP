@@ -961,8 +961,9 @@ class MySceneGraph {
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
                     grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
-                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' && grandChildren[0].nodeName != 'objfile')) {
-                return "There must be exactly 1 primitive type (rectangle, triangle, cylinder, sphere, torus, plane or patch)"
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' && 
+                    grandChildren[0].nodeName != 'objfile' && grandChildren[0].nodeName != 'trifan')) {
+                return "There must be exactly 1 primitive type"
             }
 
             // Specifications for the current primitive.
@@ -1073,8 +1074,9 @@ class MySceneGraph {
 
                 if (primitiveType == 'cylinder')
                     var cyl = new MyCylinder(this.scene, primitiveId, base, top, height, slices, stacks);
-                else var cyl = new Cylinder2(this.scene, primitiveId, base, top, height, slices, stacks);
-
+                else if (primitiveType =='cylinder2')
+                    var cyl = new Cylinder2(this.scene, primitiveId, base, top, height, slices, stacks);
+                else var cyl = new CylinderClosed(this.scene, primitiveId, base, top, height, slices, stacks);
 
                 this.primitives[primitiveId] = cyl;
             } else if (primitiveType == 'sphere') {
@@ -1176,7 +1178,6 @@ class MySceneGraph {
                 this.primitives[primitiveId] = patch;
             } else if (primitiveType == 'objfile') {
 
-
                 var file = this.reader.getString(grandChildren[0], 'file');
                 if (!(file.substring(file.length - 4, file.length) == ".obj")) {
                     this.onXMLMinorError("File type not suported.");
@@ -1184,6 +1185,23 @@ class MySceneGraph {
                 }
                 var objFile = new CGFOBJModel(this.scene, file, false);
                 this.primitives[primitiveId] = objFile;
+            }
+            else if (primitiveType == 'trifan') {
+                console.log("TRIFAN")
+
+                // base
+                var radius = this.reader.getFloat(grandChildren[0], 'radius');
+                if (!(radius != null && !isNaN(radius)))
+                    return "unable to parse radius of the primitive coordinates for ID = " + primitiveId;
+
+                // slices
+                var slices = this.reader.getFloat(grandChildren[0], 'slices');
+                if (!(slices != null && !isNaN(slices)))
+                    return "unable to parse slices of the primitive coordinates for ID = " + primitiveId;
+
+                var fan = new TriFan(this.scene, primitiveId, radius, slices);
+
+                this.primitives[primitiveId] = fan;
             }
         }
 
@@ -1535,7 +1553,6 @@ class MySceneGraph {
     drawPrimitive(id, factorS, factorT) {
         var primitive = this.primitives[id];
         primitive.updateTexCoords(factorS, factorT);
-        primitive.enableNormalViz();
         primitive.display();
     }
 

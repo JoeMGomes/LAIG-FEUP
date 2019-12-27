@@ -2,7 +2,7 @@
     <scene root="root" axis_length="5" />
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
-            <from x="0" y="4" z="2" />
+            <from x="0" y="4" z="0.1" />
             <to x="0" y="2" z="0" />
         </perspective>
         <perspective id="topView" near="0.1" far="500" angle="45">
@@ -22,7 +22,7 @@
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
             <attenuation constant="1.0" linear="1.0" quadratic="1.0" />
         </omni>
-         <omni id="blackLight" enabled="1">
+        <omni id="blackLight" enabled="1">
             <location x="0" y="5" z="4" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
             <diffuse r=".4" g=".4" b=".4" a=".4" />
@@ -46,6 +46,12 @@
             <diffuse r="0.6" g="0.3" b="0.1" a="1.0" />
             <specular r=".3" g=".3" b=".3" a="1.0" />
         </material>
+        <material id="black" shininess="1">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
+        </material>
     </materials>
     <transformations>
         <transformation id="demoTransform">
@@ -53,6 +59,12 @@
             <rotate axis="x" angle="45" />
             <rotate axis="z" angle="0" />
         </transformation>
+        <transformation id="centerOcto">
+                <rotate axis="x" angle="90"/>
+                <rotate axis="z" angle="22.5"/>
+                <scale x="0.1" y="0.1" z="0.1"/>
+                <translate x="0" y="0" z="-0.5"/>
+            </transformation>
     </transformations>
     <animations>
         <animation id="bladeRotate">
@@ -73,10 +85,17 @@
         <primitive id="chair">
             <objfile file="models/chair.obj"/>
         </primitive>
+        <primitive id="cylinder8">
+            <cylinder base="1" top="1" height=".5" slices="8" stacks="1" />
+        </primitive>
+        <primitive id="fan">
+            <trifan radius="1" slices="8"/>
+        </primitive>
     </primitives>
     <components>
         <component id="root">
-            <transformation></transformation>
+            <transformation>
+            </transformation>
             <materials>
                 <material id="default" />
             </materials>
@@ -84,8 +103,8 @@
             <children>
                 <primitiveref id="table"/>
                 <componentref id="chairWhite"/>
-                <componentref id="chairBlack"/>
-
+                <componentref id="chairBlack"/> 
+                <componentref id="black1"/>
             </children>
         </component>
         <component id="chairWhite">
@@ -111,6 +130,56 @@
             <texture id="none"/>
             <children>
                 <primitiveref id="chair"/>
+            </children>
+        </component>
+        <component id="black1">
+             <transformation>
+                <translate x="0" y="2.165" z="0"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+        <component id="octoPiece">
+            <transformation>
+                <transformationref id="centerOcto"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="cylinder8"/>
+                <componentref id="topCover"/>
+                <componentref id="botCover"/>
+            </children>
+        </component>
+        <component id="topCover">
+            <transformation>
+                <rotate axis="x" angle="180"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="fan"/>
+            </children>
+        </component>
+        <component id="botCover">
+            <transformation>
+                <translate x="0" y="0" z=".5"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <primitiveref id="fan"/>
             </children>
         </component>
     </components>

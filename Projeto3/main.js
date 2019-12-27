@@ -58,6 +58,7 @@ serialInclude([
   "primitives/MyRectangle.js",
   "primitives/MyCylinder.js",
   "primitives/Cylinder2.js",
+  "primitives/TriFan.js",
   "primitives/MyTriangle.js",
   "primitives/Plane.js",
   "primitives/Patch.js",
