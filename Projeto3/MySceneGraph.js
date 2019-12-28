@@ -961,7 +961,7 @@ class MySceneGraph {
                 (grandChildren[0].nodeName != 'rectangle' && grandChildren[0].nodeName != 'triangle' &&
                     grandChildren[0].nodeName != 'cylinder' && grandChildren[0].nodeName != 'sphere' &&
                     grandChildren[0].nodeName != 'torus' && grandChildren[0].nodeName != 'plane' &&
-                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' && 
+                    grandChildren[0].nodeName != 'patch' && grandChildren[0].nodeName != 'cylinder2' &&
                     grandChildren[0].nodeName != 'objfile' && grandChildren[0].nodeName != 'trifan')) {
                 return "There must be exactly 1 primitive type"
             }
@@ -1074,7 +1074,7 @@ class MySceneGraph {
 
                 if (primitiveType == 'cylinder')
                     var cyl = new MyCylinder(this.scene, primitiveId, base, top, height, slices, stacks);
-                else if (primitiveType =='cylinder2')
+                else if (primitiveType == 'cylinder2')
                     var cyl = new Cylinder2(this.scene, primitiveId, base, top, height, slices, stacks);
                 else var cyl = new CylinderClosed(this.scene, primitiveId, base, top, height, slices, stacks);
 
@@ -1185,8 +1185,7 @@ class MySceneGraph {
                 }
                 var objFile = new CGFOBJModel(this.scene, file, false);
                 this.primitives[primitiveId] = objFile;
-            }
-            else if (primitiveType == 'trifan') {
+            } else if (primitiveType == 'trifan') {
                 console.log("TRIFAN")
 
                 // base
@@ -1480,9 +1479,13 @@ class MySceneGraph {
 
 
     update(t) {
-        
+
         this.updateAnimation(t, this.idRoot);
     }
+
+
+
+
 
     /**
      * Displays the scene, processing each node, starting in the root node.
@@ -1492,6 +1495,8 @@ class MySceneGraph {
         //To test the parsing/creation of the primitives, call the display function directly
 
         var rootMaterial = Object.keys(this.materials)[0];
+
+        this.pickID = 1;
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
 
     }
@@ -1502,6 +1507,8 @@ class MySceneGraph {
         if (node.animation != null) {
             node.animation.update(t);
         }
+
+
         for (var i = 0; i < node.children.length; i++) {
             this.updateAnimation(t, node.children[i]);
         }
@@ -1531,7 +1538,7 @@ class MySceneGraph {
 
         this.scene.multMatrix(node.transform);
         if (node.animation != null) {
-            
+
             this.scene.multMatrix(node.animation.apply());
         }
 
@@ -1541,6 +1548,14 @@ class MySceneGraph {
             if (this.primitives[node.leafs[i]] != null)
                 this.drawPrimitive(node.leafs[i], sLength, tLength);
         }
+
+        if (nodeID == "octoPiece") {
+            for (let i = 0; i < node.children.length; i++) {
+                this.scene.registerForPick(this.pickID, this.components[nodeID]);
+                this.pickID++;
+            }
+        }
+
 
         //percorrer outros nodes filhos recursivamente
         for (var i = 0; i < node.children.length; i++) {

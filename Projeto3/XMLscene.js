@@ -42,6 +42,7 @@ class XMLscene extends CGFscene {
     this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
     this.defaultShader = this.activeShader;
     this.startTime = null;
+    this.setPickEnabled(true);
   }
 
   /**
@@ -67,6 +68,7 @@ class XMLscene extends CGFscene {
    * Initializes the scene lights with the values read from the XML file.
    */
   initLights() {
+
     var i = 0;
     // Lights index.
 
@@ -198,14 +200,14 @@ class XMLscene extends CGFscene {
     // Clear image and depth buffer everytime we update the scene
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
-    
+
     this.camera = camera;
     this.interface.setActiveCamera(this.camera);
-    
+
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
-    
+
     // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
@@ -238,7 +240,24 @@ class XMLscene extends CGFscene {
     // ---- END Background, camera and axis setup
   }
 
+
+  logPicking() {
+    if (this.pickMode == false) {
+      if (this.pickResults != null && this.pickResults.length > 0) {
+        for (var i = 0; i < this.pickResults.length; i++) {
+          var obj = this.pickResults[i][0];
+          if (obj) {
+            var customId = this.pickResults[i][1];
+            console.log("Picked object: " + obj + ", with pick id " + customId);
+          }
+        }
+        this.pickResults.splice(0, this.pickResults.length);
+      }
+    }
+  }
+
   display() {
+    this.logPicking();
     this.securityCamText.attachToFrameBuffer()
 
     this.render(this.securityCam)
@@ -246,13 +265,13 @@ class XMLscene extends CGFscene {
     this.securityCamText.detachFromFrameBuffer()
 
     this.render(this.normalCam)
-  
+
     this.gl.disable(this.gl.DEPTH_TEST)
 
     this.secCam.display()
     this.setActiveShader(this.defaultShader)
 
     this.gl.enable(this.gl.DEPTH_TEST)
-    
+
   }
 }
