@@ -85,7 +85,5 @@ checkFinalMove(ID,Player):-
     replaceFact(square(C,_,_,_),  square(C,K,L,S3)), 
     replaceFact(square(D,_,_,_),  square(D,M,N,S4)))).
 
-
-
     
     

@@ -227,3 +227,11 @@ game_over(_, Winner):-
 	((X > 0, Winner is 1); true),
 	((X < 0, Winner is -1); true),
 	X \== 0.
+
+
+get_octolist(List):-
+    findall([A,X], octo(A,_,_,X,_,_,_,_), List).
+
+
+get_squarelist(List):-
+    findall([A,X], square(A,_,_,X), List).

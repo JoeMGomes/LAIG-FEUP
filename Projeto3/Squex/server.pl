@@ -104,6 +104,7 @@ print_header_line(_).
 
 % Require your Prolog Files here
 :-include('squex.pl').
+:-include('json.pl').
 
 % Display Board on Server
 parse_input(display,Res):-
@@ -130,8 +131,10 @@ parse_input(handshake, Res):-
 parse_input(quit, Res):-
 	Res = '{"msg": "goodbye", "return": true}'.
 
-% Example function
-parse_input(test(C,N), Res) :- test(C,Res,N).
-test(_,[],N) :- N =< 0.
-test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-	
+parse_input(get_octolist, Res):-
+	get_octolist(List),
+	matrix_to_json(List,Res).
+
+parse_input(get_squarelist, Res):-
+	get_squarelist(List),
+	matrix_to_json(List,Res).

@@ -54,7 +54,7 @@
             if(onSuccess && data.target.status == 200)
                 onSuccess(reply);
             else
-                console.log("Reply Message: ", reply.msg, "; Return Value: ", reply.return);
+                console.log(reply);
         };
         
         request.onError = onError || function () {
