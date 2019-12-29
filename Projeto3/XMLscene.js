@@ -42,6 +42,7 @@ class XMLscene extends CGFscene {
     this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
     this.defaultShader = this.activeShader;
     this.startTime = null;
+
   }
 
   /**
