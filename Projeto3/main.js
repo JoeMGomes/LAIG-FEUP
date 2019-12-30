@@ -72,6 +72,7 @@ serialInclude([
   "KeyframeAnimation.js",
   "CGFResourceReader.js",
   "primitives/CGFOBJModel.js",
+  "Connection.js",
 
   (main = function() {
     // Standard application, scene and interface setup
@@ -96,6 +97,9 @@ serialInclude([
     var myGraph = new MySceneGraph(filename, myScene);
 
     // start
+
     app.run();
   })
 ]);
+
+
