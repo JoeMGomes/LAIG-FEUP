@@ -1,4 +1,6 @@
 :- consult('data.pl').
+:- dynamic moveLog/3.
+
 
 %creates a 2 way edge
 addEdge(X,Y):-
@@ -160,7 +162,7 @@ checkAllBlack(X):-
 
 
 %stop state for checkWinBlack
-%ends at 67 because of bottom row
+%ends at 63 because of bottom row
 checkWinBlack(X,63):-
 	end(0),
 	checkPath(X,63,-1).
@@ -235,3 +237,36 @@ get_octolist(List):-
 
 get_squarelist(List):-
     findall([A,X], square(A,_,_,X), List).
+
+clear_board:-
+	reconsult('data.pl').
+
+log_move(Row, Col):-
+	moveNo(X),
+	assertz(moveLog(X,Row,Col)),
+	X1 is X +1,
+	replaceFact(moveNo(X), moveNo(X1)).
+
+redoAux([]).
+
+redoAux([[_,Y,Z]|Tail]):-
+	call(move, Y,Z),
+	redoAux(Tail).
+
+redo_all_moves:-
+	findall([X,Row,Col], moveLog(X,Row,Col), MoveList),
+	retractall(moveLog(_,_,_)),
+	redoAux(MoveList).
+
+
+undo:-
+	moveNo(X),
+	X1 is X-1,
+	retractall(moveLog(X1,_,_)),
+	replaceFact(moveNo(X), moveNo(X1)),
+	clear_board,
+	redo_all_moves.
+
+
+
+

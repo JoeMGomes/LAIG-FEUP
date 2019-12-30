@@ -82,6 +82,7 @@ move(Row, Col):-
 			)
 		)
 	),
+	log_move(Row, Col),
 	(game_over(_,_);true),
 	turn(C),
 	(C>0 , write('It is @\'s turn!');
@@ -110,9 +111,7 @@ playBot(Level):-
 			)
 		)
 		),
-		
 		turn(Z),
-
 		(game_over(_,_);true),
 		(Z>0 , write('It is @\'s turn!'), nl;
 		write('It is b\'s turn!'), nl).	
@@ -133,6 +132,7 @@ moveVsBot(Row, Col, Level):-
 			)
 		)
 	),
+	log_move(Row, Col),
 	(game_over(_,_);true),
 	turn(A),
 	(A < 0), 
@@ -155,5 +155,7 @@ botVsbot(Level):-
 	end(0),
 	playBot(Level),!,
 	botVsbot(Level).
+
+
 
 

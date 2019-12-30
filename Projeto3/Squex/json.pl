@@ -23,4 +23,4 @@ matrix_to_json([List | R], [JsonList | Json]):-
 list_to_json([], []).
 list_to_json([Element | Rest], [JSONElem | JsonRest]):-
   json(Element, JSONElem),
-  list_to_json(Rest, JsonRest).
+  list_to_json(Rest, JsonRest). 

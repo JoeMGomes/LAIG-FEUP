@@ -138,3 +138,12 @@ parse_input(get_octolist, Res):-
 parse_input(get_squarelist, Res):-
 	get_squarelist(List),
 	matrix_to_json(List,Res).
+
+parse_input(undo, Res):-
+	undo,
+	Res = '{"msg": "undone", "return": true}'.
+
+
+testlogs:-
+	findall(X,moveLog(X,_,_),List),
+	write(List).

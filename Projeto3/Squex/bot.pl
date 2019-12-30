@@ -21,7 +21,8 @@ randomPlay(Player):-
     valid_moves(_,_,List),
     random_member(M, List),
     octo(M, Row, Col,_,_,_,_,_),
-    placePiece(Player, Row, Col).
+    placePiece(Player, Row, Col),
+    log_move(Row, Col).
 
 %stopcase for testAllOctos
 %ends at X = 63
@@ -44,7 +45,8 @@ smartPlay(Player):-
     A \== [],
     random_member(ID, A),
     octo(ID, Row, Col,_,_,_,_,_),
-    placePiece(Player, Row, Col).
+    placePiece(Player, Row, Col),
+    log_move(Row, Col).
 
 
 %in case that u cannot end in the next play do a random play

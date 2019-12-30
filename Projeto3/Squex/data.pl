@@ -3,6 +3,7 @@
 :- dynamic turn/1.
 :- dynamic end/1.
 :- dynamic edge/2.
+:- dynamic moveNo/1.
 
 turn(1).
 end(0).
@@ -131,3 +132,7 @@ square(46,6,4,x).
 square(47,6,5,x).
 square(48,6,6,x).
 
+moveNo(0).
+
+%moveLog(MoveNo, Row, Col).
+%moveNo(number).
