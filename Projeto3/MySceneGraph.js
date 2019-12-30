@@ -1555,9 +1555,6 @@ class MySceneGraph {
                 this.pickID++;
             }
         }
-        else if (nodeID != "root") {
-            this.scene.registerForPick(1, this.components[nodeID]);
-        }
 
         //percorrer outros nodes filhos recursivamente
         for (let i = 0; i < node.children.length; i++) {
