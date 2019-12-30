@@ -105,6 +105,7 @@
                 <componentref id="chairWhite"/>
                 <componentref id="chairBlack"/> 
                 <componentref id="black1"/>
+                <componentref id="board"/>
             </children>
         </component>
         <component id="chairWhite">
@@ -134,7 +135,7 @@
         </component>
         <component id="black1">
              <transformation>
-                <translate x="0" y="2.165" z="0"/>
+                <translate x="1" y="2.165" z="0"/>
             </transformation>
             <materials>
                 <material id="brown"/>
@@ -182,5 +183,297 @@
                 <primitiveref id="fan"/>
             </children>
         </component>
+
+
+        <component id="board">
+            <transformation>
+                <translate x="-0.63" y="2.165" z="-0.63"/>
+                <scale x="1" y="0.1" z="1"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardLine0"/>
+                <componentref id="boardLine1"/>
+                <componentref id="boardLine2"/>
+                <componentref id="boardLine3"/>
+                <componentref id="boardLine4"/>
+                <componentref id="boardLine5"/>
+                <componentref id="boardLine6"/>
+                <componentref id="boardLine7"/>
+            </children>
+        </component>
+
+
+        <component id="boardLine0">
+            <transformation>
+                <translate x="0" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>    
+            </children>
+        </component>
+
+
+        <component id="boardLine1">
+            <transformation>
+                <translate x="0" y="0" z="0.18"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine2">
+            <transformation>
+                <translate x="0" y="0" z="0.36"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine3">
+            <transformation>
+                <translate x="0" y="0" z="0.54"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine4">
+            <transformation>
+                <translate x="0" y="0" z="0.72"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine5">
+            <transformation>
+                <translate x="0" y="0" z="0.9"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine6">
+            <transformation>
+                <translate x="0" y="0" z="1.08"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+        <component id="boardLine7">
+            <transformation>
+                <translate x="0" y="0" z="1.26"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="boardPiece0"/>
+                <componentref id="boardPiece1"/>
+                <componentref id="boardPiece2"/>
+                <componentref id="boardPiece3"/>
+                <componentref id="boardPiece4"/>
+                <componentref id="boardPiece5"/>
+                <componentref id="boardPiece6"/>
+                <componentref id="boardPiece7"/>
+            </children>
+        </component>
+
+
+        <component id="boardPiece0">
+            <transformation>
+                <translate x="0" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece1">
+            <transformation>
+                <translate x="0.18" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece2">
+            <transformation>
+                <translate x="0.36" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece3">
+            <transformation>
+                <translate x="0.54" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece4">
+            <transformation>
+                <translate x="0.72" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece5">
+            <transformation>
+                <translate x="0.9" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece6">
+            <transformation>
+                <translate x="1.08" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="boardPiece7">
+            <transformation>
+                <translate x="1.26" y="0" z="0"/>
+            </transformation>
+            <materials>
+                <material id="default"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+
+
     </components>
 </lxs>

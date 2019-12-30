@@ -1544,21 +1544,23 @@ class MySceneGraph {
 
 
         //desenhar as primitivas
-        for (var i = 0; i < node.leafs.length; i++) {
+        for (let i = 0; i < node.leafs.length; i++) {
             if (this.primitives[node.leafs[i]] != null)
                 this.drawPrimitive(node.leafs[i], sLength, tLength);
         }
 
-        if (nodeID == "octoPiece") {
+        if (nodeID.substr(0, 5) == "board") {
             for (let i = 0; i < node.children.length; i++) {
                 this.scene.registerForPick(this.pickID, this.components[nodeID]);
                 this.pickID++;
             }
         }
-
+        else if (nodeID != "root") {
+            this.scene.registerForPick(1, this.components[nodeID]);
+        }
 
         //percorrer outros nodes filhos recursivamente
-        for (var i = 0; i < node.children.length; i++) {
+        for (let i = 0; i < node.children.length; i++) {
             this.scene.pushMatrix();
             this.traverseNodes(node.children[i], material, texture, sLength, tLength);
             this.scene.popMatrix();
