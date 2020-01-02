@@ -38,11 +38,12 @@ class XMLscene extends CGFscene {
     this.setUpdatePeriod(16.67);
 
 
-    this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
+    // this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
+    // this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
     this.defaultShader = this.activeShader;
     this.startTime = null;
-    this.setPickEnabled(true);
+    this.setPickEnabled(true); 
+    this.interfaceManager = new InterfaceManager(this,null);
   }
 
   /**
@@ -136,6 +137,7 @@ class XMLscene extends CGFscene {
    */
   onGraphLoaded() {
     this.axis = new CGFaxis(this, this.graph.referenceLength);
+    this.interfaceManager = new InterfaceManager(this, null);
 
     this.gl.clearColor(
       this.graph.background[0],
@@ -183,9 +185,9 @@ class XMLscene extends CGFscene {
       this.startTime = t;
     }
     // only shader 6 is using time factor
-    this.secCam.shader.setUniformsValues({
-      timeFactor: t / 100 % 1000
-    });
+    // this.secCam.shader.setUniformsValues({
+    //   timeFactor: t / 100 % 1000
+    // });
     let deltaT = t - this.startTime;
     if (this.sceneInited) {
       this.graph.update(deltaT);
@@ -260,20 +262,8 @@ class XMLscene extends CGFscene {
   display() {
     this.logPicking();
 
-    this.securityCamText.attachToFrameBuffer()
-
-    this.render(this.securityCam)
-
-    this.securityCamText.detachFromFrameBuffer()
-
     this.render(this.normalCam)
 
-    this.gl.disable(this.gl.DEPTH_TEST)
-
-    this.secCam.display()
-    this.setActiveShader(this.defaultShader)
-
-    this.gl.enable(this.gl.DEPTH_TEST)
-
+    this.interfaceManager.display();
   }
 }
