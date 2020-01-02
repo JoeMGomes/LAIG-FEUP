@@ -325,8 +325,8 @@ class MySceneGraph {
                     return "unable to parse y coordenate of the 'to' point of the view " + viewId;
                 }
 
-                var pers = new CGFcamera(angle, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
-                var persS = new CGFcamera(angle, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+                var pers = new CGFcamera(angle*DEGREE_TO_RAD, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
+                var persS = new CGFcamera(angle*DEGREE_TO_RAD, near, far, vec3.fromValues(fromX, fromY, fromZ), vec3.fromValues(toX, toY, toZ));
                 this.views[viewId] = pers;
                 this.securityCams[viewId] = persS;
 
@@ -1124,7 +1124,7 @@ class MySceneGraph {
             } else if (primitiveType == 'plane') {
                 //npartsU
                 var npartsU = this.reader.getInteger(grandChildren[0], 'npartsU');
-                if (!(npartsU != null && !isNaN(inner)))
+                if (!(npartsU != null && !isNaN(npartsU)))
                     return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsV
@@ -1137,22 +1137,22 @@ class MySceneGraph {
             } else if (primitiveType == 'patch') {
                 //npointsU
                 var npointsU = this.reader.getInteger(grandChildren[0], 'npointsU');
-                if (!(npartsU != null && !isNaN(inner)))
+                if (!(npointsU != null && !isNaN(npointsU)))
                     return "unable to parse npointsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npointsV
                 var npointsV = this.reader.getInteger(grandChildren[0], 'npointsV');
-                if (!(npointsV != null && !isNaN(inner)))
+                if (!(npointsV != null && !isNaN(npointsV)))
                     return "unable to parse npointsV of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsU
                 var npartsU = this.reader.getInteger(grandChildren[0], 'npartsU');
-                if (!(npartsU != null && !isNaN(inner)))
+                if (!(npartsU != null && !isNaN(npartsU)))
                     return "unable to parse npartsU of the primitive coordinates for ID = " + primitiveId;
 
                 //npartsV
                 var npartsV = this.reader.getInteger(grandChildren[0], 'npartsV');
-                if (!(npartsV != null && !isNaN(inner)))
+                if (!(npartsV != null && !isNaN(npartsV)))
                     return "unable to parse npartsV of the primitive coordinates for ID = " + primitiveId;
 
                 var grandgrandChildren = grandChildren[0].children;
@@ -1186,8 +1186,6 @@ class MySceneGraph {
                 var objFile = new CGFOBJModel(this.scene, file, false);
                 this.primitives[primitiveId] = objFile;
             } else if (primitiveType == 'trifan') {
-                console.log("TRIFAN")
-
                 // base
                 var radius = this.reader.getFloat(grandChildren[0], 'radius');
                 if (!(radius != null && !isNaN(radius)))
