@@ -1,13 +1,13 @@
 class InterfaceComp {
 
-    constructor(scene, id, coords, width, height, on_click, textureName){
+    constructor(scene, coords, width, height, textureName, on_click){
         this.scene = scene
-        this.id=id
         this.initBuffers(coords[0],coords[1],width,height);
         this.width = width
         this.height = height
         this.on_click=on_click
-        this.textureName = textureName
+        if (textureName != null)
+        this.texture = new CGFtexture(this.scene, "./scenes/images/interface/" + textureName);    
     }
 
     initBuffers(xPos, yPos, width, height){
@@ -75,9 +75,18 @@ class InterfaceComp {
     }
 
     onClick() {
-        if (this.on_click){
+        if (this.on_click != null){
             this.on_click();
         }
     }
 
+    isInside(x, y, canvas_width, canvas_height) {
+        let top = (-this.vertices[1] + 1) / 2 * canvas_height;
+        let bottom = (-this.vertices[5] + 1) / 2 * canvas_height;
+        let left = (this.vertices[0] + 1) / 2 * canvas_width;
+        let right = (this.vertices[2] + 1) / 2 * canvas_width;
+        let height = Math.abs(bottom - top);
+        let width = Math.abs(right - left);
+        return y >= top && y <= top + height && x >= left && x <= left + width;
+    }
 }
