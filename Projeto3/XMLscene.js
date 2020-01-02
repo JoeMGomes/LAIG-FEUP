@@ -37,9 +37,6 @@ class XMLscene extends CGFscene {
     this.axis = new CGFaxis(this);
     this.setUpdatePeriod(16.67);
 
-
-    // this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    // this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
     this.defaultShader = this.activeShader;
     this.startTime = null;
     this.setPickEnabled(true); 
@@ -50,13 +47,6 @@ class XMLscene extends CGFscene {
    * Initializes the scene cameras.
    */
   initCameras() {
-    this.securityCam = new CGFcamera(
-      0.4,
-      0.1,
-      500,
-      vec3.fromValues(20, 20, 10),
-      vec3.fromValues(0, 0, 0)
-    );
     this.normalCam = new CGFcamera(
       0.4,
       0.1,

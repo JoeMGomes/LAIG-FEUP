@@ -13,13 +13,13 @@ class InterfaceManager {
         );
         this.elements = [];
         
-        this.elements["button"] = new InterfaceComp( this.scene, [-0.25, 0.2], 0.5, 0.3, "blackmarble.png", function() {
-            console.log("aee");
-        });
+        // this.elements["button"] = new InterfaceComp( this.scene, [-0.25, 0.2], 0.5, 0.3, "blackmarble.png", function() {
+        //     console.log("aee");
+        // });
         
-        this.elements["aa"] = new InterfaceComp( this.scene, [-0.5, 0.5], 0.5, 0.3, "tiledWood.png",  function() {
-            console.log("wood");
-        });
+        // this.elements["aa"] = new InterfaceComp( this.scene, [-0.5, 0.5], 0.5, 0.3, "tiledWood.png",  function() {
+        //     console.log("wood");
+        // });
 
         //Init events
         let thisObj = this;
