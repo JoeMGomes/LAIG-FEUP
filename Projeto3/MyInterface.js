@@ -26,7 +26,7 @@ class MyInterface extends CGFinterface {
 
     return true;
   }
-
+  
   addGroups(lights, views, securityCams) {
     var groupLight = this.gui.addFolder("Lights");
     groupLight.open();

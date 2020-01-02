@@ -131,6 +131,11 @@ parse_input(handshake, Res):-
 parse_input(quit, Res):-
 	Res = '{"msg": "goodbye", "return": true}'.
 
+parse_input(turn, Res):-
+	turn(X),
+	json(X,Res).
+
+
 parse_input(get_octolist, Res):-
 	get_octolist(List),
 	matrix_to_json(List,Res).

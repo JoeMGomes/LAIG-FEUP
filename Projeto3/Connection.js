@@ -19,7 +19,7 @@
     }
 
     plRequest(request){
-        let requestString = requase.command.toString();
+        let requestString = request.command.toString();
         if(request.args != null)
             requestString += '(' + request.args.toString().replace(/"/g, '') +')';
 
@@ -40,7 +40,7 @@
             counter = 0;
         }
 
-        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, true);
+        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, false);
 
         request.onload = function(data) {
              counter = 0;

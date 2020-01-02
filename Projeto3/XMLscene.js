@@ -22,7 +22,7 @@ class XMLscene extends CGFscene {
    */
   init(application) {
     super.init(application);
-
+    this.game = new Game(this);
     this.sceneInited = false;
 
     this.initCameras();
@@ -249,6 +249,7 @@ class XMLscene extends CGFscene {
           if (obj) {
             var customId = this.pickResults[i][1];
             console.log("Picked object: " + obj + ", with pick id " + customId);
+            this.game.playMove(customId);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -258,6 +259,7 @@ class XMLscene extends CGFscene {
 
   display() {
     this.logPicking();
+
     this.securityCamText.attachToFrameBuffer()
 
     this.render(this.securityCam)

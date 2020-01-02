@@ -73,6 +73,7 @@ serialInclude([
   "CGFResourceReader.js",
   "primitives/CGFOBJModel.js",
   "Connection.js",
+  "Game.js",
 
   (main = function() {
     // Standard application, scene and interface setup

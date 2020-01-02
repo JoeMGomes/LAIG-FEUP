@@ -8,7 +8,7 @@ json(Number, Number):-
 json(Element, JSONElem):-
   surround(Element, '"', '"', JSONElem).
 
-
+iquals(X, X).
 
 surround(Element, Left, Right, Surrounded):-
   atom_concat(Left, Element, Temp),

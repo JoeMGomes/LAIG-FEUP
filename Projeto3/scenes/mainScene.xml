@@ -104,7 +104,8 @@
                 <primitiveref id="table"/>
                 <componentref id="chairWhite"/>
                 <componentref id="chairBlack"/> 
-                <componentref id="black1"/>
+                <componentref id="blackPieces"/>
+                <componentref id="whitePieces"/>
                 <componentref id="board"/>
             </children>
         </component>
@@ -133,9 +134,55 @@
                 <primitiveref id="chair"/>
             </children>
         </component>
-        <component id="black1">
+
+
+        <component id="whitePieces">
              <transformation>
-                <translate x="1" y="2.165" z="0"/>
+                <translate x="0" y="2.165" z="0"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="white1"/>
+                <componentref id="white2"/>
+                <componentref id="white3"/>
+                <componentref id="white4"/>
+                <componentref id="white5"/>
+                <componentref id="white6"/>
+                <componentref id="white7"/>
+                <componentref id="white8"/>
+                <componentref id="white9"/>
+                <componentref id="white10"/>
+                <componentref id="white11"/>
+                <componentref id="white12"/>
+                <componentref id="white13"/>
+                <componentref id="white14"/>
+                <componentref id="white15"/>
+                <componentref id="white16"/>
+                <componentref id="white17"/>
+                <componentref id="white18"/>
+                <componentref id="white19"/>
+                <componentref id="white20"/>
+                <componentref id="white21"/>
+                <componentref id="white22"/>
+                <componentref id="white23"/>
+                <componentref id="white24"/>
+                <componentref id="white25"/>
+                <componentref id="white26"/>
+                <componentref id="white27"/>
+                <componentref id="white28"/>
+                <componentref id="white29"/>
+                <componentref id="white30"/>
+                <componentref id="white31"/>
+                <componentref id="white32"/>
+            </children>
+        </component>
+
+        <component id="white1">
+             <transformation>
+                <translate x="-0.63" y="0" z="-.82"/>
             </transformation>
             <materials>
                 <material id="brown"/>
@@ -145,6 +192,875 @@
                 <componentref id="octoPiece"/>
             </children>
         </component>
+
+        <component id="white2">
+             <transformation>
+                <translate x="-0.63" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white3">
+             <transformation>
+                <translate x="-0.63" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white4">
+             <transformation>
+                <translate x="-0.63" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white5">
+             <transformation>
+                <translate x="-0.45" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white6">
+             <transformation>
+                <translate x="-0.45" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white7">
+             <transformation>
+                <translate x="-0.45" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white8">
+             <transformation>
+                <translate x="-0.45" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white9">
+             <transformation>
+                <translate x="-0.27" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white10">
+             <transformation>
+                <translate x="-0.27" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white11">
+             <transformation>
+                <translate x="-0.27" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white12">
+             <transformation>
+                <translate x="-0.27" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white13">
+             <transformation>
+                <translate x="-0.09" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white14">
+             <transformation>
+                <translate x="-0.09" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white15">
+             <transformation>
+                <translate x="-0.09" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white16">
+             <transformation>
+                <translate x="-0.09" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white17">
+             <transformation>
+                <translate x="0.09" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white18">
+             <transformation>
+                <translate x="0.09" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white19">
+             <transformation>
+                <translate x="0.09" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white20">
+             <transformation>
+                <translate x="0.09" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white21">
+             <transformation>
+                <translate x="0.27" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white22">
+             <transformation>
+                <translate x="0.27" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white23">
+             <transformation>
+                <translate x="0.27" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white24">
+             <transformation>
+                <translate x="0.27" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white25">
+             <transformation>
+                <translate x="0.45" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white26">
+             <transformation>
+                <translate x="0.45" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white27">
+             <transformation>
+                <translate x="0.45" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white28">
+             <transformation>
+                <translate x="0.45" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+
+        <component id="white29">
+             <transformation>
+                <translate x="0.63" y="0" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white30">
+             <transformation>
+                <translate x="0.63" y="0.05" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white31">
+             <transformation>
+                <translate x="0.63" y="0.1" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="white32">
+             <transformation>
+                <translate x="0.63" y="0.15" z="-.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+
+
+        <component id="blackPieces">
+             <transformation>
+                <translate x="0" y="2.165" z="0"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="black1"/>
+                <componentref id="black2"/>
+                <componentref id="black3"/>
+                <componentref id="black4"/>
+                <componentref id="black5"/>
+                <componentref id="black6"/>
+                <componentref id="black7"/>
+                <componentref id="black8"/>
+                <componentref id="black9"/>
+                <componentref id="black10"/>
+                <componentref id="black11"/>
+                <componentref id="black12"/>
+                <componentref id="black13"/>
+                <componentref id="black14"/>
+                <componentref id="black15"/>
+                <componentref id="black16"/>
+                <componentref id="black17"/>
+                <componentref id="black18"/>
+                <componentref id="black19"/>
+                <componentref id="black20"/>
+                <componentref id="black21"/>
+                <componentref id="black22"/>
+                <componentref id="black23"/>
+                <componentref id="black24"/>
+                <componentref id="black25"/>
+                <componentref id="black26"/>
+                <componentref id="black27"/>
+                <componentref id="black28"/>
+                <componentref id="black29"/>
+                <componentref id="black30"/>
+                <componentref id="black31"/>
+                <componentref id="black32"/>
+            </children>
+        </component>
+   
+        <component id="black1">
+             <transformation>
+                <translate x="-0.63" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black2">
+             <transformation>
+                <translate x="-0.63" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black3">
+             <transformation>
+                <translate x="-0.63" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black4">
+             <transformation>
+                <translate x="-0.63" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black5">
+             <transformation>
+                <translate x="-0.45" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black6">
+             <transformation>
+                <translate x="-0.45" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black7">
+             <transformation>
+                <translate x="-0.45" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black8">
+             <transformation>
+                <translate x="-0.45" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black9">
+             <transformation>
+                <translate x="-0.27" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black10">
+             <transformation>
+                <translate x="-0.27" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black11">
+             <transformation>
+                <translate x="-0.27" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black12">
+             <transformation>
+                <translate x="-0.27" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black13">
+             <transformation>
+                <translate x="-0.09" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black14">
+             <transformation>
+                <translate x="-0.09" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black15">
+             <transformation>
+                <translate x="-0.09" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black16">
+             <transformation>
+                <translate x="-0.09" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black17">
+             <transformation>
+                <translate x="0.09" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black18">
+             <transformation>
+                <translate x="0.09" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black19">
+             <transformation>
+                <translate x="0.09" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black20">
+             <transformation>
+                <translate x="0.09" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black21">
+             <transformation>
+                <translate x="0.27" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black22">
+             <transformation>
+                <translate x="0.27" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black23">
+             <transformation>
+                <translate x="0.27" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black24">
+             <transformation>
+                <translate x="0.27" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black25">
+             <transformation>
+                <translate x="0.45" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black26">
+             <transformation>
+                <translate x="0.45" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black27">
+             <transformation>
+                <translate x="0.45" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black28">
+             <transformation>
+                <translate x="0.45" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+
+        <component id="black29">
+             <transformation>
+                <translate x="0.63" y="0" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black30">
+             <transformation>
+                <translate x="0.63" y="0.05" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black31">
+             <transformation>
+                <translate x="0.63" y="0.1" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+        <component id="black32">
+             <transformation>
+                <translate x="0.63" y="0.15" z="0.82"/>
+            </transformation>
+            <materials>
+                <material id="brown"/>
+            </materials>
+            <texture id="none"/>
+            <children>
+                <componentref id="octoPiece"/>
+            </children>
+        </component>
+
+
         <component id="octoPiece">
             <transformation>
                 <transformationref id="centerOcto"/>
