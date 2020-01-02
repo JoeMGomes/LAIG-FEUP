@@ -6,6 +6,7 @@ class InterfaceComp {
         this.width = width
         this.height = height
         this.on_click=on_click
+        this.active = true
         if (textureName != null)
         this.texture = new CGFtexture(this.scene, "./scenes/images/interface/" + textureName);    
     }
@@ -88,5 +89,18 @@ class InterfaceComp {
         let height = Math.abs(bottom - top);
         let width = Math.abs(right - left);
         return y >= top && y <= top + height && x >= left && x <= left + width;
+    }
+
+    enable(){
+        this.active = true
+    }
+
+    
+    disable(){
+        this.active = false
+    }
+
+    isActive(){
+        return this.active
     }
 }

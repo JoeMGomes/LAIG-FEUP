@@ -31,7 +31,8 @@ class InterfaceManager {
         
             for(var element in thisObj.elements){
                 if (thisObj.elements[element].isInside(x, y, canvas.width, canvas.height))
-                thisObj.elements[element].onClick()
+                    if(thisObj.elements[element].isActive())
+                        thisObj.elements[element].onClick()
             }
 
         });
@@ -42,7 +43,8 @@ class InterfaceManager {
         this.scene.gl.disable(this.scene.gl.DEPTH_TEST);
 
         for(var element in this.elements){
-            this.elements[element].display();
+            if(this.elements[element].isActive())
+                this.elements[element].display();
         }
 
         this.scene.gl.enable(this.scene.gl.DEPTH_TEST);
