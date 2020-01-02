@@ -105,8 +105,6 @@ class Game {
     }
 
     updatePieces(){
-
-
         let reply = function(data) {
             let blacki = 1;
             let whitei = 1;
