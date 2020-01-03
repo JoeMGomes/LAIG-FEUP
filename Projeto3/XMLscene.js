@@ -189,6 +189,7 @@ class XMLscene extends CGFscene {
     let deltaT = t - this.startTime;
     if (this.sceneInited) {
       this.graph.update(deltaT);
+      this.game.anime(deltaT);
     }
   }
 

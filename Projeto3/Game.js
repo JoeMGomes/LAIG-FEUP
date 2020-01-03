@@ -10,10 +10,15 @@ class Game {
         this.whitePieces = [];
         this.turn = 0;
         this.server = new Connection();
-        
+
+        this.inAnimation = false;
+        this.animeTime = 0;
+        this.PieceAnimating = [];
     }
 
     playMove(pickID){
+        if(this.inAnimation)
+            return;
         let row, col;
         if (pickID >= 17 && pickID <= 24){
             row = 0;
@@ -81,28 +86,69 @@ class Game {
         console.log("addPiece");
         if(this.turn > 0){
             let pieceName = "black" + (this.blackPieces.length + 1);
-            console.log(pieceName);
             this.blackPieces.push(pieceName);
             let placedPiece = this.scene.graph.graphNodes[pieceName];
             let rowCoords = this.getCoords(row);
             let colCoords = this.getCoords(col);
-            let newTransform = mat4.create();
-            mat4.translate(newTransform, newTransform, [colCoords, 0, rowCoords]);                
-            placedPiece.transform = newTransform;   
+            this.PieceAnimating.push(placedPiece);
+            let finalPosition = [];
+            finalPosition.push(colCoords);
+            finalPosition.push(rowCoords);
+            this.PieceAnimating.push(finalPosition);
+            this.PieceAnimating.push(this.getInitialCoords((this.blackPieces.length + 1), 0.82));
+            this.inAnimation = true;
+            this.animeTime = 0;  
         }
         else{
             let pieceName = "white" + (this.whitePieces.length + 1);
-            console.log(pieceName.length);
             this.whitePieces.push(pieceName);
             let placedPiece = this.scene.graph.graphNodes[pieceName];
             let rowCoords = this.getCoords(row);
             let colCoords = this.getCoords(col);
-            let newTransform = mat4.create();
-            mat4.translate(newTransform, newTransform, [colCoords, 0, rowCoords]);                
-            placedPiece.transform = newTransform;   
+            this.PieceAnimating.push(placedPiece);
+            let finalPosition = [];
+            finalPosition.push(colCoords);
+            finalPosition.push(rowCoords);
+            this.PieceAnimating.push(finalPosition);
+            this.PieceAnimating.push(this.getInitialCoords((this.whitePieces.length + 1), -0.82));
+            this.inAnimation = true;
+            this.animeTime = 0;
         }
 
     }
+
+
+
+    
+    anime(t){
+        t /= 1000;  
+        if(this.inAnimation){
+            if(this.animeTime == 0){
+                this.animeTime = t;
+            }else {
+                let percentage = (t - this.animeTime)/2;
+                if (percentage > 1){
+                    this.animeTime = 0;
+                    this.inAnimation = false;
+                    let newMatrix = mat4.create();
+                    mat4.translate(newMatrix, newMatrix, [this.PieceAnimating[1][0], 0, this.PieceAnimating[1][1]]);
+                    this.PieceAnimating[0].transform = newMatrix;
+                    this.PieceAnimating = [];
+                    return;
+                }
+                
+                let newX = ((1 - percentage) * this.PieceAnimating[2][0]) + (percentage * this.PieceAnimating[1][0]);
+                let newZ = ((1 - percentage) * this.PieceAnimating[2][2]) + (percentage * this.PieceAnimating[1][1]);
+                let newY = ((1 - percentage) * this.PieceAnimating[2][1]) + Math.sin(Math.PI*percentage);
+                let newMatrix = mat4.create();
+                console.log(newY);
+                mat4.translate(newMatrix, newMatrix, [newX, newY, newZ]);
+                console.log(this.PieceAnimating[0]);
+                this.PieceAnimating[0].transform = newMatrix;
+            }
+        }
+    }
+
 
     updatePieces(){
 
@@ -137,10 +183,6 @@ class Game {
     }
 
 
-    anime(data){
-        
-    }
-
     getCoords(number){
         switch(number){
             case 0:
@@ -161,6 +203,30 @@ class Game {
                 return 0.63;
         }
 
+    }
+
+    getInitialCoords(number, z){
+        let x = Math.floor((number-1)/4);
+        let y = (number-1)%4;
+
+        let position = [];
+        position.push(this.getCoords(x));
+        switch(y){
+            case 0:
+                position.push(0.15);
+                break;
+            case 1:
+                position.push(0.1);
+                break;
+            case 2:
+                position.push(0.05);
+                break;
+            case 3:
+                position.push(0);
+                break;
+        }
+        position.push(z);
+        return position;
     }
 
 }
