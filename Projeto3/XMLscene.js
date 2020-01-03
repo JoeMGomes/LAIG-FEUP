@@ -23,6 +23,8 @@ class XMLscene extends CGFscene {
   init(application) {
     super.init(application);
     this.sceneInited = false;
+
+    this.firstTheme = true;
     
     this.initCameras();
     
@@ -39,8 +41,7 @@ class XMLscene extends CGFscene {
     this.startTime = null;
     this.setPickEnabled(true); 
     
-    this.game = new Game(this);
-    this.interfaceManager = new InterfaceManager(this,this.game);
+    this.currentScene = "classicRoom.xml";
   }
 
   /**
@@ -69,7 +70,6 @@ class XMLscene extends CGFscene {
 
       if (this.graph.lights.hasOwnProperty(key)) {
         var light = this.graph.lights[key];
-
         this.lights[i].setPosition(
           light[2][0],
           light[2][1],
@@ -127,24 +127,26 @@ class XMLscene extends CGFscene {
    */
   onGraphLoaded() {
 
-    this.gl.clearColor(
-      this.graph.background[0],
-      this.graph.background[1],
-      this.graph.background[2],
-      this.graph.background[3]
-    );
-
-    this.setGlobalAmbientLight(
-      this.graph.ambient[0],
-      this.graph.ambient[1],
-      this.graph.ambient[2],
-      this.graph.ambient[3]
-    );
-
     this.initViews();
     this.initLights();
+    
+    if(this.firstTheme){
+    this.game = new Game(this);
+    this.interfaceManager = new InterfaceManager(this,this.game);
+
 
     this.interface.addGroups(this.graph.lights, this.graph.views, this.graph.securityCams);
+    this.interface.addThemeGroup();
+    } else {
+      this.interface.updateLights(this.graph.lights);
+      this.interface.updateViews(this.graph.views);
+
+    }
+    
+
+    this.gl.clearColor(this.graph.background[0], this.graph.background[1], this.graph.background[2], this.graph.background[3]);
+
+    this.setGlobalAmbientLight(this.graph.ambient[0], this.graph.ambient[1], this.graph.ambient[2],this.graph.ambient[3]);
 
     this.sceneInited = true;
   }
@@ -225,6 +227,7 @@ class XMLscene extends CGFscene {
 
       // Displays the scene (MySceneGraph function).
       this.graph.displayScene();
+
     }
     this.popMatrix();
     // ---- END Background, camera and axis setup
@@ -253,6 +256,20 @@ class XMLscene extends CGFscene {
 
     this.render(this.normalCam)
 
-    this.interfaceManager.display();
+    this.displayInterfaceManager();
+  }
+
+  displayInterfaceManager(){
+    if(this.interfaceManager){
+      this.interfaceManager.display();
+    }
+  }
+
+  changeScene(scene){
+    
+    this.lightValues = {};
+    this.firstTheme = false;
+    this.graph.changeScene(scene);
+
   }
 }

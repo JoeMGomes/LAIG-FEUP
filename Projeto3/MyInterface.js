@@ -28,23 +28,57 @@ class MyInterface extends CGFinterface {
   }
   
   addGroups(lights, views) {
-    var groupLight = this.gui.addFolder("Lights");
-    groupLight.open();
+    this.groupLight = this.gui.addFolder("Lights");
+    this.groupLight.open();
 
     for (var key in lights) {
       if (lights.hasOwnProperty(key)) {
         this.scene.lightValues[key] = lights[key][0];
-        groupLight.add(this.scene.lightValues, key);
+        this.groupLight.add(this.scene.lightValues, key);
       }
     }
 
-    var groupCam = this.gui.addFolder("Views");
-    groupCam.open();
+    this.groupCam = this.gui.addFolder("Views");
+    this.groupCam.open();
     const cameraIdArray = Object.keys(views);
     this.currentCameraId = this.scene.graph.default;
 
-    groupCam.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
+    this.groupCam.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
 
+  }
+
+  updateLights(lights){
+    for(var i = this.groupLight.__controllers.length - 1; i >= 0;i--){
+        this.groupLight.__controllers[i].remove();
+    }
+
+    for (var key in lights) {
+      if (lights.hasOwnProperty(key)) {
+        this.scene.lightValues[key] = lights[key][0];
+        this.groupLight.add(this.scene.lightValues, key);
+      }
+    }
+  }
+
+  updateViews(views){
+    for(var i = this.groupCam.__controllers.length - 1; i >= 0;i--){
+        this.groupCam.__controllers[i].remove();
+    }
+
+    const cameraIdArray = Object.keys(views);
+    this.currentCameraId = this.scene.graph.default;
+
+    this.groupCam.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
+  }
+
+
+
+  addThemeGroup(){
+    let themes = ['classicRoom.xml','newTheme.xml'];
+
+    var themeGroup = this.gui.addFolder("Themes");
+    themeGroup.open();
+    themeGroup.add(this.scene,'currentScene',themes).name("Current Theme").onChange(val => this.scene.changeScene(val));
   }
 
   /**
