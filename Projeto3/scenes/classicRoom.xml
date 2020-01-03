@@ -56,7 +56,7 @@
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
-         <material id="boardMaterial" shininess="1">
+        <material id="boardMaterial" shininess="1">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -133,7 +133,7 @@
             <children>
                 <componentref id="tableComp"/>
                 <componentref id="chairWhite"/>
-                <componentref id="chairBlack"/> 
+                <componentref id="chairBlack"/>
                 <componentref id="blackPieces"/>
                 <componentref id="whitePieces"/>
                 <componentref id="board"/>
@@ -258,7 +258,7 @@
         </component>
 
         <component id="white1">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -271,7 +271,7 @@
         </component>
 
         <component id="white2">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -284,7 +284,7 @@
         </component>
 
         <component id="white3">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -297,7 +297,7 @@
         </component>
 
         <component id="white4">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -310,7 +310,7 @@
         </component>
 
         <component id="white5">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -323,7 +323,7 @@
         </component>
 
         <component id="white6">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -336,7 +336,7 @@
         </component>
 
         <component id="white7">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -349,7 +349,7 @@
         </component>
 
         <component id="white8">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -362,7 +362,7 @@
         </component>
 
         <component id="white9">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -375,7 +375,7 @@
         </component>
 
         <component id="white10">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -388,7 +388,7 @@
         </component>
 
         <component id="white11">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -401,7 +401,7 @@
         </component>
 
         <component id="white12">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -414,7 +414,7 @@
         </component>
 
         <component id="white13">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -427,7 +427,7 @@
         </component>
 
         <component id="white14">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -440,7 +440,7 @@
         </component>
 
         <component id="white15">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -453,7 +453,7 @@
         </component>
 
         <component id="white16">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -466,7 +466,7 @@
         </component>
 
         <component id="white17">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -479,7 +479,7 @@
         </component>
 
         <component id="white18">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -492,7 +492,7 @@
         </component>
 
         <component id="white19">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -505,7 +505,7 @@
         </component>
 
         <component id="white20">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -518,7 +518,7 @@
         </component>
 
         <component id="white21">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -531,7 +531,7 @@
         </component>
 
         <component id="white22">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -570,7 +570,7 @@
         </component>
 
         <component id="white25">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -583,7 +583,7 @@
         </component>
 
         <component id="white26">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -596,7 +596,7 @@
         </component>
 
         <component id="white27">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -609,7 +609,7 @@
         </component>
 
         <component id="white28">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -623,7 +623,7 @@
 
 
         <component id="white29">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0" z="-.82"/>
             </transformation>
             <materials>
@@ -636,7 +636,7 @@
         </component>
 
         <component id="white30">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.05" z="-.82"/>
             </transformation>
             <materials>
@@ -649,7 +649,7 @@
         </component>
 
         <component id="white31">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -662,7 +662,7 @@
         </component>
 
         <component id="white32">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.15" z="-.82"/>
             </transformation>
             <materials>
@@ -677,7 +677,7 @@
 
 
         <component id="blackPieces">
-             <transformation>
+            <transformation>
                 <translate x="0" y="2.165" z="0"/>
             </transformation>
             <materials>
@@ -719,9 +719,9 @@
                 <componentref id="black32"/>
             </children>
         </component>
-   
+
         <component id="black1">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -734,7 +734,7 @@
         </component>
 
         <component id="black2">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -747,7 +747,7 @@
         </component>
 
         <component id="black3">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -760,7 +760,7 @@
         </component>
 
         <component id="black4">
-             <transformation>
+            <transformation>
                 <translate x="-0.63" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -773,7 +773,7 @@
         </component>
 
         <component id="black5">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -786,7 +786,7 @@
         </component>
 
         <component id="black6">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -799,7 +799,7 @@
         </component>
 
         <component id="black7">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -812,7 +812,7 @@
         </component>
 
         <component id="black8">
-             <transformation>
+            <transformation>
                 <translate x="-0.45" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -825,7 +825,7 @@
         </component>
 
         <component id="black9">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -838,7 +838,7 @@
         </component>
 
         <component id="black10">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -851,7 +851,7 @@
         </component>
 
         <component id="black11">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -864,7 +864,7 @@
         </component>
 
         <component id="black12">
-             <transformation>
+            <transformation>
                 <translate x="-0.27" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -877,7 +877,7 @@
         </component>
 
         <component id="black13">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -890,7 +890,7 @@
         </component>
 
         <component id="black14">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -903,7 +903,7 @@
         </component>
 
         <component id="black15">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -916,7 +916,7 @@
         </component>
 
         <component id="black16">
-             <transformation>
+            <transformation>
                 <translate x="-0.09" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -929,7 +929,7 @@
         </component>
 
         <component id="black17">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -942,7 +942,7 @@
         </component>
 
         <component id="black18">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -955,7 +955,7 @@
         </component>
 
         <component id="black19">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -968,7 +968,7 @@
         </component>
 
         <component id="black20">
-             <transformation>
+            <transformation>
                 <translate x="0.09" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -981,7 +981,7 @@
         </component>
 
         <component id="black21">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -994,7 +994,7 @@
         </component>
 
         <component id="black22">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -1007,7 +1007,7 @@
         </component>
 
         <component id="black23">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -1020,7 +1020,7 @@
         </component>
 
         <component id="black24">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -1033,7 +1033,7 @@
         </component>
 
         <component id="black25">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -1046,7 +1046,7 @@
         </component>
 
         <component id="black26">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -1059,7 +1059,7 @@
         </component>
 
         <component id="black27">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -1072,7 +1072,7 @@
         </component>
 
         <component id="black28">
-             <transformation>
+            <transformation>
                 <translate x="0.45" y="0.15" z="0.82"/>
             </transformation>
             <materials>
@@ -1086,7 +1086,7 @@
 
 
         <component id="black29">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0" z="0.82"/>
             </transformation>
             <materials>
@@ -1099,7 +1099,7 @@
         </component>
 
         <component id="black30">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.05" z="0.82"/>
             </transformation>
             <materials>
@@ -1112,7 +1112,7 @@
         </component>
 
         <component id="black31">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.1" z="0.82"/>
             </transformation>
             <materials>
@@ -1125,7 +1125,7 @@
         </component>
 
         <component id="black32">
-             <transformation>
+            <transformation>
                 <translate x="0.63" y="0.15" z="0.82"/>
             </transformation>
             <materials>
