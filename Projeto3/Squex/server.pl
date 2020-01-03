@@ -148,6 +148,11 @@ parse_input(undo, Res):-
 	undo,
 	Res = '{"msg": "undone", "return": true}'.
 
+parse_input(reset,Res):-
+	clear_board,
+	retractall(moveLog(_,_,_)),
+	Res = '{"msg": "reset", "return": true}'.
+
 
 testlogs:-
 	findall(X,moveLog(X,_,_),List),

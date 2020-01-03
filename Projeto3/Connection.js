@@ -40,10 +40,10 @@
             counter = 0;
         }
 
-        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, false);
+        request.open('GET', 'http://localhost:' + this.port + '/' + requestString, true);
 
         request.onload = function(data) {
-             counter = 0;
+            counter = 0;
             let reply;
             try{
                 reply = JSON.parse(data.target.response);

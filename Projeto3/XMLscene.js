@@ -22,40 +22,31 @@ class XMLscene extends CGFscene {
    */
   init(application) {
     super.init(application);
-    this.game = new Game(this);
     this.sceneInited = false;
-
+    
     this.initCameras();
-
+    
     this.enableTextures(true);
-
+    
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
-    this.axis = new CGFaxis(this);
+    
     this.setUpdatePeriod(16.67);
-
-
-    this.securityCamText = new CGFtextureRTT(this, this.gl.canvas.width, this.gl.canvas.height);
-    this.secCam = new MySecurityCamera(this, "cam", this.securityCamText);
+    
     this.defaultShader = this.activeShader;
     this.startTime = null;
-    this.setPickEnabled(true);
+    this.setPickEnabled(true); 
+    
+    this.game = new Game(this);
+    this.interfaceManager = new InterfaceManager(this,this.game);
   }
 
   /**
    * Initializes the scene cameras.
    */
   initCameras() {
-    this.securityCam = new CGFcamera(
-      0.4,
-      0.1,
-      500,
-      vec3.fromValues(20, 20, 10),
-      vec3.fromValues(0, 0, 0)
-    );
     this.normalCam = new CGFcamera(
       0.4,
       0.1,
@@ -135,7 +126,6 @@ class XMLscene extends CGFscene {
    * As loading is asynchronous, this may be called already after the application has started the run loop
    */
   onGraphLoaded() {
-    this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.gl.clearColor(
       this.graph.background[0],
@@ -183,9 +173,9 @@ class XMLscene extends CGFscene {
       this.startTime = t;
     }
     // only shader 6 is using time factor
-    this.secCam.shader.setUniformsValues({
-      timeFactor: t / 100 % 1000
-    });
+    // this.secCam.shader.setUniformsValues({
+    //   timeFactor: t / 100 % 1000
+    // });
     let deltaT = t - this.startTime;
     if (this.sceneInited) {
       this.graph.update(deltaT);
@@ -213,8 +203,7 @@ class XMLscene extends CGFscene {
     this.applyViewMatrix();
 
     this.pushMatrix();
-    this.axis.display();
-
+    
     var i = 0;
     for (var key in this.lightValues) {
       if (this.lightValues.hasOwnProperty(key)) {
@@ -250,7 +239,8 @@ class XMLscene extends CGFscene {
           if (obj) {
             var customId = this.pickResults[i][1];
             console.log("Picked object: " + obj + ", with pick id " + customId);
-            this.game.playMove(customId);
+            if(this.game.started)
+              this.game.playMove(customId);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);
@@ -261,20 +251,8 @@ class XMLscene extends CGFscene {
   display() {
     this.logPicking();
 
-    this.securityCamText.attachToFrameBuffer()
-
-    this.render(this.securityCam)
-
-    this.securityCamText.detachFromFrameBuffer()
-
     this.render(this.normalCam)
 
-    this.gl.disable(this.gl.DEPTH_TEST)
-
-    this.secCam.display()
-    this.setActiveShader(this.defaultShader)
-
-    this.gl.enable(this.gl.DEPTH_TEST)
-
+    this.interfaceManager.display();
   }
 }

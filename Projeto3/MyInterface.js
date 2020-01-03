@@ -27,7 +27,7 @@ class MyInterface extends CGFinterface {
     return true;
   }
   
-  addGroups(lights, views, securityCams) {
+  addGroups(lights, views) {
     var groupLight = this.gui.addFolder("Lights");
     groupLight.open();
 
@@ -41,11 +41,9 @@ class MyInterface extends CGFinterface {
     var groupCam = this.gui.addFolder("Views");
     groupCam.open();
     const cameraIdArray = Object.keys(views);
-    const secCamIdArray = Object.keys(securityCams)
     this.currentCameraId = this.scene.graph.default;
 
     groupCam.add(this, 'currentCameraId', cameraIdArray).name('Camera').onChange(val => this.scene.selectView(val));
-    groupCam.add(this, 'currentCameraId', secCamIdArray).name('Security').onChange(val => this.scene.selectSecView(val));
 
   }
 
