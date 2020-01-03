@@ -22,25 +22,25 @@ class XMLscene extends CGFscene {
    */
   init(application) {
     super.init(application);
-    this.game = new Game(this);
     this.sceneInited = false;
-
+    
     this.initCameras();
-
+    
     this.enableTextures(true);
-
+    
     this.gl.clearDepth(100.0);
     this.gl.enable(this.gl.DEPTH_TEST);
     this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
-
-    this.axis = new CGFaxis(this);
+    
     this.setUpdatePeriod(16.67);
-
+    
     this.defaultShader = this.activeShader;
     this.startTime = null;
     this.setPickEnabled(true); 
-    this.interfaceManager = new InterfaceManager(this,null);
+    
+    this.game = new Game(this);
+    this.interfaceManager = new InterfaceManager(this,this.game);
   }
 
   /**
@@ -126,7 +126,6 @@ class XMLscene extends CGFscene {
    * As loading is asynchronous, this may be called already after the application has started the run loop
    */
   onGraphLoaded() {
-    this.interfaceManager = new InterfaceManager(this, null);
 
     this.gl.clearColor(
       this.graph.background[0],
@@ -239,7 +238,8 @@ class XMLscene extends CGFscene {
           if (obj) {
             var customId = this.pickResults[i][1];
             console.log("Picked object: " + obj + ", with pick id " + customId);
-            this.game.playMove(customId);
+            if(this.game.started)
+              this.game.playMove(customId);
           }
         }
         this.pickResults.splice(0, this.pickResults.length);

@@ -33,22 +33,13 @@ class InterfaceManager {
     initElements(){
         this.elements = [];
         
-        let camLog = function(){console.log(this.scene.normalCam)};
+        this.elements["squex"] = new InterfaceComp( this.scene, [-0.98, 0.98], 0.2, 0.2, "squex.png", null);
 
-        this.elements["squex"] = new InterfaceComp( this.scene, [-0.98, 0.98], 0.2, 0.2, "squex.png", camLog.bind(this));
-
-        this.elements["play"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.3, "play.png", function(){
-            this.elements["play"].disable();
-        });
+        this.elements["play"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.3, "play.png", this.game.initGame.bind(this.game));
         
-        this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", function() {
-            console.log("aee");
-        });
+        this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", this.game.initGame.bind(this.game));
 
-
-        this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", function() {
-            console.log("aee");
-        });
+        this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", /*this.game.undo.bind(this.game)*/);
     }
 
     display() {

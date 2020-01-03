@@ -2,15 +2,22 @@
 class Game { 
     constructor(scene){
         this.scene = scene;
+        this.started = false;
+        this.server = new Connection();
+    }
+
+    initGame(){
         this.turn = 0;
         this.end = false;
         this.bot = 0;
         this.moves = [];
         this.blackPieces = [];
         this.whitePieces = [];
-        this.turn = 0;
-        this.server = new Connection();
-        
+        this.started = true;
+        let resetRequest = this.server.createRequest('reset');
+        this.server.plRequest(resetRequest);
+
+        this.scene.interfaceManager.elements['play'].disable();
     }
 
     playMove(pickID){

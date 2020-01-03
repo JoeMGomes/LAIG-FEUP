@@ -544,7 +544,7 @@
         </component>
 
         <component id="white23">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.1" z="-.82"/>
             </transformation>
             <materials>
@@ -557,7 +557,7 @@
         </component>
 
         <component id="white24">
-             <transformation>
+            <transformation>
                 <translate x="0.27" y="0.15" z="-.82"/>
             </transformation>
             <materials>
