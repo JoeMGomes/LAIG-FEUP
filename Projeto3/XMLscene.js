@@ -126,7 +126,6 @@ class XMLscene extends CGFscene {
    * As loading is asynchronous, this may be called already after the application has started the run loop
    */
   onGraphLoaded() {
-    this.axis = new CGFaxis(this, this.graph.referenceLength);
     this.interfaceManager = new InterfaceManager(this, null);
 
     this.gl.clearColor(
@@ -204,8 +203,7 @@ class XMLscene extends CGFscene {
     this.applyViewMatrix();
 
     this.pushMatrix();
-    this.axis.display();
-
+    
     var i = 0;
     for (var key in this.lightValues) {
       if (this.lightValues.hasOwnProperty(key)) {

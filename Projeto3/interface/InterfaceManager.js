@@ -3,6 +3,7 @@ class InterfaceManager {
         this.scene = scene;
         this.game = game;
         this.init();
+        this.initElements();
     }
     init() {
         this.defaultShader = this.scene.activeShader;
@@ -11,17 +12,8 @@ class InterfaceManager {
             "shaders/interface.vert",
             "shaders/interface.frag"
         );
-        this.elements = [];
-        
-        // this.elements["button"] = new InterfaceComp( this.scene, [-0.25, 0.2], 0.5, 0.3, "blackmarble.png", function() {
-        //     console.log("aee");
-        // });
-        
-        // this.elements["aa"] = new InterfaceComp( this.scene, [-0.5, 0.5], 0.5, 0.3, "tiledWood.png",  function() {
-        //     console.log("wood");
-        // });
 
-        //Init events
+        //Setup Event Listener
         let thisObj = this;
         let canvas = document.getElementsByTagName("canvas")[0];
 
@@ -35,6 +27,27 @@ class InterfaceManager {
                         thisObj.elements[element].onClick()
             }
 
+        });
+    }
+
+    initElements(){
+        this.elements = [];
+        
+        let camLog = function(){console.log(this.scene.normalCam)};
+
+        this.elements["squex"] = new InterfaceComp( this.scene, [-0.98, 0.98], 0.2, 0.2, "squex.png", camLog.bind(this));
+
+        this.elements["play"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.3, "play.png", function(){
+            this.elements["play"].disable();
+        });
+        
+        this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", function() {
+            console.log("aee");
+        });
+
+
+        this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", function() {
+            console.log("aee");
         });
     }
 

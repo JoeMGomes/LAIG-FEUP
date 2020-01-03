@@ -2,7 +2,7 @@
     <scene root="root" axis_length="5" />
     <views default="defaultCamera">
         <perspective id="defaultCamera" near="0.1" far="500" angle="80">
-            <from x="0" y="4" z="2.5" />
+            <from x="0" y="3.6" z="1.2" />
             <to x="0" y="2.5" z="0" />
         </perspective>
         <perspective id="topView" near="0.1" far="500" angle="80">
@@ -18,43 +18,49 @@
         <omni id="whiteLight" enabled="1">
             <location x="1.8" y="7.1" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <attenuation constant="1.0" linear="3.0" quadratic="1.0" />
         </omni>
         <omni id="whiteLight1" enabled="1">
             <location x="-1.6" y="7.1" z="10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <attenuation constant="1.0" linear="3.0" quadratic="1.0" />
         </omni>
         <omni id="whiteLight2" enabled="1">
             <location x="1.8" y="7.1" z="-10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <attenuation constant="1.0" linear="3.0" quadratic="1.0" />
         </omni>
         <omni id="whiteLight3" enabled="1">
             <location x="-1.6" y="7.1" z="-10" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <attenuation constant="1.0" linear="3.0" quadratic="1.0" />
         </omni>
     </lights>
     <textures>
         <texture id="blackMarble" file="scenes/images/blackmarble.png" />
         <texture id="wood" file="scenes/images/wood.png" />
-        <texture id="tiledWood" file="scenes/images/tiledWood.png" />
+        <texture id="floorText" file="scenes/images/rug.png" />
     </textures>
     <materials>
-        <material id="default" shininess="5">
+        <material id="default" shininess="1">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </material>
+         <material id="boardMaterial" shininess="1">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
         <material id="brown" shininess="2">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -89,13 +95,6 @@
         </transformation>
     </transformations>
     <animations>
-        <animation id="bladeRotate">
-            <keyframe instant="18">
-                <translate x="0" y="0" z="0" />
-                <rotate angle_x="0" angle_y="-10000" angle_z="0" />
-                <scale x="1" y="1" z="1" />
-            </keyframe>
-        </animation>
     </animations>
     <primitives>
         <primitive id="bladeRect">
@@ -151,6 +150,20 @@
             <children>
                 <primitiveref id="room"/>
                 <componentref id="lampsComp"/>
+                <componentref id="floor"/>
+            </children>
+        </component>
+        <component id="floor">
+            <transformation>
+                <rotate axis="x" angle="-90"/>
+                <scale x="22" y="22" z="1"/>
+            </transformation>
+            <materials>
+                <materials id="default"/>
+            </materials>
+            <texture id="floorText" length_s="0.1" length_t="0.1"/>
+            <children>
+                <primitiveref id="rect"/>
             </children>
         </component>
         <component id="tableComp">
@@ -200,10 +213,8 @@
                 <primitiveref id="chair"/>
             </children>
         </component>
-
-
         <component id="whitePieces">
-             <transformation>
+            <transformation>
                 <translate x="0" y="2.165" z="0"/>
             </transformation>
             <materials>
@@ -251,7 +262,7 @@
                 <translate x="-0.63" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -264,7 +275,7 @@
                 <translate x="-0.63" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -277,7 +288,7 @@
                 <translate x="-0.63" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -290,7 +301,7 @@
                 <translate x="-0.63" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -303,7 +314,7 @@
                 <translate x="-0.45" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -316,7 +327,7 @@
                 <translate x="-0.45" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -329,7 +340,7 @@
                 <translate x="-0.45" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -342,7 +353,7 @@
                 <translate x="-0.45" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -355,7 +366,7 @@
                 <translate x="-0.27" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -368,7 +379,7 @@
                 <translate x="-0.27" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -381,7 +392,7 @@
                 <translate x="-0.27" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -394,7 +405,7 @@
                 <translate x="-0.27" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -407,7 +418,7 @@
                 <translate x="-0.09" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -420,7 +431,7 @@
                 <translate x="-0.09" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -433,7 +444,7 @@
                 <translate x="-0.09" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -446,7 +457,7 @@
                 <translate x="-0.09" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -459,7 +470,7 @@
                 <translate x="0.09" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -472,7 +483,7 @@
                 <translate x="0.09" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -485,7 +496,7 @@
                 <translate x="0.09" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -498,7 +509,7 @@
                 <translate x="0.09" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -511,7 +522,7 @@
                 <translate x="0.27" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -524,7 +535,7 @@
                 <translate x="0.27" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -537,7 +548,7 @@
                 <translate x="0.27" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="black"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -550,7 +561,7 @@
                 <translate x="0.27" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -563,7 +574,7 @@
                 <translate x="0.45" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -576,7 +587,7 @@
                 <translate x="0.45" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -589,7 +600,7 @@
                 <translate x="0.45" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -602,7 +613,7 @@
                 <translate x="0.45" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -616,7 +627,7 @@
                 <translate x="0.63" y="0" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -629,7 +640,7 @@
                 <translate x="0.63" y="0.05" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -642,7 +653,7 @@
                 <translate x="0.63" y="0.1" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -655,7 +666,7 @@
                 <translate x="0.63" y="0.15" z="-.82"/>
             </transformation>
             <materials>
-                <material id="brown"/>
+                <material id="beije"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1125,8 +1136,6 @@
                 <componentref id="octoPiece"/>
             </children>
         </component>
-
-
         <component id="octoPiece">
             <transformation>
                 <transformationref id="centerOcto"/>
@@ -1363,7 +1372,7 @@
                 <translate x="0" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1376,7 +1385,7 @@
                 <translate x="0.18" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1389,7 +1398,7 @@
                 <translate x="0.36" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1402,7 +1411,7 @@
                 <translate x="0.54" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1415,7 +1424,7 @@
                 <translate x="0.72" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1428,7 +1437,7 @@
                 <translate x="0.9" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1441,7 +1450,7 @@
                 <translate x="1.08" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
@@ -1454,7 +1463,7 @@
                 <translate x="1.26" y="0" z="0"/>
             </transformation>
             <materials>
-                <material id="inherit"/>
+                <material id="boardMaterial"/>
             </materials>
             <texture id="none"/>
             <children>
