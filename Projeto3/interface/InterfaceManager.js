@@ -33,13 +33,23 @@ class InterfaceManager {
     initElements(){
         this.elements = [];
         
-        this.elements["squex"] = new InterfaceComp( this.scene, [-0.98, 0.98], 0.2, 0.2, "squex.png", null);
+        this.elements["squex"] = new InterfaceComp( this.scene, [-0.98, 0.98], 0.4, 0.33, "squex.png", null);
 
-        this.elements["play"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.3, "play.png", this.game.initGame.bind(this.game));
+        this.elements["play"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.25, "play.png", this.game.initGame.bind(this.game));
         
-        this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", this.game.initGame.bind(this.game));
+        this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", this.game.resetGame.bind(this.game));
 
         this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", /*this.game.undo.bind(this.game)*/);
+
+        this.elements["PvP"] = new InterfaceComp( this.scene, [-0.98, -.38], 0.2, 0.15, "PvP.png", this.game.setPvP.bind(this.game));
+        
+        this.elements["PvC"] = new InterfaceComp( this.scene, [-0.98, -.18], 0.2, 0.15, "PvC.png", this.game.setPvC.bind(this.game));
+
+        this.elements["CvC"] = new InterfaceComp( this.scene, [-0.98, 0.02], 0.2, 0.15, "CvC.png", this.game.setCvC.bind(this.game));
+
+        this.elements["Level1"] = new InterfaceComp( this.scene, [-0.78, -0.18], 0.2, 0.15, "Level1.png", this.game.setBotLvl1.bind(this.game));
+        this.elements["Level2"] = new InterfaceComp( this.scene, [-0.78, 0.02], 0.2, 0.15, "Level2.png", this.game.setBotLvl2.bind(this.game));
+
     }
 
     display() {
