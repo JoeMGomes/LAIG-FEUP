@@ -4,6 +4,7 @@ class Game {
         this.scene = scene;
         this.started = false;
         this.server = new Connection();
+        this.updateTurn();
     }
 
     initGame(){
@@ -18,11 +19,13 @@ class Game {
 
         this.inAnimation = false;
         this.animeTime = 0;
+        this.cameraTime = 0;
+        this.animeCamera = false;
         this.PieceAnimating = [];
         this.started = true;
         let resetRequest = this.server.createRequest('reset');
         this.server.plRequest(resetRequest);
-
+        
         this.scene.interfaceManager.elements['play'].disable();
     }
 
@@ -70,7 +73,6 @@ class Game {
         let reply = function(data) {
             this.updateTurn();
             if(data["msg"] == "moved"){
-                
                 this.addPiece(row, col);
             }
         };
@@ -85,10 +87,51 @@ class Game {
 
     updateTurn(){
         let reply = function(data) {
+            if ((this.turn > 0 && data < 0) || (this.turn < 0 && data > 0)){
+                console.log("what");
+                this.animeCamera = true;
+            }
             this.turn = data;
         };
         let request = this.server.createRequest('turn', null, reply.bind(this));
         this.server.plRequest(request);
+    }
+
+
+    animecamara(t, camera){
+        t /= 1000;  
+        if(this.animeCamera){
+            if(this.cameraTime == 0){
+                this.cameraTime = t;
+                this.lastT = 0;
+            }else {
+                let percentage = (t - this.cameraTime)/2;
+                if (percentage > 1){
+                    this.cameraTime = 0;
+                    this.animeCamera = false;
+                    if (this.turn > 0)
+                    camera.setPosition([0, 3.6, 1.2]);
+                    else
+                    camera.setPosition([0, 3.6, -1.2]);
+                    return;
+                }
+                if(this.turn < 0){
+                    let newZ = Math.cos(Math.PI*percentage) * 1.2;
+                    let newX = (Math.sin(Math.PI*percentage) * 1.2);
+                    console.log(newX);
+                    console.log(newZ);
+                    camera.setPosition([newX, 3.6, newZ]);
+                }else {
+                    let newZ = Math.cos(Math.PI*percentage) * -1.2;
+                    let newX = (Math.sin(Math.PI*percentage) * 1.2);
+                    console.log(newX);
+                    console.log(newZ);
+                    camera.setPosition([newX, 3.6, newZ]);
+                }
+                
+                this.lastT = t;
+            }
+        }
     }
 
 
@@ -151,9 +194,7 @@ class Game {
                 let newZ = ((1 - percentage) * this.PieceAnimating[2][2]) + (percentage * this.PieceAnimating[1][1]);
                 let newY = ((1 - percentage) * this.PieceAnimating[2][1]) + Math.sin(Math.PI*percentage);
                 let newMatrix = mat4.create();
-                console.log(newY);
                 mat4.translate(newMatrix, newMatrix, [newX, newY, newZ]);
-                console.log(this.PieceAnimating[0]);
                 this.PieceAnimating[0].transform = newMatrix;
             }
         }

@@ -45,7 +45,6 @@ class KeyFrameAnimation extends Animation {
         }
         this.tAnterior = t;
 
-
     }
 
 

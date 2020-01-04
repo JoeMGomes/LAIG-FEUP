@@ -180,6 +180,7 @@ class XMLscene extends CGFscene {
     if (this.sceneInited) {
       this.graph.update(deltaT);
       this.game.anime(deltaT);
+      this.game.animecamara(t, this.camera)
     }
   }
 
