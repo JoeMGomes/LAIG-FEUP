@@ -21,6 +21,7 @@ class MySceneGraph {
      */
     constructor(filename, scene) {
         this.loadedOk = null;
+        this.ready = false;
 
         // Establish bidirectional references between scene and graph.
         this.scene = scene;
@@ -208,7 +209,7 @@ class MySceneGraph {
             if ((error = this.parseComponents(nodes[index])) != null)
                 return error;
         }
-        this.log("all parsed");
+        this.ready = true;
     }
 
     /**
@@ -1477,31 +1478,26 @@ class MySceneGraph {
 
 
     update(t) {
-
+        if(this.idRoot)
         this.updateAnimation(t, this.idRoot);
     }
-
-
-
-
 
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        //To do: Create display loop for transversing the scene graplay loop for transversing the scene graph
-        //To test the parsing/creation of the primitives, call the display function directly
-
+        if(this.ready){
         var rootMaterial = Object.keys(this.materials)[0];
 
         this.pickID = 1;
         this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
-
+        }
     }
 
     updateAnimation(t, nodeID) {
         let nodes = this.graphNodes;
         let node = nodes[nodeID];
+
         if (node.animation != null) {
             node.animation.update(t);
         }
@@ -1577,5 +1573,22 @@ class MySceneGraph {
         }
     }
 
+    //"Calls" constructor again
+    changeScene(scene){
+
+        this.loadedOk = null;
+        this.ready = false;
+        // Establish bidirectional references between scene and graph.
+        this.graphNodes = [];
+
+        console.log(this.idRoot)
+        this.idRoot = null; // The id of the root element.
+
+        // File reading 
+        this.reader = new CGFXMLreader();
+       
+        this.reader.open('scenes/' + scene, this);
+
+    }
 
 }
