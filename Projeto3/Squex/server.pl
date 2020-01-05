@@ -128,7 +128,8 @@ parse_input(moveVsBot(X,Y, Level),Res):-
 % Argument is bot difficulty (1 or 2)
 parse_input(playBot(X),Res):-
 	playBot(X),
-	Res = '{"msg": "botPlayed", "return": true}'.
+	get_octolist(List),
+	matrix_to_json(List,Res).
 
 % Handshake message
 parse_input(handshake, Res):-
