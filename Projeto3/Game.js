@@ -6,13 +6,21 @@ class Game {
         this.updateTurn();
         this.moves = [];
         this.movieIndice = 0;
+        this.playMode = "pvp"; // pvp pvc cvc       
     }
 
     initGame() {
+        this.resetGameVars();
+        let resetRequest = this.server.createRequest("reset");
+        this.server.plRequest(resetRequest);
+
+        this.scene.interfaceManager.elements["play"].disable();
+    }
+
+    resetGameVars(){
         this.turn = 1;
         this.end = false;
         this.botLevel = 1;
-        this.playMode = "pvc"; // pvp pvc cvc       
         this.blackPieces = [];
         this.whitePieces = [];
         this.squarePieces = [];
@@ -28,10 +36,13 @@ class Game {
         this.animeCamera = false;
         this.PieceAnimating = [];
         this.started = true;
-        let resetRequest = this.server.createRequest("reset");
-        this.server.plRequest(resetRequest);
+    }
 
-        this.scene.interfaceManager.elements["play"].disable();
+    undo(){
+        this.scene.graph.GraphNodes = [];
+        this.scene.graph.parseNodes(this.scene.graph.idRoot);
+        this.resetGameVars();
+        
     }
 
     setPvP() {

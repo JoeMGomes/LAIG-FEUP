@@ -39,7 +39,7 @@ class InterfaceManager {
         
         this.elements["reset"] = new InterfaceComp( this.scene, [-0.98, -.78], 0.2, 0.15, "reset.png", this.game.resetGame.bind(this.game));
 
-        this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", /*this.game.undo.bind(this.game)*/);
+        this.elements["undo"] = new InterfaceComp( this.scene, [-0.98, -.58], 0.2, 0.15, "undo.png", this.game.undo.bind(this.game));
 
         this.elements["PvP"] = new InterfaceComp( this.scene, [-0.98, -.38], 0.2, 0.15, "PvP.png", this.game.setPvP.bind(this.game));
         
