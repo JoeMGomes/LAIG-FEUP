@@ -10,7 +10,7 @@ class GraphNode {
         this.nodeID = nodeID;
         this.children = [];
         this.leafs = [];
-        this.materialsID = [];
+        this.materialsID = [];  
         this.materialsIndex = 0;
         this.animation;
         this.textureID = null;

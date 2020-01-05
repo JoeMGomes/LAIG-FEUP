@@ -56,7 +56,7 @@
             <diffuse r="1" g="1" b="1" a="1.0" />
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />
         </material>
-        <material id="boardMaterial" shininess="1">
+         <material id="boardMaterial" shininess="1">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -100,6 +100,9 @@
         <primitive id="bladeRect">
             <rectangle x1="0" y1="0" x2="1" y2=".4" />
         </primitive>
+        <primitive id="rect">
+            <rectangle x1="-0.5" y1="-0.5" x2="0.5" y2="0.5" />
+        </primitive>
         <primitive id="table">
             <objfile file="models/table.obj"/>
         </primitive>
@@ -118,9 +121,6 @@
         <primitive id="lamps">
             <objfile file="models/lamp.obj"/>
         </primitive>
-        <primitive id="rect">
-            <rectangle x1="-.5" y1="-0.5" x2="0.5" y2="0.5"/>
-        </primitive>
     </primitives>
     <components>
         <component id="root">
@@ -133,50 +133,21 @@
             <children>
                 <componentref id="tableComp"/>
                 <componentref id="chairWhite"/>
-                <componentref id="chairBlack"/>
+                <componentref id="chairBlack"/> 
                 <componentref id="blackPieces"/>
                 <componentref id="whitePieces"/>
                 <componentref id="board"/>
                 <componentref id="room"/>
-                <componentref id="squarePiecewhite"/>
-                <componentref id="squarePieceblack"/>
-            </children>
-        </component>
-
-        <component id="squarePieceblack">
-            <transformation>
-                <translate x="0" y="1" z="0.0"/>
-            </transformation>
-            <materials>
-                <material id="black" />
-            </materials>
-            <texture id="none" />
-            <children>
-                <componentref id="cubo"/>
-            </children>
-        </component>
-
-
-        <component id="squarePiecewhite">
-            <transformation>
-                <translate x="0" y="2.163" z="0.54"/>
-            </transformation>
-            <materials>
-                <material id="beije" />
-            </materials>
-            <texture id="none" />
-            <children>
                 <componentref id="cubo"/>
             </children>
         </component>
 
         <component id="cubo">
             <transformation>
-                <scale x="0.07" y="0.05" z="0.07"/>
-                <rotate axis="y" angle="45"/>
+                <scale x="5" y="5" z="5"/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="body" />
             <children>
@@ -194,10 +165,10 @@
         <component id="cima">
             <transformation>
                 <translate x="0" y="0.5" z="0.0"/>
-                <rotate axis="x" angle="-90" />
+                <rotate axis="x" angle="90" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
@@ -212,7 +183,7 @@
                 <rotate axis="x" angle="90" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
@@ -225,7 +196,7 @@
                 <translate x="0" y="0" z="-0.5"/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
@@ -238,7 +209,7 @@
                 <translate x="0" y="0" z="0.5"/>
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
@@ -252,7 +223,7 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
@@ -266,13 +237,14 @@
                 <rotate axis="y" angle="90" />
             </transformation>
             <materials>
-                <material id="inherit" />
+                <material id="black" />
             </materials>
             <texture id="none" />
             <children>
                 <primitiveref id="rect" />
             </children>
         </component>
+
         <component id="room">
             <transformation>
             </transformation>
@@ -810,7 +782,7 @@
 
 
         <component id="blackPieces">
-            <transformation>
+             <transformation>
                 <translate x="0" y="2.165" z="0"/>
             </transformation>
             <materials>

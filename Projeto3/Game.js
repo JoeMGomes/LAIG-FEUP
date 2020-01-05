@@ -14,6 +14,7 @@ class Game {
         this.moves = [];
         this.blackPieces = [];
         this.whitePieces = [];
+        this.squarePieces = [];
         this.turn = 0;
         this.server = new Connection();
 
@@ -74,6 +75,7 @@ class Game {
             this.updateTurn();
             if(data["msg"] == "moved"){
                 this.addPiece(row, col);
+
             }
         };
         let request1 = this.server.createRequest('move', [row, col], reply.bind(this));
@@ -98,7 +100,7 @@ class Game {
     }
 
 
-    animecamara(t, camera){
+    animecamera(t, camera){
         t /= 1000;  
         if(this.animeCamera){
             if(this.cameraTime == 0){
@@ -109,23 +111,19 @@ class Game {
                 if (percentage > 1){
                     this.cameraTime = 0;
                     this.animeCamera = false;
-                    if (this.turn > 0)
+                    if (this.turn < 0)
                     camera.setPosition([0, 3.6, 1.2]);
                     else
                     camera.setPosition([0, 3.6, -1.2]);
                     return;
                 }
-                if(this.turn < 0){
+                if(this.turn > 0){
                     let newZ = Math.cos(Math.PI*percentage) * 1.2;
                     let newX = (Math.sin(Math.PI*percentage) * 1.2);
-                    console.log(newX);
-                    console.log(newZ);
                     camera.setPosition([newX, 3.6, newZ]);
                 }else {
                     let newZ = Math.cos(Math.PI*percentage) * -1.2;
                     let newX = (Math.sin(Math.PI*percentage) * 1.2);
-                    console.log(newX);
-                    console.log(newZ);
                     camera.setPosition([newX, 3.6, newZ]);
                 }
                 
@@ -135,9 +133,48 @@ class Game {
     }
 
 
+
+    updateSquares(){
+        let reply = function(data) {
+            for(let i = 0; i < data.length; i++){
+                if(data[i][1] == "b"){
+                    let blacksquare = this.scene.graph.graphNodes["squarePieceblack"];
+                    let newPiece = new GraphNode(blacksquare.nodeID + data[i][0]);
+                    /* newPiece.nodeID = blacksquare.nodeID + data[i][0]; */
+                    newPiece.children = blacksquare.children;
+                    newPiece.leafs = blacksquare.leafs;
+                    newPiece.materialsID = blacksquare.materialsID;
+                    newPiece.materialsIndex = blacksquare.materialsIndex;
+                    newPiece.textureID = blacksquare.textureID;
+                    mat4.translate(newPiece.transform, newPiece.transform, [this.getSquareCoords(data[i][0]%7), 2.163, this.getSquareCoords(Math.floor(data[i][0]/7))]);
+                    console.log(newPiece);
+                    this.scene.graph.graphNodes[this.scene.graph.idRoot].children.push(newPiece.nodeID);
+                    this.scene.graph.graphNodes[newPiece.nodeID] = newPiece;
+                }
+                else if (data[i][1] == "@"){
+                    let whitesquare = this.scene.graph.graphNodes["squarePiecewhite"];
+                    let newPiece = new GraphNode(whitesquare.nodeID + data[i][0]);
+                    /* newPiece.nodeID = whitesquare.nodeID + data[i][0]; */
+                    newPiece.children = whitesquare.children;
+                    newPiece.leafs = whitesquare.leafs;
+                    newPiece.materialsID = whitesquare.materialsID;
+                    newPiece.materialsIndex = whitesquare.materialsIndex;
+                    newPiece.textureID = whitesquare.textureID;
+                    mat4.translate(newPiece.transform, newPiece.transform, [this.getSquareCoords(data[i][0]%7), 2.163, this.getSquareCoords(Math.floor(data[i][0]/7))]);
+                    console.log(newPiece);
+                    this.scene.graph.graphNodes[this.scene.graph.idRoot].children.push(newPiece.nodeID);
+                    this.scene.graph.graphNodes[newPiece.nodeID] = newPiece;
+                }
+
+            }
+        };
+        let request = this.server.createRequest('get_squarelist', null, reply.bind(this));
+        this.server.plRequest(request);
+    }
+
     addPiece(row, col){
         console.log("addPiece");
-        if(this.turn > 0){
+        if(this.turn < 0){
             let pieceName = "black" + (this.blackPieces.length + 1);
             this.blackPieces.push(pieceName);
             let placedPiece = this.scene.graph.graphNodes[pieceName];
@@ -187,6 +224,7 @@ class Game {
                     mat4.translate(newMatrix, newMatrix, [this.PieceAnimating[1][0], 0, this.PieceAnimating[1][1]]);
                     this.PieceAnimating[0].transform = newMatrix;
                     this.PieceAnimating = [];
+                    this.updateSquares();
                     return;
                 }
                 
@@ -198,37 +236,6 @@ class Game {
                 this.PieceAnimating[0].transform = newMatrix;
             }
         }
-    }
-
-
-    updatePieces(){
-        let reply = function(data) {
-            let blacki = 1;
-            let whitei = 1;
-            for(let i = 0; i < data.length; i++){
-                if (data[i][1] == "b"){
-                    let pieceName = "black" + blacki;
-                    let placedPiece = this.scene.graph.graphNodes[pieceName];
-                    let row = this.getCoords(Math.floor((data[i][0]+1)/8));
-                    let col = this.getCoords((data[i][0]+1)%8  -1);
-                    let newTransform = mat4.create();
-                    mat4.translate(newTransform, newTransform, [col, 0, row]);                
-                    placedPiece.transform = newTransform;
-                    blacki++;   
-                }else if(data[i][1] == "@"){
-                    let pieceName = "white" + blacki;
-                    let placedPiece = this.scene.graph.graphNodes[pieceName];
-                    let row = this.getCoords(Math.floor((data[i][0])/8));
-                    let col = this.getCoords((data[i][0])%8);
-                    let newTransform = mat4.create();
-                    mat4.translate(newTransform, newTransform, [col, 0, row]);                
-                    placedPiece.transform = newTransform;
-                    whitei++;
-                }
-            }
-        };
-        let request = this.server.createRequest('get_octolist', null, reply.bind(this));
-        this.server.plRequest(request);
     }
 
 
@@ -252,6 +259,26 @@ class Game {
                 return 0.63;
         }
 
+    }
+
+    getSquareCoords(number){
+        console.log(number);
+        switch(number){
+            case 0:
+                return -0.54;
+            case 1:
+                return -0.36;
+            case 2:
+                return -0.18;
+            case 3:
+                return 0;
+            case 4:
+                return 0.18;
+            case 5:
+                return 0.36;
+            case 6:
+                return 0.54;
+        }   
     }
 
     getInitialCoords(number, z){
