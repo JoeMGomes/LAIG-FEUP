@@ -159,7 +159,7 @@
 
         <component id="squarePiecewhite">
             <transformation>
-                <translate x="0" y="2.163" z="0.54"/>
+                <translate x="0" y="1" z="0.0"/>
             </transformation>
             <materials>
                 <material id="beije" />

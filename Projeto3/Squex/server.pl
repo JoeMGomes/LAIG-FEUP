@@ -117,6 +117,13 @@ parse_input(move(X,Y),Res):-
 	move(X,Y),
 	Res = '{"msg": "moved", "return": true}'.
 
+% Make a move against the bot
+% Arguments are target position and bot level
+parse_input(moveVsBot(X,Y, Level),Res):-
+	moveVsBot(X,Y,Level),
+	get_octolist(List),
+	matrix_to_json(List,Res).
+
 % PlayBot
 % Argument is bot difficulty (1 or 2)
 parse_input(playBot(X),Res):-
