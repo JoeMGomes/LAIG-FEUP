@@ -15,6 +15,8 @@ class Game {
         this.blackPieces = [];
         this.whitePieces = [];
         this.squarePieces = [];
+        this.moves = [];
+        this.movieIndice = 0;
         this.updateTurn();
         this.server = new Connection();
 
@@ -159,7 +161,6 @@ class Game {
     updateTurn() {
         let reply = function(data) {
             if ((this.turn > 0 && data < 0) || (this.turn < 0 && data > 0)) {
-                console.log("what");
                 this.animeCamera = true;
             }
             this.turn = data;
@@ -180,13 +181,13 @@ class Game {
                 if (percentage > 1) {
                     this.cameraTime = 0;
                     this.animeCamera = false;
-                    if (this.turn < 0)
+                    if (this.turn > 0)
                     camera.setPosition([0, 3.6, 1.2]);
                     else
                     camera.setPosition([0, 3.6, -1.2]);
                     return;
                 }
-                if(this.turn > 0){
+                if(this.turn < 0){
                     let newZ = Math.cos(Math.PI*percentage) * 1.2;
                     let newX = (Math.sin(Math.PI*percentage) * 1.2);
                     camera.setPosition([newX, 3.6, newZ]);
@@ -204,7 +205,7 @@ class Game {
     updateSquares(){
         let reply = function(data) {
             for(let i = 0; i < data.length; i++){
-                if(data[i][1] == "b"){
+                if(data[i][1] == "@"){
                     let blacksquare = this.scene.graph.graphNodes["squarePieceblack"];
                     let newPiece = new GraphNode(blacksquare.nodeID + data[i][0]);
                     /* newPiece.nodeID = blacksquare.nodeID + data[i][0]; */
@@ -218,7 +219,7 @@ class Game {
                     this.scene.graph.graphNodes[this.scene.graph.idRoot].children.push(newPiece.nodeID);
                     this.scene.graph.graphNodes[newPiece.nodeID] = newPiece;
                 }
-                else if (data[i][1] == "@"){
+                else if (data[i][1] == "b"){
                     let whitesquare = this.scene.graph.graphNodes["squarePiecewhite"];
                     let newPiece = new GraphNode(whitesquare.nodeID + data[i][0]);
                     /* newPiece.nodeID = whitesquare.nodeID + data[i][0]; */
@@ -274,11 +275,23 @@ class Game {
     }
 
     addPiece(row, col) {
-        if (this.turn < 0) {
+        this.moves.push([row, col]);
+        if (this.turn > 0) {
             this.addPieceBlack(row, col);
         } else {
             this.addPieceWhite(row, col);
         }
+    }
+
+
+    moviePlay(){
+        if (this.inAnimation) this.moviePlay();
+        else if(this.movieIndice == this.moves.length) return;
+        else{
+            this.updateTurn();
+            this.addPiece(this.moves[this.movieIndice][0],  this.moves[this.movieIndice][1]);
+        }
+
     }
 
     anime(t) {
