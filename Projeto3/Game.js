@@ -21,6 +21,7 @@ class Game {
         this.server = new Connection();
 
         this.botMoves = [];
+        this.botPlaying = false;
 
         this.inAnimation = false;
         this.animeTime = 0;
@@ -34,29 +35,53 @@ class Game {
         this.scene.interfaceManager.elements["play"].disable();
     }
 
-    setPvP(){
+    setPvP() {
         this.playMode = "pvp";
     }
 
-    setPvC(){
+    setPvC() {
         this.playMode = "pvc";
     }
 
-    setCvC(){
+    setCvC() {
         this.playMode = "pvc";
     }
 
-    setBotLvl1(){
+    setBotLvl1() {
         this.botLevel = 1;
     }
 
-    setBotLvl2(){
+    setBotLvl2() {
         this.botLevel = 2;
     }
 
     resetGame() {
         let resetRequest = this.server.createRequest("reset", null, location.reload());
         this.server.plRequest(resetRequest);
+    }
+
+    playBot() {
+        let reply = function(data) {
+
+            this.botMoves = this.calcBoardDiff(data);
+            this.botPlaying = false;
+        };
+        let playBotRequest = this.server.createRequest(
+            "playBot",
+            [this.botLevel],
+            reply.bind(this)
+        );
+        this.server.plRequest(playBotRequest);
+    }
+
+    botVbot() {
+        this.playMode = "cvc";
+        let count = 0;
+        while(count < 20){
+        this.playBot();
+        this.animBot();
+        count++;
+        }
     }
 
     playMove(pickID) {
@@ -96,7 +121,7 @@ class Game {
                 this.addPiece(row, col);
             } else if (data["msg"] != "Bad Request") {
                 this.addPiece(row, col);
-                this.calcBoardDiff(data);
+                this.botMoves = this.calcBoardDiff(data);
             }
         };
 
@@ -141,8 +166,9 @@ class Game {
         //get what is different in an Array
         let difference = usedMatrix.filter(x => !usedSpots.includes(x));
 
+        let ret = [];
 
-        for(let i = 0; i < difference.length; i++) {
+        for (let i = 0; i < difference.length; i++) {
             for (let j = 63; j >= 0; j--) {
                 if (Matrix[j][0] == difference[i]) {
                     difference[i] = [difference[i], Matrix[j][1]];
@@ -152,10 +178,9 @@ class Game {
             let botMoveRow = Math.floor(difference[i][0] / 8);
             let botMoveCol = difference[i][0] % 8;
 
-            console.log(botMoveRow, botMoveCol);
-            
-            this.botMoves.push([botMoveRow, botMoveCol, difference[i][1]]);
+            ret.push([botMoveRow, botMoveCol, difference[i][1]]);
         }
+        return ret;
     }
 
     updateTurn() {
@@ -314,17 +339,9 @@ class Game {
                     this.PieceAnimating = [];
                     this.updateSquares();
 
-                    console.log(this.botMoves);
-                    console.log(this.botMoves.length);
+                    //if bot playeds animates it
+                    this.animBot();
 
-                    if(this.botMoves.length > 0){
-                        if(this.botMoves[0][2] == "b")
-                            this.addPieceWhite(this.botMoves[0][0], this.botMoves[0][1]);
-                        else 
-                            this.addPieceBlack(this.botMoves[0][0], this.botMoves[0][1]);
-
-                        this.botMoves.shift();
-                    }
                     return;
                 }
 
@@ -340,6 +357,16 @@ class Game {
                 mat4.translate(newMatrix, newMatrix, [newX, newY, newZ]);
                 this.PieceAnimating[0].transform = newMatrix;
             }
+        }
+    }
+
+    animBot() {
+        if (this.botMoves.length > 0) {
+            if (this.botMoves[0][2] == "b")
+                this.addPieceWhite(this.botMoves[0][0], this.botMoves[0][1]);
+            else this.addPieceBlack(this.botMoves[0][0], this.botMoves[0][1]);
+
+            this.botMoves.shift();
         }
     }
 

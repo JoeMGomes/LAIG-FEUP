@@ -45,7 +45,7 @@ class InterfaceManager {
         
         this.elements["PvC"] = new InterfaceComp( this.scene, [-0.98, -.18], 0.2, 0.15, "PvC.png", this.game.setPvC.bind(this.game));
 
-        this.elements["CvC"] = new InterfaceComp( this.scene, [-0.98, 0.02], 0.2, 0.15, "CvC.png", this.game.setCvC.bind(this.game));
+        this.elements["CvC"] = new InterfaceComp( this.scene, [-0.98, 0.02], 0.2, 0.15, "CvC.png", this.game.botVbot.bind(this.game));
 
         this.elements["Level1"] = new InterfaceComp( this.scene, [-0.78, -0.18], 0.2, 0.15, "Level1.png", this.game.setBotLvl1.bind(this.game));
         this.elements["Level2"] = new InterfaceComp( this.scene, [-0.78, 0.02], 0.2, 0.15, "Level2.png", this.game.setBotLvl2.bind(this.game));

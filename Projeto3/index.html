@@ -25,20 +25,18 @@
      <div class="console">
       <input id="query_field" type="Text" value="handshake" />
       <br />
-      <button id="send_button" type="button" onClick="server.makeRequest()">
-        Send
-      </button>
+      <button id="send_button" type="button" onClick="server.makeRequest()">Send</button>
       <button id="quit_button" type="button" onClick="server.getPrologRequest('quit');"> Quit </button>
       <button id="quit_button" type="button" onClick="server.getPrologRequest('display');"> Display </button>
       <button id="quit_button" type="button" onClick="window.server = new Connection();"> Connect </button>
-
-
     </div>
     <style>
       .console {
+        display: none;
         position: fixed;
         width: 10em;
-        left: 10em;
+        right: 0em;
+        bottom: 0em;
       }
     </style>
   </body>
