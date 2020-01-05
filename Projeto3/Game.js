@@ -4,19 +4,18 @@ class Game {
         this.started = false;
         this.server = new Connection();
         this.updateTurn();
+        this.moves = [];
+        this.movieIndice = 0;
     }
 
     initGame() {
         this.turn = 1;
         this.end = false;
         this.botLevel = 1;
-        this.playMode = "pvc"; // pvp pvc cvc
-        this.moves = [];
+        this.playMode = "pvc"; // pvp pvc cvc       
         this.blackPieces = [];
         this.whitePieces = [];
         this.squarePieces = [];
-        this.moves = [];
-        this.movieIndice = 0;
         this.updateTurn();
         this.server = new Connection();
 
@@ -300,6 +299,7 @@ class Game {
     }
 
     addPiece(row, col) {
+        if (this.movieIndice == 0)
         this.moves.push([row, col]);
         if (this.turn > 0) {
             this.addPieceBlack(row, col);
@@ -308,13 +308,33 @@ class Game {
         }
     }
 
+    
+    initMovie(){
+        this.scene.graph.GraphNodes = [];
+        this.scene.graph.parseNodes(this.scene.graph.idRoot);
+        this.initGame();
+        this.updateTurn();
+        this.moviePlay();
+    }
+
 
     moviePlay(){
-        if (this.inAnimation) this.moviePlay();
-        else if(this.movieIndice == this.moves.length) return;
+        this.playMode = "pvp";
+        if(this.movieIndice == this.moves.length -1) {
+            this.movieIndice = 0;
+            return;}
         else{
-            this.updateTurn();
+            let reply = function(data) {
+                this.updateTurn();
+                this.addPiece(this.moves[this.movieIndice][0],  this.moves[this.movieIndice][1]);
+            };
+            console.log(this.moves);
+            let request1 = this.server.createRequest("move", [this.moves[this.movieIndice][0], this.moves[this.movieIndice][1]], reply.bind(this));
+            this.server.plRequest(request1);
             this.addPiece(this.moves[this.movieIndice][0],  this.moves[this.movieIndice][1]);
+            this.updateTurn();
+            this.movieIndice++;
+
         }
 
     }
@@ -341,7 +361,10 @@ class Game {
 
                     //if bot playeds animates it
                     this.animBot();
-
+                    if (this.movieIndice > 0){
+                        this.updateTurn();
+                        this.moviePlay();
+                    }
                     return;
                 }
 
@@ -362,9 +385,19 @@ class Game {
 
     animBot() {
         if (this.botMoves.length > 0) {
-            if (this.botMoves[0][2] == "b")
+            if (this.botMoves[0][2] == "b"){
+                if (this.movieIndice == 0)
+                this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
+
                 this.addPieceWhite(this.botMoves[0][0], this.botMoves[0][1]);
-            else this.addPieceBlack(this.botMoves[0][0], this.botMoves[0][1]);
+                
+            }
+            else {
+                if (this.movieIndice == 0)
+                this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
+                this.addPieceBlack(this.botMoves[0][0], this.botMoves[0][1]);
+                
+            }
 
             this.botMoves.shift();
         }
@@ -422,7 +455,6 @@ class Game {
     }
 
     getSquareCoords(number){
-        console.log(number);
         switch(number){
             case 0:
                 return -0.54;

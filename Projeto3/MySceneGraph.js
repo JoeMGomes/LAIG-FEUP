@@ -28,7 +28,7 @@ class MySceneGraph {
         scene.graph = this;
 
         this.nodes = [];
-
+        this.currentFilename = filename;
         this.idRoot = null; // The id of the root element.
 
         this.axisCoords = [];
@@ -1586,7 +1586,7 @@ class MySceneGraph {
 
         // File reading 
         this.reader = new CGFXMLreader();
-       
+        this.currentFilename = scene;
         this.reader.open('scenes/' + scene, this);
 
     }

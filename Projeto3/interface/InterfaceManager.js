@@ -50,7 +50,7 @@ class InterfaceManager {
         this.elements["Level1"] = new InterfaceComp( this.scene, [-0.78, -0.18], 0.2, 0.15, "Level1.png", this.game.setBotLvl1.bind(this.game));
         this.elements["Level2"] = new InterfaceComp( this.scene, [-0.78, 0.02], 0.2, 0.15, "Level2.png", this.game.setBotLvl2.bind(this.game));
 
-        this.elements["Movie"] = new InterfaceComp( this.scene, [-0.98, 0.22], 0.2, 0.15, "Level2.png", this.game.setBotLvl2.bind(this.game));
+        this.elements["Movie"] = new InterfaceComp( this.scene, [-0.98, 0.22], 0.2, 0.15, "Movie.png", this.game.initMovie.bind(this.game));
 
     }
 
