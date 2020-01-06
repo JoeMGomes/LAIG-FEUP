@@ -153,17 +153,17 @@ class XMLscene extends CGFscene {
 
   initViews() {
     this.normalCam = this.graph.views[this.graph.default];
-    this.interface.setActiveCamera(this.camera);
+    //this.interface.setActiveCamera(this.camera);
   }
 
   selectView(id) {
     this.normalCam = this.graph.views[id];
-    this.interface.setActiveCamera(this.camera);
+    //this.interface.setActiveCamera(this.camera);
   }
 
   selectSecView(id) {
     this.securityCam = this.graph.securityCams[id];
-    this.interface.setActiveCamera(this.camera);
+   this.interface.setActiveCamera(this.camera);
   }
 
   updateMaterial() {
@@ -196,7 +196,7 @@ class XMLscene extends CGFscene {
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
     this.camera = camera;
-    this.interface.setActiveCamera(this.camera);
+  
 
     // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();

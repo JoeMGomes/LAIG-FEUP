@@ -1,4 +1,4 @@
-class InterfaceComp {
+    class InterfaceComp {
 
     constructor(scene, coords, width, height, textureName, on_click){
         this.scene = scene

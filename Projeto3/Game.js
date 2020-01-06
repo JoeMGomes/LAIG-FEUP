@@ -42,6 +42,57 @@ class Game {
         this.scene.graph.GraphNodes = [];
         this.scene.graph.parseNodes(this.scene.graph.idRoot);
         this.resetGameVars();
+
+
+        let request1 = this.server.createRequest('undo', null, null);
+        this.server.plRequest(request1);
+
+
+        let reply = function(data) {
+            console.log(data);
+            for(let i = 0; i < data.length; i++){
+                let col = data[i][0]%8;
+                let row = Math.floor(data[i][0]/8);
+                
+                if(data[i][1] == "@"){
+                    console.log(row, col);
+                    let pieceName = "black" + (this.blackPieces.length + 1);
+                    this.blackPieces.push([pieceName, row, col]);
+                    let placedPiece = this.scene.graph.graphNodes[pieceName];
+                    let rowCoords = this.getCoords(row);
+                    let colCoords = this.getCoords(col);
+                    let newMatrix = mat4.create();
+                    mat4.translate(newMatrix, newMatrix, [
+                        colCoords,
+                        0,
+                        rowCoords
+                    ]);
+                    placedPiece.transform = newMatrix;
+
+                }
+                else if (data[i][1] == "b"){
+                    console.log(row, col);
+                    let pieceName = "white" + (this.whitePieces.length + 1);
+                    this.whitePieces.push([pieceName, row, col]);
+                    let placedPiece = this.scene.graph.graphNodes[pieceName];
+                    let rowCoords = this.getCoords(row);
+                    let colCoords = this.getCoords(col);
+                    let newMatrix = mat4.create();
+                    mat4.translate(newMatrix, newMatrix, [
+                        colCoords,
+                        0,
+                        rowCoords
+                    ]);
+                    placedPiece.transform = newMatrix;
+                }
+
+            }
+            this.updateSquares();
+            this.updateTurn();
+            this.moves.pop();
+        };
+        let request = this.server.createRequest('get_octolist', null, reply.bind(this));
+        this.server.plRequest(request);
         
     }
 
@@ -94,8 +145,9 @@ class Game {
         }
     }
 
-    playMove(pickID) {
-        if (this.inAnimation) return;
+
+    findPosition(pickID){
+        pickID--;
         let row, col;
         if (pickID >= 17 && pickID <= 24) {
             row = 0;
@@ -124,7 +176,14 @@ class Game {
         } else {
             return null;
         }
+        return[row, col];
+    }
 
+    playMove(pickID) {
+        if (this.inAnimation) return;
+        let coords = this.findPosition(pickID);
+        let row = coords[0];
+        let col = coords[1];
         let reply = function(data) {
             this.updateTurn();
             if (data["msg"] == "moved") {
