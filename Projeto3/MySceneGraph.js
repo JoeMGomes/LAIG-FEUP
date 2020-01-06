@@ -1490,7 +1490,7 @@ class MySceneGraph {
         var rootMaterial = Object.keys(this.materials)[0];
 
         this.pickID = 1;
-        this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1);
+        this.traverseNodes(this.idRoot, this.materials[rootMaterial], null, 1, 1, false);
         }
     }
 
@@ -1509,7 +1509,7 @@ class MySceneGraph {
     }
 
 
-    traverseNodes(nodeID, material, texture, sLength, tLength) {
+    traverseNodes(nodeID, material, texture, sLength, tLength, isPicked) {
 
         var node = this.graphNodes[nodeID];
 
@@ -1543,6 +1543,15 @@ class MySceneGraph {
                 this.drawPrimitive(node.leafs[i], sLength, tLength);
         }
 
+        if (nodeID.substr(0, 10) == "board" && !isPicked){
+            this.scene.registerForPick(this.pickID, this.components[nodeID]);
+            this.pickID++;
+            isPicked = true;
+        }else if (!isPicked){
+            this.scene.registerForPick(0, null);
+        }
+
+
         if (nodeID.substr(0, 5) == "board") {
             for (let i = 0; i < node.children.length; i++) {
                 this.scene.registerForPick(this.pickID, this.components[nodeID]);
@@ -1553,7 +1562,7 @@ class MySceneGraph {
         //percorrer outros nodes filhos recursivamente
         for (let i = 0; i < node.children.length; i++) {
             this.scene.pushMatrix();
-            this.traverseNodes(node.children[i], material, texture, sLength, tLength);
+            this.traverseNodes(node.children[i], material, texture, sLength, tLength, isPicked);
             this.scene.popMatrix();
         }
     }
