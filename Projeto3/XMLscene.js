@@ -244,8 +244,10 @@ class XMLscene extends CGFscene {
             var customId = this.pickResults[i][1];
             console.log("Picked object: " + obj + ", with pick id " + customId);
             if(this.game.started){
-              if(this.game.playMode != "cvc")
-                this.game.playMove(customId);
+              if(this.game.playMode != "cvc"){
+              this.game.playMove(customId);
+              this.game.updateEnd();
+              }
             }
           }
         }

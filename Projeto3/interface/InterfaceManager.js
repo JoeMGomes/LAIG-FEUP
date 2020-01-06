@@ -52,6 +52,11 @@ class InterfaceManager {
 
         this.elements["Movie"] = new InterfaceComp( this.scene, [-0.98, 0.22], 0.2, 0.15, "Movie.png", this.game.initMovie.bind(this.game));
 
+        this.elements["whiteWin"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.25, "whiteWin.png", null);
+        this.elements["blackWin"] = new InterfaceComp( this.scene, [-0.15, 0.15], 0.3, 0.25, "blackWin.png", null);
+
+        this.elements["blackWin"].disable();
+        this.elements["whiteWin"].disable();
     }
 
     display() {

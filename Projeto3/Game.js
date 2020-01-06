@@ -6,7 +6,7 @@ class Game {
         this.updateTurn();
         this.moves = [];
         this.movieIndice = 0;
-        this.playMode = "pvp"; // pvp pvc cvc       
+        this.playMode = "pvp"; // pvp pvc cvc
     }
 
     initGame() {
@@ -17,9 +17,9 @@ class Game {
         this.scene.interfaceManager.elements["play"].disable();
     }
 
-    resetGameVars(){
+    resetGameVars() {
         this.turn = 1;
-        this.end = false;
+        this.end = 0;
         this.botLevel = 1;
         this.blackPieces = [];
         this.whitePieces = [];
@@ -38,7 +38,7 @@ class Game {
         this.started = true;
     }
 
-    undo(){
+    undo() {
         this.scene.graph.GraphNodes = [];
         this.scene.graph.parseNodes(this.scene.graph.idRoot);
         this.resetGameVars();
@@ -123,25 +123,21 @@ class Game {
 
     playBot() {
         let reply = function(data) {
-
             this.botMoves = this.calcBoardDiff(data);
             this.botPlaying = false;
         };
-        let playBotRequest = this.server.createRequest(
-            "playBot",
-            [this.botLevel],
-            reply.bind(this)
-        );
+        let playBotRequest = this.server.createRequest("playBot", [this.botLevel], reply.bind(this));
         this.server.plRequest(playBotRequest);
     }
 
     botVbot() {
         this.playMode = "cvc";
-        let count = 0;
-        while(count < 20){
-        this.playBot();
-        this.animBot();
-        count++;
+        let count = 0
+        while (count < 64) {
+            this.updateEnd();
+            this.playBot();
+            this.animBot();
+            count++;
         }
     }
 
@@ -195,17 +191,26 @@ class Game {
         };
 
         let request1;
-        console.log(this.playMode);
         if (this.playMode == "pvp")
             request1 = this.server.createRequest("move", [row, col], reply.bind(this));
         else if (this.playMode == "pvc")
-            request1 = this.server.createRequest(
-                "moveVsBot",
-                [row, col, this.botLevel],
-                reply.bind(this)
-            );
+            request1 = this.server.createRequest("moveVsBot", [row, col, this.botLevel], reply.bind(this));
 
         this.server.plRequest(request1);
+    }
+
+    updateEnd() {
+        let reply = function(data) {
+            this.end = data;
+            if (this.end != 0) {
+                this.started = false;
+                if (this.end == 1) this.scene.interfaceManager.elements["blackWin"].enable();
+                else if (this.end == -1) this.scene.interfaceManager.elements["whiteWin"].enable();
+            }
+        };
+
+        let request = this.server.createRequest("getEnd", null, reply.bind(this));
+        this.server.plRequest(request);
     }
 
     calcBoardDiff(Matrix) {
@@ -263,11 +268,10 @@ class Game {
         this.server.plRequest(request);
     }
 
-
-    animecamera(t, camera){
-        t /= 1000;  
-        if(this.animeCamera){
-            if(this.cameraTime == 0){
+    animecamera(t, camera) {
+        t /= 1000;
+        if (this.animeCamera) {
+            if (this.cameraTime == 0) {
                 this.cameraTime = t;
                 this.lastT = 0;
             } else {
@@ -275,19 +279,17 @@ class Game {
                 if (percentage > 1) {
                     this.cameraTime = 0;
                     this.animeCamera = false;
-                    if (this.turn > 0)
-                    camera.setPosition([0, 3.6, 1.2]);
-                    else
-                    camera.setPosition([0, 3.6, -1.2]);
+                    if (this.turn > 0) camera.setPosition([0, 3.6, 1.2]);
+                    else camera.setPosition([0, 3.6, -1.2]);
                     return;
                 }
-                if(this.turn < 0){
-                    let newZ = Math.cos(Math.PI*percentage) * 1.2;
-                    let newX = (Math.sin(Math.PI*percentage) * 1.2);
+                if (this.turn < 0) {
+                    let newZ = Math.cos(Math.PI * percentage) * 1.2;
+                    let newX = Math.sin(Math.PI * percentage) * 1.2;
                     camera.setPosition([newX, 3.6, newZ]);
-                }else {
-                    let newZ = Math.cos(Math.PI*percentage) * -1.2;
-                    let newX = (Math.sin(Math.PI*percentage) * 1.2);
+                } else {
+                    let newZ = Math.cos(Math.PI * percentage) * -1.2;
+                    let newX = Math.sin(Math.PI * percentage) * 1.2;
                     camera.setPosition([newX, 3.6, newZ]);
                 }
 
@@ -296,10 +298,10 @@ class Game {
         }
     }
 
-    updateSquares(){
+    updateSquares() {
         let reply = function(data) {
-            for(let i = 0; i < data.length; i++){
-                if(data[i][1] == "@"){
+            for (let i = 0; i < data.length; i++) {
+                if (data[i][1] == "@") {
                     let blacksquare = this.scene.graph.graphNodes["squarePieceblack"];
                     let newPiece = new GraphNode(blacksquare.nodeID + data[i][0]);
                     /* newPiece.nodeID = blacksquare.nodeID + data[i][0]; */
@@ -308,12 +310,14 @@ class Game {
                     newPiece.materialsID = blacksquare.materialsID;
                     newPiece.materialsIndex = blacksquare.materialsIndex;
                     newPiece.textureID = blacksquare.textureID;
-                    mat4.translate(newPiece.transform, newPiece.transform, [this.getSquareCoords(data[i][0]%7), 2.163, this.getSquareCoords(Math.floor(data[i][0]/7))]);
-                    console.log(newPiece);
+                    mat4.translate(newPiece.transform, newPiece.transform, [
+                        this.getSquareCoords(data[i][0] % 7),
+                        2.163,
+                        this.getSquareCoords(Math.floor(data[i][0] / 7))
+                    ]);
                     this.scene.graph.graphNodes[this.scene.graph.idRoot].children.push(newPiece.nodeID);
                     this.scene.graph.graphNodes[newPiece.nodeID] = newPiece;
-                }
-                else if (data[i][1] == "b"){
+                } else if (data[i][1] == "b") {
                     let whitesquare = this.scene.graph.graphNodes["squarePiecewhite"];
                     let newPiece = new GraphNode(whitesquare.nodeID + data[i][0]);
                     /* newPiece.nodeID = whitesquare.nodeID + data[i][0]; */
@@ -322,19 +326,19 @@ class Game {
                     newPiece.materialsID = whitesquare.materialsID;
                     newPiece.materialsIndex = whitesquare.materialsIndex;
                     newPiece.textureID = whitesquare.textureID;
-                    mat4.translate(newPiece.transform, newPiece.transform, [this.getSquareCoords(data[i][0]%7), 2.163, this.getSquareCoords(Math.floor(data[i][0]/7))]);
-                    console.log(newPiece);
+                    mat4.translate(newPiece.transform, newPiece.transform, [
+                        this.getSquareCoords(data[i][0] % 7),
+                        2.163,
+                        this.getSquareCoords(Math.floor(data[i][0] / 7))
+                    ]);
                     this.scene.graph.graphNodes[this.scene.graph.idRoot].children.push(newPiece.nodeID);
                     this.scene.graph.graphNodes[newPiece.nodeID] = newPiece;
                 }
-
             }
         };
-        let request = this.server.createRequest('get_squarelist', null, reply.bind(this));
+        let request = this.server.createRequest("get_squarelist", null, reply.bind(this));
         this.server.plRequest(request);
     }
-
-
 
     addPieceBlack(row, col) {
         let pieceName = "black" + (this.blackPieces.length + 1);
@@ -369,8 +373,7 @@ class Game {
     }
 
     addPiece(row, col) {
-        if (this.movieIndice == 0)
-        this.moves.push([row, col]);
+        if (this.movieIndice == 0) this.moves.push([row, col]);
         if (this.turn > 0) {
             this.addPieceBlack(row, col);
         } else {
@@ -378,8 +381,7 @@ class Game {
         }
     }
 
-    
-    initMovie(){
+    initMovie() {
         this.scene.graph.GraphNodes = [];
         this.scene.graph.parseNodes(this.scene.graph.idRoot);
         this.initGame();
@@ -387,26 +389,27 @@ class Game {
         this.moviePlay();
     }
 
-
-    moviePlay(){
+    moviePlay() {
         this.playMode = "pvp";
-        if(this.movieIndice == this.moves.length -1) {
+        if (this.movieIndice == this.moves.length - 1) {
             this.movieIndice = 0;
-            return;}
-        else{
+            return;
+        } else {
             let reply = function(data) {
                 this.updateTurn();
-                this.addPiece(this.moves[this.movieIndice][0],  this.moves[this.movieIndice][1]);
+                this.addPiece(this.moves[this.movieIndice][0], this.moves[this.movieIndice][1]);
             };
             console.log(this.moves);
-            let request1 = this.server.createRequest("move", [this.moves[this.movieIndice][0], this.moves[this.movieIndice][1]], reply.bind(this));
+            let request1 = this.server.createRequest(
+                "move",
+                [this.moves[this.movieIndice][0], this.moves[this.movieIndice][1]],
+                reply.bind(this)
+            );
             this.server.plRequest(request1);
-            this.addPiece(this.moves[this.movieIndice][0],  this.moves[this.movieIndice][1]);
+            this.addPiece(this.moves[this.movieIndice][0], this.moves[this.movieIndice][1]);
             this.updateTurn();
             this.movieIndice++;
-
         }
-
     }
 
     anime(t) {
@@ -431,7 +434,7 @@ class Game {
 
                     //if bot playeds animates it
                     this.animBot();
-                    if (this.movieIndice > 0){
+                    if (this.movieIndice > 0) {
                         this.updateTurn();
                         this.moviePlay();
                     }
@@ -439,13 +442,10 @@ class Game {
                 }
 
                 let newX =
-                    (1 - percentage) * this.PieceAnimating[2][0] +
-                    percentage * this.PieceAnimating[1][0];
+                    (1 - percentage) * this.PieceAnimating[2][0] + percentage * this.PieceAnimating[1][0];
                 let newZ =
-                    (1 - percentage) * this.PieceAnimating[2][2] +
-                    percentage * this.PieceAnimating[1][1];
-                let newY =
-                    (1 - percentage) * this.PieceAnimating[2][1] + Math.sin(Math.PI * percentage);
+                    (1 - percentage) * this.PieceAnimating[2][2] + percentage * this.PieceAnimating[1][1];
+                let newY = (1 - percentage) * this.PieceAnimating[2][1] + Math.sin(Math.PI * percentage);
                 let newMatrix = mat4.create();
                 mat4.translate(newMatrix, newMatrix, [newX, newY, newZ]);
                 this.PieceAnimating[0].transform = newMatrix;
@@ -455,18 +455,13 @@ class Game {
 
     animBot() {
         if (this.botMoves.length > 0) {
-            if (this.botMoves[0][2] == "b"){
-                if (this.movieIndice == 0)
-                this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
+            if (this.botMoves[0][2] == "b") {
+                if (this.movieIndice == 0) this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
 
                 this.addPieceWhite(this.botMoves[0][0], this.botMoves[0][1]);
-                
-            }
-            else {
-                if (this.movieIndice == 0)
-                this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
+            } else {
+                if (this.movieIndice == 0) this.moves.push([this.botMoves[0][0], this.botMoves[0][1]]);
                 this.addPieceBlack(this.botMoves[0][0], this.botMoves[0][1]);
-                
             }
 
             this.botMoves.shift();
@@ -524,8 +519,8 @@ class Game {
         }
     }
 
-    getSquareCoords(number){
-        switch(number){
+    getSquareCoords(number) {
+        switch (number) {
             case 0:
                 return -0.54;
             case 1:
@@ -540,12 +535,12 @@ class Game {
                 return 0.36;
             case 6:
                 return 0.54;
-        }   
+        }
     }
 
-    getInitialCoords(number, z){
-        let x = Math.floor((number-1)/4);
-        let y = (number-1)%4;
+    getInitialCoords(number, z) {
+        let x = Math.floor((number - 1) / 4);
+        let y = (number - 1) % 4;
 
         let position = [];
         position.push(this.getCoords(x));
