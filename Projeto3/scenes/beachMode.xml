@@ -77,9 +77,15 @@
         </material>
         <material id="black" shininess="1">
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />
-            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
-            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <ambient r="0.4" g="0.4" b="0.4" a="1.0" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
             <specular r=".05" g=".05" b=".05" a="1.0" />
+        </material>
+        <material id="green" shininess="1">
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
+            <ambient r="0.1" g="0.6" b="0.1" a="1.0" />
+            <diffuse r="0.1" g="0.6" b="0.1" a="1.0" />
+            <specular r=".05" g=".6" b=".05" a="1.0" />
         </material>
     </materials>
     <transformations>
@@ -164,6 +170,12 @@
         <primitive id="skybox">
             <objfile file="models/Sky.obj"/>
         </primitive>
+        <primitive id="palmtrunk">
+            <objfile file="models/palmTrunk.obj"/>
+        </primitive>
+        <primitive id="palmleafs">
+            <objfile file="models/palmLeafs.obj"/>
+        </primitive>
     </primitives>
     <components>
         <component id="root">
@@ -184,6 +196,10 @@
                 <componentref id="squarePiecewhite"/>
                 <componentref id="squarePieceblack"/>
                 <componentref id="skyComp"/>
+                <componentref id="leafs1"/>
+                <componentref id="trunk1"/>
+                <componentref id="leafs2"/>
+                <componentref id="trunk2"/>
             </children>
         </component>
         <component id="skyComp">
@@ -195,6 +211,76 @@
             <texture id="skyText" />
             <children>
                 <primitiveref id="skybox"/>
+            </children>
+        </component>
+        <component id="leafs1">
+            <transformation>
+                <translate x="-10" y="-2" z="-10"/>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="leafsComp"/>
+            </children>
+        </component>
+        <component id="trunk1">
+            <transformation>
+                <translate x="-10" y="-2" z="-10"/>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunkComp"/>
+            </children>
+        </component>
+        <component id="leafs2">
+            <transformation>
+                <translate x="10" y="-2" z="10"/>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="leafsComp"/>
+            </children>
+        </component>
+        <component id="trunk2">
+            <transformation>
+                <translate x="10" y="-2" z="10"/>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <componentref id="trunkComp"/>
+            </children>
+        </component>
+        <component id="trunkComp">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="brown" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="palmtrunk"/>
+            </children>
+        </component>
+        <component id="leafsComp">
+            <transformation>
+            </transformation>
+            <materials>
+                <material id="green" />
+            </materials>
+            <texture id="none" />
+            <children>
+                <primitiveref id="palmleafs"/>
             </children>
         </component>
         <component id="squarePieceblack">
