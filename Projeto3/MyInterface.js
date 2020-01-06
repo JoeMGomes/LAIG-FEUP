@@ -74,7 +74,7 @@ class MyInterface extends CGFinterface {
 
 
   addThemeGroup(){
-    let themes = ['classicRoom.xml','newTheme.xml'];
+    let themes = ['classicRoom.xml','beachMode.xml'];
 
     var themeGroup = this.gui.addFolder("Themes");
     themeGroup.open();

@@ -161,6 +161,10 @@ parse_input(reset,Res):-
 	retractall(moveLog(_,_,_)),
 	Res = '{"msg": "reset", "return": true}'.
 
+parse_input(getEnd,Res):-
+	end(X),
+	json(X,Res).
+
 
 testlogs:-
 	findall(X,moveLog(X,_,_),List),
